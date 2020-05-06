@@ -13,3 +13,8 @@ public class ArticlePO {
     private String corpusTime;
     private String corpusNum;
 }
+//public class CorpusVO {
+//    private String articleId;
+//    private String articleName;
+//    private String articleTime;
+//}
