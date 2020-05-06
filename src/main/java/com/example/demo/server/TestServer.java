@@ -1,6 +1,6 @@
 package com.example.demo.server;
 
-import com.example.demo.vo.ArticleVO;
+import com.example.demo.po.ArticlePO;
 
 import java.util.List;
 
@@ -18,5 +18,5 @@ public interface TestServer {
     /**
      * @return ArticleVO
      */
-    List<ArticleVO> searchAll(String userId);
+    List<ArticlePO> searchAll(String userId);
 }

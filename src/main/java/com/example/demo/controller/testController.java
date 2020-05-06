@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
+import com.example.demo.po.ArticlePO;
 import com.example.demo.server.TestServer;
-import com.example.demo.vo.ArticleVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +29,7 @@ public class testController {
     }
 
     @RequestMapping("/listAllArticle/{userId}")
-    public List<ArticleVO> listAllArticle(@PathVariable("userId") String userId){
+    public List<ArticlePO> listAllArticle(@PathVariable("userId") String userId){
         return server.searchAll(userId);
     }
 }

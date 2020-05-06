@@ -1,8 +1,8 @@
 package com.example.demo.server.impl;
 
-import com.example.demo.dao.TestDao;
+import com.example.demo.dao.TestDAO;
+import com.example.demo.po.ArticlePO;
 import com.example.demo.server.TestServer;
-import com.example.demo.vo.ArticleVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ import java.util.List;
 public class TestServerImpl implements TestServer {
 
     @Autowired
-    private TestDao testDao;
+    private TestDAO testDao;
 
     @Override
     public void delete(String id){
@@ -27,8 +27,8 @@ public class TestServerImpl implements TestServer {
     }
 
     @Override
-    public List<ArticleVO> searchAll(String userId){
-        List<ArticleVO> search = testDao.searchAll(userId);
+    public List<ArticlePO> searchAll(String userId){
+        List<ArticlePO> search = testDao.searchAll(userId);
         return search;
     }
 }

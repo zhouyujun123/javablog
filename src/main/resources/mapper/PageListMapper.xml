@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.example.demo.dao.TestDao">
+<mapper namespace="com.example.demo.dao.TestDAO">
     <delete id="deleteById" parameterType="string">
         delete from t_article t where t.id=#{id}
     </delete>
@@ -8,11 +8,11 @@
         insert into t_corpus(corpus_id,corpus_name,corpus_time,corpus_num) values(#{corpusId},#{corpusName},#{corpusTime},#{corpusNum})
     </insert>
 
-    <select id="search" parameterType="string" resultType="com.example.demo.vo.ArticleVO">
+    <select id="search" parameterType="string" resultType="com.example.demo.po.ArticlePO">
         select article_name from t_article where article_name=#{articleName}
     </select>
 
-    <select id="searchAll"  resultType="com.example.demo.vo.ArticleVO">
+    <select id="searchAll"  resultType="com.example.demo.po.ArticlePO">
         select * from t_corpus where user_id=#{userId}
     </select>
 </mapper>

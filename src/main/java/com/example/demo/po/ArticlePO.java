@@ -1,4 +1,4 @@
-package com.example.demo.vo;
+package com.example.demo.po;
 
 import lombok.Data;
 
@@ -7,7 +7,7 @@ import lombok.Data;
  * @data 自动生成get set方法
  */
 @Data
-public class ArticleVO {
+public class ArticlePO {
     private String corpusId;
     private String corpusName;
     private String corpusTime;
