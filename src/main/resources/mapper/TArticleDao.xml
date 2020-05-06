@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.TArticleDao">
+
+    <resultMap type="com.example.demo.entity.TArticle" id="TArticleMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="articleId" column="article_id" jdbcType="VARCHAR"/>
+        <result property="articleName" column="article_name" jdbcType="VARCHAR"/>
+        <result property="articleAuthor" column="article_author" jdbcType="VARCHAR"/>
+        <result property="articleIntroduct" column="article_introduct" jdbcType="VARCHAR"/>
+        <result property="articleTime" column="article_time" jdbcType="TIMESTAMP"/>
+        <result property="articleContent" column="article_content" jdbcType="VARCHAR"/>
+        <result property="articleCorpusId" column="article_corpus_id" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TArticleMap">
+        select
+          id, article_id, article_name, article_author, article_introduct, article_time, article_content, article_corpus_id
+        from zyjblog.t_article
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TArticleMap">
+        select
+          id, article_id, article_name, article_author, article_introduct, article_time, article_content, article_corpus_id
+        from zyjblog.t_article
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TArticleMap">
+        select
+          id, article_id, article_name, article_author, article_introduct, article_time, article_content, article_corpus_id
+        from zyjblog.t_article
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="articleId != null and articleId != ''">
+                and article_id = #{articleId}
+            </if>
+            <if test="articleName != null and articleName != ''">
+                and article_name = #{articleName}
+            </if>
+            <if test="articleAuthor != null and articleAuthor != ''">
+                and article_author = #{articleAuthor}
+            </if>
+            <if test="articleIntroduct != null and articleIntroduct != ''">
+                and article_introduct = #{articleIntroduct}
+            </if>
+            <if test="articleTime != null">
+                and article_time = #{articleTime}
+            </if>
+            <if test="articleContent != null and articleContent != ''">
+                and article_content = #{articleContent}
+            </if>
+            <if test="articleCorpusId != null and articleCorpusId != ''">
+                and article_corpus_id = #{articleCorpusId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into zyjblog.t_article(article_id, article_name, article_author, article_introduct, article_time, article_content, article_corpus_id)
+        values (#{articleId}, #{articleName}, #{articleAuthor}, #{articleIntroduct}, #{articleTime}, #{articleContent}, #{articleCorpusId})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update zyjblog.t_article
+        <set>
+            <if test="articleId != null and articleId != ''">
+                article_id = #{articleId},
+            </if>
+            <if test="articleName != null and articleName != ''">
+                article_name = #{articleName},
+            </if>
+            <if test="articleAuthor != null and articleAuthor != ''">
+                article_author = #{articleAuthor},
+            </if>
+            <if test="articleIntroduct != null and articleIntroduct != ''">
+                article_introduct = #{articleIntroduct},
+            </if>
+            <if test="articleTime != null">
+                article_time = #{articleTime},
+            </if>
+            <if test="articleContent != null and articleContent != ''">
+                article_content = #{articleContent},
+            </if>
+            <if test="articleCorpusId != null and articleCorpusId != ''">
+                article_corpus_id = #{articleCorpusId},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from zyjblog.t_article where id = #{id}
+    </delete>
+
+</mapper>
