@@ -88,4 +88,5 @@
         delete from zyjblog.t_corpus where id = #{id}
     </delete>
 
+
 </mapper>

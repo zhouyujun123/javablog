@@ -46,4 +46,19 @@ public class TArticleController {
         return ApiResult.resultWith(ResultCodeEnum.SUCCESS, pageInfo);
     }
 
+    /**
+     *
+     * @param id 文章id
+     * @return
+     */
+    @GetMapping("/deleteById/{id}")
+    public ApiResult deleteById(@PathVariable("id") Integer id){
+        boolean delete = tArticleService.deleteById(id);
+        if (delete){
+           return ApiResult.resultWith(ResultCodeEnum.SUCCESS);
+        }else {
+            return ApiResult.errorWith(ResultCodeEnum.OPERATION_FAILED);
+        }
+    }
+
 }
