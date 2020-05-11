@@ -61,4 +61,16 @@ public class TArticleController {
         }
     }
 
+    /**
+     * 添加文章
+     */
+    @RequestMapping("/addArticle")
+    public ApiResult addCorpus(TArticle tArticle){
+        if (tArticleService.insert(tArticle)) {
+            return ApiResult.resultWith(ResultCodeEnum.SUCCESS);
+        }else {
+            return ApiResult.errorWith(ResultCodeEnum.ERROR);
+        }
+    }
+
 }

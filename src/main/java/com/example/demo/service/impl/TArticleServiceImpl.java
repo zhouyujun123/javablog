@@ -49,9 +49,11 @@ public class TArticleServiceImpl implements TArticleService {
      * @return 实例对象
      */
     @Override
-    public TArticle insert(TArticle tArticle) {
-        this.tArticleDao.insert(tArticle);
-        return tArticle;
+    public boolean insert(TArticle tArticle) {
+        if (this.tArticleDao.insert(tArticle)>0){
+            return true;
+        }
+        return false;
     }
 
     /**

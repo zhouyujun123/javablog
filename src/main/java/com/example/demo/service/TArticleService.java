@@ -1,7 +1,6 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.TArticle;
-import com.example.demo.entity.TCorpus;
 
 import java.util.List;
 
@@ -42,7 +41,7 @@ public interface TArticleService {
      * @param tArticle 实例对象
      * @return 实例对象
      */
-    TArticle insert(TArticle tArticle);
+    boolean insert(TArticle tArticle);
 
     /**
      * 修改数据
