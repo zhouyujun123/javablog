@@ -20,7 +20,7 @@ public class TCorpus implements Serializable {
     
     private String corpusName;
     
-    private Date corpusTime;
+    private String corpusTime;
     
     private Integer corpusNum;
 
@@ -57,11 +57,11 @@ public class TCorpus implements Serializable {
         this.corpusName = corpusName;
     }
 
-    public Date getCorpusTime() {
+    public String getCorpusTime() {
         return corpusTime;
     }
 
-    public void setCorpusTime(Date corpusTime) {
+    public void setCorpusTime(String corpusTime) {
         this.corpusTime = corpusTime;
     }
 

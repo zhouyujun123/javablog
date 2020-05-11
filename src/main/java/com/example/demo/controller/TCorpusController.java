@@ -60,9 +60,14 @@ public class TCorpusController {
         }
     }
 
-    public static void main(String[] args) {
-
-        System.out.println(System.currentTimeMillis());
+    @RequestMapping("/addCorpus")
+    public ApiResult addCorpus(TCorpus tCorpus){
+        if (tCorpusService.insert(tCorpus)) {
+            return ApiResult.resultWith(ResultCodeEnum.SUCCESS);
+        }else {
+            return ApiResult.errorWith(ResultCodeEnum.ERROR);
+        }
     }
+
 
 }

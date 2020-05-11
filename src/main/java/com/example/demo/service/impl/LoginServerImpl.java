@@ -1,11 +1,11 @@
-package com.example.demo.server.impl;
+package com.example.demo.service.impl;
 
 import com.example.demo.base.ApiException;
 import com.example.demo.base.ApiResult;
 import com.example.demo.base.ResultCodeEnum;
 import com.example.demo.dao.LoginDAO;
 import com.example.demo.po.UserPO;
-import com.example.demo.server.LoginServer;
+import com.example.demo.service.LoginServer;
 import com.example.demo.utils.JwtUtil;
 import com.example.demo.vo.LoginVO;
 import org.springframework.beans.factory.annotation.Autowired;

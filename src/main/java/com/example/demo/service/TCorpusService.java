@@ -40,7 +40,7 @@ public interface TCorpusService {
      * @param tCorpus 实例对象
      * @return 实例对象
      */
-    TCorpus insert(TCorpus tCorpus);
+    Boolean insert(TCorpus tCorpus);
 
     /**
      * 修改数据

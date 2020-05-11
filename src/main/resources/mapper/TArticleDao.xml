@@ -64,8 +64,8 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into zyjblog.t_article(article_id, article_name, article_author, article_introduct, article_time, article_content, article_corpus_id)
-        values (#{articleId}, #{articleName}, #{articleAuthor}, #{articleIntroduct}, #{articleTime}, #{articleContent}, #{articleCorpusId})
+        insert into zyjblog.t_article(article_id, article_name, article_author, article_introduct, article_time, article_content, article_corpus_id, article_state)
+        values (#{articleId}, #{articleName}, #{articleAuthor}, #{articleIntroduct}, #{articleTime}, #{articleContent}, #{articleCorpusId}, #{articleState})
     </insert>
 
     <!--通过主键修改数据-->

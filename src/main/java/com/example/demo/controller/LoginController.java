@@ -1,8 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.base.ApiResult;
-import com.example.demo.server.LoginServer;
-import com.example.demo.utils.JwtUtil;
+import com.example.demo.service.LoginServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

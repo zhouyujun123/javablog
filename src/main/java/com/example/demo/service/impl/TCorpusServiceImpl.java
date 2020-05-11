@@ -49,9 +49,11 @@ public class TCorpusServiceImpl implements TCorpusService {
      * @return 实例对象
      */
     @Override
-    public TCorpus insert(TCorpus tCorpus) {
-        this.tCorpusDao.insert(tCorpus);
-        return tCorpus;
+    public Boolean insert(TCorpus tCorpus) {
+        if (this.tCorpusDao.insert(tCorpus)>0){
+            return true;
+        }
+        return false;
     }
 
     /**
