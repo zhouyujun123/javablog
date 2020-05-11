@@ -7,9 +7,13 @@ import com.example.demo.dao.LoginDAO;
 import com.example.demo.po.UserPO;
 import com.example.demo.service.LoginServer;
 import com.example.demo.utils.JwtUtil;
+import com.example.demo.utils.MD5Util;
 import com.example.demo.vo.LoginVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * @Author mintaoyu
@@ -23,12 +27,37 @@ public class LoginServerImpl implements LoginServer {
 
     @Override
     public ApiResult hasPeople(String username, String password) {
+        try {
+            password = MD5Util.md5LowerCase(password);
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         UserPO userPO = loginDAO.hasPeople(username, password);
         if (userPO != null) {
             String token = JwtUtil.sign(username, userPO.getId().toString());
-            LoginVO loginVO = new LoginVO(token,userPO.getUserName(),userPO.getId().toString());
-            return ApiResult.resultWith(ResultCodeEnum.SUCCESS,loginVO);
+            LoginVO loginVO = new LoginVO(token, userPO.getUserName(), userPO.getId().toString());
+            return ApiResult.resultWith(ResultCodeEnum.SUCCESS, loginVO);
         }
         throw new ApiException(ApiResult.errorWith(ResultCodeEnum.LOGIN_FAILED));
+    }
+
+    @Override
+    public ApiResult registered(String username, String password) {
+        UserPO userPO = loginDAO.hasPeopleName(username);
+        if (userPO != null) {
+            return ApiResult.errorWith(ResultCodeEnum.ERROR);
+        } else {
+            try {
+                password = MD5Util.md5LowerCase(password);
+            } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            int i = loginDAO.addAccount(username, password);
+            if (i > 0) {
+                return ApiResult.resultWith(ResultCodeEnum.SUCCESS);
+            } else {
+                return ApiResult.errorWith(ResultCodeEnum.ERROR);
+            }
+        }
     }
 }

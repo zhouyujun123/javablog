@@ -14,4 +14,12 @@ public interface LoginServer {
      */
     ApiResult hasPeople(String username, String password);
 
+    /**
+     * 注册
+     * @param username
+     * @param password
+     * @return
+     */
+    ApiResult registered(String username, String password);
+
 }

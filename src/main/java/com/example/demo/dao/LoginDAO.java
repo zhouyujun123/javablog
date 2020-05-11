@@ -19,4 +19,19 @@ public interface LoginDAO {
      */
     UserPO hasPeople(@Param("username") String username, @Param("password") String password);
 
+    /**
+     * 是否存在该注册名
+     * @param username
+     * @return
+     */
+    UserPO hasPeopleName(@Param("username") String username);
+
+    /**
+     * 注册账户
+     * @param username
+     * @param password
+     * @return
+     */
+    int addAccount(@Param("username") String username, @Param("password") String password);
+
 }

@@ -24,4 +24,17 @@ public class LoginController {
     public ApiResult login(String username, String password){
         return loginServer.hasPeople(username, password);
     }
+
+    /**
+     * 注册
+     * @param username
+     * @param password
+     * @return
+     */
+    @RequestMapping("/registered")
+    public ApiResult registered(String username, String password){
+        return loginServer.registered(username,password);
+    }
+
+
 }
