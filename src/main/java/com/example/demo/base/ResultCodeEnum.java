@@ -6,6 +6,8 @@ package com.example.demo.base;
  */
 public enum ResultCodeEnum {
     ERROR(0, "请求失败"),
+    ACCOUNT_EXIST(4011, "账户已存在"),
+    MAIL_FAIL(4012, "邮件发送失败"),
     SUCCESS(2000, "请求成功"),
     ILLEGAL_STATE(2001, "错误状态"),
     OPERATION_FAILED(4000, "操作失败"),

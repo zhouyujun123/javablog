@@ -20,6 +20,6 @@ public interface LoginServer {
      * @param password
      * @return
      */
-    ApiResult registered(String username, String password);
+    ApiResult registered(String username, String password,String mailbox);
 
 }

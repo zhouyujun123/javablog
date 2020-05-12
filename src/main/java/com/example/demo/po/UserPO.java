@@ -11,4 +11,5 @@ public class UserPO {
     private Integer id;
     private String userName;
     private String userPsw;
+    private String userEmail;
 }

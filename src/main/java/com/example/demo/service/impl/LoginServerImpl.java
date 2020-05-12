@@ -42,17 +42,17 @@ public class LoginServerImpl implements LoginServer {
     }
 
     @Override
-    public ApiResult registered(String username, String password) {
-        UserPO userPO = loginDAO.hasPeopleName(username);
+    public ApiResult registered(String username, String password,String mailbox) {
+        UserPO userPO = loginDAO.hasPeopleRegistered(username,mailbox);
         if (userPO != null) {
-            return ApiResult.errorWith(ResultCodeEnum.ERROR);
+            return ApiResult.errorWith(ResultCodeEnum.ACCOUNT_EXIST);
         } else {
             try {
                 password = MD5Util.md5LowerCase(password);
             } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-            int i = loginDAO.addAccount(username, password);
+            int i = loginDAO.addAccount(username, password,mailbox);
             if (i > 0) {
                 return ApiResult.resultWith(ResultCodeEnum.SUCCESS);
             } else {

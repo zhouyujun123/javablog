@@ -9,14 +9,14 @@
           and user_psw = #{password}
     </select>
 
-    <select id="hasPeopleName" resultType="com.example.demo.po.UserPO">
+    <select id="hasPeopleRegistered" resultType="com.example.demo.po.UserPO">
         select *
         from t_user
-        where user_name = #{username}
+        where user_name = #{username} or user_email=#{mailbox}
     </select>
 
-    <insert id="addAccount" keyProperty="id" useGeneratedKeys="true">
-        insert into t_user(user_name, user_psw)
-        values (#{username}, #{password})
+    <insert id="addAccount">
+        insert into t_user(user_name, user_psw,user_email)
+        values (#{username}, #{password},#{mailbox})
     </insert>
 </mapper>

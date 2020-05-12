@@ -24,7 +24,7 @@ public interface LoginDAO {
      * @param username
      * @return
      */
-    UserPO hasPeopleName(@Param("username") String username);
+    UserPO hasPeopleRegistered(@Param("username") String username,@Param("mailbox")String mailbox);
 
     /**
      * 注册账户
@@ -32,6 +32,6 @@ public interface LoginDAO {
      * @param password
      * @return
      */
-    int addAccount(@Param("username") String username, @Param("password") String password);
+    int addAccount(@Param("username") String username, @Param("password") String password,@Param("mailbox")String mailbox);
 
 }
