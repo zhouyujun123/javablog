@@ -7,22 +7,15 @@ import com.example.demo.base.ApiResult;
 import com.example.demo.base.ResultCodeEnum;
 import com.example.demo.service.LoginServer;
 import com.example.demo.service.MailService;
-import com.example.demo.utils.JwtUtil;
 import com.example.demo.utils.VerifyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -63,10 +56,8 @@ public class LoginController {
      * @return
      */
     @RequestMapping("/registered")
-    public ApiResult registered(@RequestHeader("uuid") String uuid, String username, String password, String mailbox, String captcha) {
-        log.info(uuid);
-        log.info(currentMap.get(uuid));
-        if (uuid != null && captcha.equals(currentMap.get(uuid))) {
+    public ApiResult registered( String username, String password, String mailbox, String captcha) {
+        if (mailbox != null && captcha.equals(currentMap.get(mailbox))) {
             return loginServer.registered(username, password, mailbox);
         } else {
             throw new ApiException(ApiResult.errorWith(ResultCodeEnum.ERROR));
@@ -82,13 +73,12 @@ public class LoginController {
     @RequestMapping("/getCaptcha")
     public ApiResult getCaptcha(HttpServletResponse response, HttpServletRequest request,String mailbox) {
         Object[] objects = VerifyUtil.createImage();
-        String randomUUID = IdUtil.randomUUID();
         // 获取验证码
         String yzm = (String) objects[0];
         log.info("验证码为 =======> " + yzm);
-        currentMap.put(randomUUID, yzm);
+        currentMap.put(mailbox, yzm);
         mailService.sendAttachmentsMail(mailbox, "验证码", yzm);
-        return ApiResult.resultWith(ResultCodeEnum.SUCCESS,randomUUID);
+        return ApiResult.resultWith(ResultCodeEnum.SUCCESS);
     }
 
 
