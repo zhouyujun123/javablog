@@ -1,0 +1,13 @@
+providers:
+  mino:
+    minoUrl: 'http://115.28.105.227:8888'
+    accessKey: 'minioadmin'
+    secretKey: 'minioadmin'
+    bucketName: 'blog'
+
+
+
+
+
+
+

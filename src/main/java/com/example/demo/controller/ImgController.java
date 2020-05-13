@@ -5,19 +5,12 @@ import com.example.demo.base.ApiResult;
 import com.example.demo.base.ResultCodeEnum;
 import com.example.demo.utils.ImageUtil;
 import io.minio.MinioClient;
-import javafx.application.Application;
 import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnails;
-import org.apache.ibatis.annotations.Param;
-import org.springframework.util.MultiValueMap;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartRequest;
-import org.springframework.web.multipart.support.StandardMultipartHttpServletRequest;
-
-import javax.servlet.http.HttpServletRequest;
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -31,18 +24,31 @@ import java.util.List;
 @RestController
 public class ImgController {
 
+    @Value("${providers.mino.minoUrl}")
+    private String minoUrl;
+
+    @Value("${providers.mino.accessKey}")
+    private String accessKey;
+
+    @Value("${providers.mino.secretKey}")
+    private String secretKey;
+
+    @Value("${providers.mino.bucketName}")
+    private String bucketName;
+
+
     @RequestMapping(value = "/uploadFile",consumes = "multipart/form-data")
-    public ApiResult uploadFile(@RequestParam("files") MultipartFile[] files) {
+    public ApiResult uploadFile(MultipartFile[] files) {
         List<String> imgUrlList = new ArrayList<>();
         try {
-            MinioClient minioClient = new MinioClient("http://115.28.105.227:8888/", "minioadmin", "minioadmin");
+            MinioClient minioClient = new MinioClient(minoUrl, accessKey, secretKey);
             // 检查存储桶是否已经存在
-            boolean isExist = minioClient.bucketExists("blogImg");
+            boolean isExist = minioClient.bucketExists(bucketName);
             if (isExist) {
                 log.error("Bucket already exists.");
             } else {
                 // 创建一个名为asiatrip的存储桶，用于存储照片的zip文件。
-                minioClient.makeBucket("blogImg");
+                minioClient.makeBucket(bucketName);
             }
             for (MultipartFile file : files) {
                 // 图片名称
@@ -52,13 +58,13 @@ public class ImgController {
                 InputStream inputStream = ImageUtil.bufferedImageToInputStream(image);
                 // 使用putObject上传一个文件到存储桶中。
                 assert inputStream != null;
-                minioClient.putObject("blogImg", fileName, inputStream, inputStream.available(), "application/octet-stream");
-                String url = minioClient.getObjectUrl("blogImg", fileName);
+                minioClient.putObject(bucketName, fileName, inputStream, inputStream.available(), "application/octet-stream");
+                String url = minioClient.getObjectUrl(bucketName, fileName);
                 log.info("图片url==========>" + url);
                 imgUrlList.add(url);
             }
         } catch (Exception e) {
-            throw new ApiException(ApiResult.errorWith(ResultCodeEnum.IMG_FAIL));
+            throw new ApiException(ApiResult.errorWith(ResultCodeEnum.IMG_FAIL,e.getMessage()));
         }
         return ApiResult.resultWith(ResultCodeEnum.SUCCESS, imgUrlList);
     }
