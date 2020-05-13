@@ -68,10 +68,10 @@ public class LoginController {
     /**
      * 获取验证码
      *
-     * @param response
+     * @param mailbox 邮箱
      */
     @RequestMapping("/getCaptcha")
-    public ApiResult getCaptcha(HttpServletResponse response, HttpServletRequest request,String mailbox) {
+    public ApiResult getCaptcha(String mailbox) {
         Object[] objects = VerifyUtil.createImage();
         // 获取验证码
         String yzm = (String) objects[0];
