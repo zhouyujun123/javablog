@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import cn.hutool.core.map.FixedLinkedHashMap;
-import cn.hutool.core.util.IdUtil;
 import com.example.demo.base.ApiException;
 import com.example.demo.base.ApiResult;
 import com.example.demo.base.ResultCodeEnum;
@@ -10,12 +9,9 @@ import com.example.demo.service.MailService;
 import com.example.demo.utils.VerifyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
@@ -77,7 +73,7 @@ public class LoginController {
         String yzm = (String) objects[0];
         log.info("验证码为 =======> " + yzm);
         currentMap.put(mailbox, yzm);
-        mailService.sendAttachmentsMail(mailbox, "验证码", yzm);
+        mailService.sendAttachmentsMail(mailbox, "这是您注册的验证码===>请查收", "验证码为:"+yzm);
         return ApiResult.resultWith(ResultCodeEnum.SUCCESS);
     }
 
