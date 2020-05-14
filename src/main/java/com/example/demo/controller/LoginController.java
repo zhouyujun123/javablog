@@ -9,9 +9,9 @@ import com.example.demo.service.MailService;
 import com.example.demo.utils.VerifyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
@@ -37,9 +37,9 @@ public class LoginController {
     /**
      * 登陆
      */
-    @RequestMapping("/login")
-    public ApiResult login(String username, String password) {
-        return loginServer.hasPeople(username, password);
+    @PostMapping("/login")
+    public ApiResult login(String username, String password, HttpServletResponse response) {
+        return loginServer.login(username, password,response);
     }
 
     /**
@@ -51,7 +51,7 @@ public class LoginController {
      * @param captcha  验证码
      * @return
      */
-    @RequestMapping("/registered")
+    @PostMapping("/registered")
     public ApiResult registered( String username, String password, String mailbox, String captcha) {
         if (mailbox != null && captcha.equals(currentMap.get(mailbox))) {
             return loginServer.registered(username, password, mailbox);
@@ -66,7 +66,7 @@ public class LoginController {
      *
      * @param mailbox 邮箱
      */
-    @RequestMapping("/getCaptcha")
+    @GetMapping("/getCaptcha")
     public ApiResult getCaptcha(String mailbox) {
         Object[] objects = VerifyUtil.createImage();
         // 获取验证码

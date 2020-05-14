@@ -27,7 +27,9 @@ public enum ResultCodeEnum {
     EXCHANGE_FAIL(4009, "第三方兑换失败"),
 
     SIGN_NULL(3000, "签名参数未传"),
-    SIGN_FAILED(3001, "签名错误"),
+    TOKEN_FAILED(3001, "token验证失败错误"),
+    TOKEN_EXPIRED(3003, "token过期"),
+    TOKEN_NULL(3002, "token为空"),
     PRODUCT_NUM_ERROR(60003, "商品数量不正确"),
     PHONE_NUM_ERROR(60002, "用户号位数不正确"),
     //参数错误

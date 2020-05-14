@@ -1,7 +1,8 @@
 package com.example.demo.service;
 
 import com.example.demo.base.ApiResult;
-import com.example.demo.po.UserPO;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @Author mintaoyu
@@ -12,7 +13,7 @@ public interface LoginServer {
     /**
      * 从数据库中取出登陆信息
      */
-    ApiResult hasPeople(String username, String password);
+    ApiResult login(String username, String password, HttpServletResponse response);
 
     /**
      * 注册

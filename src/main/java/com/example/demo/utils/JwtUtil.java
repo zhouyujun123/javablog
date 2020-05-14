@@ -20,7 +20,7 @@ public class JwtUtil {
      * 过期时间为一天
      * TODO 正式上线更换为15分钟
      */
-    private static final long EXPIRE_TIME = 24 * 60 * 60 * 1000;
+    private static final long EXPIRE_TIME = 900000L;
 
     /**
      * token私钥
@@ -30,11 +30,11 @@ public class JwtUtil {
     /**
      * 生成签名,15分钟后过期
      *
-     * @param username
-     * @param userId
+     * @param  time 时间
+     * @param userId 用户Id
      * @return
      */
-    public static String sign(String username, String userId) {
+    public static String sign(Long time, String userId) {
         //过期时间
         Date date = new Date(System.currentTimeMillis() + EXPIRE_TIME);
         //私钥及加密算法
@@ -44,7 +44,7 @@ public class JwtUtil {
         header.put("typ", "JWT");
         header.put("alg", "HS256");
         //附带username和userID生成签名
-        return JWT.create().withHeader(header).withClaim("loginName", username)
+        return JWT.create().withHeader(header).withClaim("time", time)
                 .withClaim("userId", userId).withExpiresAt(date).sign(algorithm);
     }
 
@@ -59,6 +59,11 @@ public class JwtUtil {
             return null;
         }
 
+    }
+
+
+    public static void main(String[] args) {
+        verity(null);
     }
 
 }

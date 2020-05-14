@@ -1,6 +1,6 @@
 package com.example.demo.dao;
 
-import com.example.demo.po.UserPO;
+import com.example.demo.entity.UserPO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

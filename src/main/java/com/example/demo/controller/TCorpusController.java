@@ -37,7 +37,7 @@ public class TCorpusController {
         return this.tCorpusService.queryById(id);
     }
 
-    @RequestMapping("/findAllCorpus")
+    @GetMapping("/findAllCorpus")
     public ApiResult findAllCorpus(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "6") Integer size,TCorpus corpus) {
         PageHelper.startPage(page, size);
         List<TCorpus> corpuses = tCorpusService.queryAll(corpus);
@@ -60,7 +60,7 @@ public class TCorpusController {
         }
     }
 
-    @RequestMapping("/addCorpus")
+    @PostMapping("/addCorpus")
     public ApiResult addCorpus(TCorpus tCorpus){
         if (tCorpusService.insert(tCorpus)) {
             return ApiResult.resultWith(ResultCodeEnum.SUCCESS);

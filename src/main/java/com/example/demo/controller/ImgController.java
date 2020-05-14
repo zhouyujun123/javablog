@@ -8,6 +8,7 @@ import io.minio.MinioClient;
 import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,7 +38,7 @@ public class ImgController {
     private String bucketName;
 
 
-    @RequestMapping(value = "/uploadFile",consumes = "multipart/form-data")
+    @PostMapping(value = "/uploadFile",consumes = "multipart/form-data")
     public ApiResult uploadFile(MultipartFile[] files) {
         List<String> imgUrlList = new ArrayList<>();
         try {

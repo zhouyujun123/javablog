@@ -4,6 +4,23 @@ providers:
     accessKey: 'minioadmin'
     secretKey: 'minioadmin'
     bucketName: 'blog'
+spring:
+  elasticsearch:
+    host: localhost
+    port: 9300
+    cluster:
+      name: elasticsearch
+  # redis
+  redis:
+    host: 115.28.105.227
+    port: 6379
+    database: 0
+    jedis:
+      pool:
+        max-active: 2
+        max-idle: 20
+        min-idle: 1
+    password: 135799
 
 
 

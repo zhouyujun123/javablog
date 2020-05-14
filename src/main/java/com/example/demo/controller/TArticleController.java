@@ -38,7 +38,7 @@ public class TArticleController {
         return this.tArticleService.queryById(id);
     }
 
-    @RequestMapping("/findAllArticle")
+    @GetMapping("/findAllArticle")
     public ApiResult findAllArticle(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "6") Integer size, TArticle article) {
         PageHelper.startPage(page, size);
         List<TArticle> tArticles = tArticleService.queryAll(article);
@@ -64,7 +64,7 @@ public class TArticleController {
     /**
      * 添加文章
      */
-    @RequestMapping("/addArticle")
+    @PostMapping("/addArticle")
     public ApiResult addCorpus(TArticle tArticle){
         if (tArticleService.insert(tArticle)) {
             return ApiResult.resultWith(ResultCodeEnum.SUCCESS);

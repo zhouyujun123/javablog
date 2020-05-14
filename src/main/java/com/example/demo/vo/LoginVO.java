@@ -8,15 +8,13 @@ import lombok.Data;
  */
 @Data
 public class LoginVO {
-    private String token;
     private String userName;
     private String userId;
 
     public LoginVO() {
     }
 
-    public LoginVO(String token, String userName, String userId) {
-        this.token = token;
+    public LoginVO(String userName, String userId) {
         this.userName = userName;
         this.userId = userId;
     }

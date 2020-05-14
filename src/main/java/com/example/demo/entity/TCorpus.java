@@ -1,6 +1,6 @@
 package com.example.demo.entity;
 
-import java.util.Date;
+
 import java.io.Serializable;
 
 /**
@@ -9,6 +9,7 @@ import java.io.Serializable;
  * @author makejava
  * @since 2020-05-06 21:42:28
  */
+
 public class TCorpus implements Serializable {
     private static final long serialVersionUID = -64265522764846700L;
     

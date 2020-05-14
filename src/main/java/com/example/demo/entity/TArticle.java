@@ -21,7 +21,9 @@ public class TArticle implements Serializable {
     private String articleId;
     
     private String articleName;
-    
+    /**
+     * 文章作者Id
+     */
     private String articleAuthor;
     
     private String articleIntroduct;
