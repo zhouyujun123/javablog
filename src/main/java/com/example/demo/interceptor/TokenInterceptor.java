@@ -52,6 +52,7 @@ public class TokenInterceptor implements HandlerInterceptor {
                         RedisUtil.set(userId, newToken);
                         response.addHeader("token", newToken);
                     }
+                    request.setAttribute("userId", userId);
                     return true;
                 }
                 throw new ApiException(ApiResult.errorWith(ResultCodeEnum.TOKEN_EXPIRED));

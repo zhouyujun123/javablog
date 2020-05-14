@@ -17,7 +17,6 @@ import java.util.Map;
  */
 public class JwtUtil {
     /**
-     * 过期时间为一天
      * TODO 正式上线更换为15分钟
      */
     private static final long EXPIRE_TIME = 900000L;
@@ -63,7 +62,7 @@ public class JwtUtil {
 
 
     public static void main(String[] args) {
-        verity(null);
+
     }
 
 }
