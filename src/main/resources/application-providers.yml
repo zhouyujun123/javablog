@@ -17,9 +17,10 @@ spring:
     database: 0
     jedis:
       pool:
-        max-active: 2
-        max-idle: 20
-        min-idle: 1
+        max-idle: 6
+        max-active: 32
+        max-wait: 100
+        min-idle: 4
     password: 135799
 
 
