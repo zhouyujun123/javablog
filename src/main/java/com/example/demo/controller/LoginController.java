@@ -4,12 +4,15 @@ import cn.hutool.core.map.FixedLinkedHashMap;
 import com.example.demo.base.ApiException;
 import com.example.demo.base.ApiResult;
 import com.example.demo.base.ResultCodeEnum;
-import com.example.demo.service.LoginServer;
+import com.example.demo.entity.TUser;
 import com.example.demo.service.MailService;
+import com.example.demo.service.TUserService;
 import com.example.demo.utils.VerifyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
@@ -24,7 +27,7 @@ import java.util.Map;
 public class LoginController {
 
     @Autowired
-    private LoginServer loginServer;
+    private TUserService userService;
 
     @Autowired
     MailService mailService;
@@ -39,22 +42,18 @@ public class LoginController {
      */
     @PostMapping("/login")
     public ApiResult login(String username, String password, HttpServletResponse response) {
-        return loginServer.login(username, password,response);
+        return userService.login(username, password, response);
     }
 
     /**
      * 注册
-     *
-     * @param username
-     * @param password
-     * @param mailbox  邮箱
      * @param captcha  验证码
      * @return
      */
     @PostMapping("/registered")
-    public ApiResult registered( String username, String password, String mailbox, String captcha) {
-        if (mailbox != null && captcha.equals(currentMap.get(mailbox))) {
-            return loginServer.registered(username, password, mailbox);
+    public ApiResult registered(TUser user, String captcha) {
+        if (user.getUserEmail() != null && captcha.equals(currentMap.get(user.getUserEmail()))) {
+            return userService.insert(user);
         } else {
             throw new ApiException(ApiResult.errorWith(ResultCodeEnum.ERROR));
         }
@@ -73,11 +72,9 @@ public class LoginController {
         String yzm = (String) objects[0];
         log.info("验证码为 =======> " + yzm);
         currentMap.put(mailbox, yzm);
-        mailService.sendAttachmentsMail(mailbox, "这是您注册的验证码===>请查收", "验证码为:"+yzm);
+        mailService.sendAttachmentsMail(mailbox, "这是您注册的验证码===>请查收", "验证码为:" + yzm);
         return ApiResult.resultWith(ResultCodeEnum.SUCCESS);
     }
-
-
 
 
 }

@@ -4,17 +4,15 @@
 
     <resultMap type="com.example.demo.entity.TCorpus" id="TCorpusMap">
         <result property="id" column="id" jdbcType="INTEGER"/>
-        <result property="corpusId" column="corpus_id" jdbcType="VARCHAR"/>
-        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
         <result property="corpusName" column="corpus_name" jdbcType="VARCHAR"/>
-        <result property="corpusTime" column="corpus_time" jdbcType="TIMESTAMP"/>
-        <result property="corpusNum" column="corpus_num" jdbcType="INTEGER"/>
+        <result property="corpusCreateTime" column="corpus_create_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <!--查询单个-->
     <select id="queryById" resultMap="TCorpusMap">
         select
-          id, corpus_id, user_id, corpus_name, corpus_time, corpus_num
+          id, user_id, corpus_name, corpus_create_time
         from zyjblog.t_corpus
         where id = #{id}
     </select>
@@ -22,7 +20,7 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="TCorpusMap">
         select
-          id, corpus_id, user_id, corpus_name, corpus_time, corpus_num
+          id, user_id, corpus_name, corpus_create_time
         from zyjblog.t_corpus
         limit #{offset}, #{limit}
     </select>
@@ -30,54 +28,42 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="TCorpusMap">
         select
-          id, corpus_id, user_id, corpus_name, corpus_time, corpus_num
+          id, user_id, corpus_name, corpus_create_time
         from zyjblog.t_corpus
         <where>
             <if test="id != null">
                 and id = #{id}
             </if>
-            <if test="corpusId != null and corpusId != ''">
-                and corpus_id = #{corpusId}
-            </if>
-            <if test="userId != null and userId != ''">
+            <if test="userId != null">
                 and user_id = #{userId}
             </if>
             <if test="corpusName != null and corpusName != ''">
                 and corpus_name = #{corpusName}
             </if>
-            <if test="corpusTime != null">
-                and corpus_time = #{corpusTime}
-            </if>
-            <if test="corpusNum != null">
-                and corpus_num = #{corpusNum}
+            <if test="corpusCreateTime != null">
+                and corpus_create_time = #{corpusCreateTime}
             </if>
         </where>
     </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into zyjblog.t_corpus(corpus_id, user_id, corpus_name, corpus_time, corpus_num)
-        values (#{corpusId}, #{userId}, #{corpusName}, #{corpusTime}, #{corpusNum})
+        insert into zyjblog.t_corpus(user_id, corpus_name, corpus_create_time)
+        values (#{userId}, #{corpusName}, #{corpusCreateTime})
     </insert>
 
     <!--通过主键修改数据-->
     <update id="update">
         update zyjblog.t_corpus
         <set>
-            <if test="corpusId != null and corpusId != ''">
-                corpus_id = #{corpusId},
-            </if>
-            <if test="userId != null and userId != ''">
+            <if test="userId != null">
                 user_id = #{userId},
             </if>
             <if test="corpusName != null and corpusName != ''">
                 corpus_name = #{corpusName},
             </if>
-            <if test="corpusTime != null">
-                corpus_time = #{corpusTime},
-            </if>
-            <if test="corpusNum != null">
-                corpus_num = #{corpusNum},
+            <if test="corpusCreateTime != null">
+                corpus_create_time = #{corpusCreateTime},
             </if>
         </set>
         where id = #{id}
@@ -87,6 +73,5 @@
     <delete id="deleteById">
         delete from zyjblog.t_corpus where id = #{id}
     </delete>
-
 
 </mapper>

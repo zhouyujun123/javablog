@@ -60,6 +60,11 @@ public class TCorpusController {
         }
     }
 
+    /**
+     * 添加文集
+     * @param tCorpus
+     * @return
+     */
     @PostMapping("/addCorpus")
     public ApiResult addCorpus(TCorpus tCorpus){
         if (tCorpusService.insert(tCorpus)) {

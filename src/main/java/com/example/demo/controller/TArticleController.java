@@ -38,6 +38,13 @@ public class TArticleController {
         return this.tArticleService.queryById(id);
     }
 
+    /**
+     * 分页 按照条件查询
+     * @param page
+     * @param size
+     * @param article
+     * @return
+     */
     @GetMapping("/findAllArticle")
     public ApiResult findAllArticle(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "6") Integer size, TArticle article) {
         PageHelper.startPage(page, size);
@@ -47,7 +54,7 @@ public class TArticleController {
     }
 
     /**
-     *
+     * 删除文章
      * @param id 文章id
      * @return
      */

@@ -1,29 +1,32 @@
 package com.example.demo.entity;
 
-
+import java.util.Date;
 import java.io.Serializable;
 
 /**
  * (TCorpus)实体类
- *
+ *  文集表
  * @author makejava
- * @since 2020-05-06 21:42:28
+ * @since 2020-05-14 17:00:34
  */
-
 public class TCorpus implements Serializable {
-    private static final long serialVersionUID = -64265522764846700L;
-    
+    private static final long serialVersionUID = 124063856764822479L;
+    /**
+    * 文集Id
+    */
     private Integer id;
-    
-    private String corpusId;
-    
-    private String userId;
-    
+    /**
+    * 用户Id
+    */
+    private Integer userId;
+    /**
+    * 文集名称
+    */
     private String corpusName;
-    
-    private String corpusTime;
-    
-    private Integer corpusNum;
+    /**
+    * 文集创建时间
+    */
+    private Date corpusCreateTime;
 
 
     public Integer getId() {
@@ -34,19 +37,11 @@ public class TCorpus implements Serializable {
         this.id = id;
     }
 
-    public String getCorpusId() {
-        return corpusId;
-    }
-
-    public void setCorpusId(String corpusId) {
-        this.corpusId = corpusId;
-    }
-
-    public String getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
@@ -58,20 +53,12 @@ public class TCorpus implements Serializable {
         this.corpusName = corpusName;
     }
 
-    public String getCorpusTime() {
-        return corpusTime;
+    public Date getCorpusCreateTime() {
+        return corpusCreateTime;
     }
 
-    public void setCorpusTime(String corpusTime) {
-        this.corpusTime = corpusTime;
-    }
-
-    public Integer getCorpusNum() {
-        return corpusNum;
-    }
-
-    public void setCorpusNum(Integer corpusNum) {
-        this.corpusNum = corpusNum;
+    public void setCorpusCreateTime(Date corpusCreateTime) {
+        this.corpusCreateTime = corpusCreateTime;
     }
 
 }
