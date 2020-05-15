@@ -31,6 +31,8 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         interceptor.excludePathPatterns("/login");
         interceptor.excludePathPatterns("/registered");
         interceptor.excludePathPatterns("/getCaptcha");
+        interceptor.excludePathPatterns("/csrf");
+        interceptor.excludePathPatterns("/");
         interceptor.excludePathPatterns("/error");
         interceptor.excludePathPatterns("/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**");
     }
