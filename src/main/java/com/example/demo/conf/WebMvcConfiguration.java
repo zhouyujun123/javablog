@@ -1,4 +1,4 @@
-package com.example.demo.base;
+package com.example.demo.conf;
 
 import com.example.demo.interceptor.TokenInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,10 +42,12 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("*")
-                .allowedMethods("PUT", "DELETE", "GET", "POST", "OPTIONS")
+                .allowedMethods("GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .exposedHeaders("access-control-allow-headers", "access-control-allow-methods", "access-control-allow-origin", "access-control-max-age", "X-Frame-Options", "token")
-                .allowCredentials(false).maxAge(6000);
+                // 标准的跨域请求是不会发送cookie等用户认证凭据，这里设置为true时，则会发送，但是前端需要
+                .allowCredentials(false)
+                .maxAge(4000);
     }
 
 
