@@ -71,6 +71,7 @@ public class TokenInterceptor implements HandlerInterceptor {
                     if (expired) {
                         String newToken = JwtUtil.sign(System.currentTimeMillis(), userId);
                         RedisUtil.set(userId, newToken);
+                        response.setHeader("Access-Control-Expose-Headers","token");
                         response.addHeader("token", newToken);
                     }
                     request.setAttribute("userId", userId);
