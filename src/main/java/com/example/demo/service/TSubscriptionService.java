@@ -28,6 +28,9 @@ public interface TSubscriptionService {
      */
     List<TSubscription> queryAllByLimit(int offset, int limit);
 
+
+    List<TSubscription> queryAll(TSubscription subscription);
+
     /**
      * 新增数据
      *

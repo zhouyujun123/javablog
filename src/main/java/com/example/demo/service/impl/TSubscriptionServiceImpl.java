@@ -42,6 +42,11 @@ public class TSubscriptionServiceImpl implements TSubscriptionService {
         return this.tSubscriptionDao.queryAllByLimit(offset, limit);
     }
 
+    @Override
+    public List<TSubscription> queryAll(TSubscription subscription) {
+        return this.tSubscriptionDao.queryAll(subscription);
+    }
+
     /**
      * 新增数据
      *
