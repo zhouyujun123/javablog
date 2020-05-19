@@ -1,12 +1,14 @@
 package com.example.demo.controller;
 
 import cn.hutool.core.map.FixedLinkedHashMap;
+import cn.hutool.core.util.StrUtil;
 import com.example.demo.base.ApiException;
 import com.example.demo.base.ApiResult;
 import com.example.demo.base.ResultCodeEnum;
 import com.example.demo.entity.TUser;
 import com.example.demo.service.MailService;
 import com.example.demo.service.TUserService;
+import com.example.demo.utils.MD5Util;
 import com.example.demo.utils.VerifyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 
 /**
@@ -24,7 +28,7 @@ import java.util.Map;
 
 @Slf4j
 @RestController
-public class LoginController {
+public class UserController {
 
     @Autowired
     private TUserService userService;
@@ -75,6 +79,27 @@ public class LoginController {
         currentMap.put(mailbox, yzm);
         mailService.sendAttachmentsMail(mailbox, "这是您注册的验证码===>请查收", "验证码为:" + yzm);
         return ApiResult.resultWith(ResultCodeEnum.SUCCESS);
+    }
+
+    /**
+     * 修改用户信息
+     * @return
+     */
+    @PostMapping("/updateUserInfo")
+    public ApiResult updateUserInfo(TUser user){
+        if (StrUtil.isNotBlank(user.getUserPsw())){
+            try {
+                String password = MD5Util.md5LowerCase(user.getUserPsw());
+                user.setUserPsw(password);
+            } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+        if (userService.update(user)>0){
+            return ApiResult.resultWith(ResultCodeEnum.SUCCESS);
+        }else {
+            return ApiResult.resultWith(ResultCodeEnum.USER_UPDATE_FAIL);
+        }
     }
 
 

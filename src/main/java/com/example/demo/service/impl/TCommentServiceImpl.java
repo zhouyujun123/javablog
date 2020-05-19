@@ -42,6 +42,11 @@ public class TCommentServiceImpl implements TCommentService {
         return this.tCommentDao.queryAllByLimit(offset, limit);
     }
 
+    @Override
+    public List<TComment> queryAllByArticleId(Integer articleId) {
+        return this.tCommentDao.queryAllByArticleId(articleId);
+    }
+
     /**
      * 新增数据
      *
@@ -49,9 +54,8 @@ public class TCommentServiceImpl implements TCommentService {
      * @return 实例对象
      */
     @Override
-    public TComment insert(TComment tComment) {
-        this.tCommentDao.insert(tComment);
-        return tComment;
+    public int insert(TComment tComment) {
+        return this.tCommentDao.insert(tComment);
     }
 
     /**

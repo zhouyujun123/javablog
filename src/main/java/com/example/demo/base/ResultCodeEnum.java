@@ -9,6 +9,7 @@ public enum ResultCodeEnum {
     ACCOUNT_EXIST(4011, "账户已存在"),
     MAIL_FAIL(4012, "邮件发送失败"),
     IMG_FAIL(4013, "上传图片失败"),
+    USER_UPDATE_FAIL(4014, "更新用户信息失败"),
     SUCCESS(2000, "请求成功"),
     ILLEGAL_STATE(2001, "错误状态"),
     OPERATION_FAILED(4000, "操作失败"),

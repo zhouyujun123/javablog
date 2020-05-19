@@ -42,6 +42,18 @@
         </where>
     </select>
 
+
+    <select id="queryAllByArticleId" resultMap="TCommentMap">
+        select
+        id, article_id, article_comment
+        from zyjblog.t_comment
+        <where>
+            <if test="articleId != null">
+                and article_id = #{articleId}
+            </if>
+        </where>
+    </select>
+
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
         insert into zyjblog.t_comment(article_id, article_comment)

@@ -45,7 +45,7 @@ public interface TUserService {
      * @param tUser 实例对象
      * @return 实例对象
      */
-    TUser update(TUser tUser);
+    int update(TUser tUser);
 
     /**
      * 通过主键删除数据

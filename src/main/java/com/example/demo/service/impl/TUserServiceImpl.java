@@ -88,9 +88,8 @@ public class TUserServiceImpl implements TUserService {
      * @return 实例对象
      */
     @Override
-    public TUser update(TUser tUser) {
-        this.tUserDao.update(tUser);
-        return this.queryById(tUser.getId());
+    public int update(TUser tUser) {
+        return this.tUserDao.update(tUser);
     }
 
     /**

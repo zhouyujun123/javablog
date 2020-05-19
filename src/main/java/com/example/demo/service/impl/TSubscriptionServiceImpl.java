@@ -49,9 +49,8 @@ public class TSubscriptionServiceImpl implements TSubscriptionService {
      * @return 实例对象
      */
     @Override
-    public TSubscription insert(TSubscription tSubscription) {
-        this.tSubscriptionDao.insert(tSubscription);
-        return tSubscription;
+    public int insert(TSubscription tSubscription) {
+        return this.tSubscriptionDao.insert(tSubscription);
     }
 
     /**

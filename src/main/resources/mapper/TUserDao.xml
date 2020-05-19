@@ -65,8 +65,8 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into zyjblog.t_user(user_name, user_psw, user_email, head_img)
-        values (#{userName}, #{userPsw}, #{userEmail}, #{headImg})
+        insert into zyjblog.t_user(user_name, user_psw, user_email)
+        values (#{userName}, #{userPsw}, #{userEmail})
     </insert>
 
     <!--通过主键修改数据-->

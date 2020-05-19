@@ -3,7 +3,6 @@ package com.example.demo.controller;
 import com.example.demo.base.ApiResult;
 import com.example.demo.base.ResultCodeEnum;
 import com.example.demo.entity.TArticle;
-import com.example.demo.entity.TCorpus;
 import com.example.demo.service.TArticleService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -40,6 +39,7 @@ public class TArticleController {
 
     /**
      * 分页 按照条件查询
+     *
      * @param page
      * @param size
      * @param article
@@ -55,15 +55,16 @@ public class TArticleController {
 
     /**
      * 删除文章
+     *
      * @param id 文章id
      * @return
      */
     @GetMapping("/deleteById/{id}")
-    public ApiResult deleteById(@PathVariable("id") Integer id){
+    public ApiResult deleteById(@PathVariable("id") Integer id) {
         boolean delete = tArticleService.deleteById(id);
-        if (delete){
-           return ApiResult.resultWith(ResultCodeEnum.SUCCESS);
-        }else {
+        if (delete) {
+            return ApiResult.resultWith(ResultCodeEnum.SUCCESS);
+        } else {
             return ApiResult.errorWith(ResultCodeEnum.OPERATION_FAILED);
         }
     }
@@ -72,14 +73,28 @@ public class TArticleController {
      * 添加文章
      */
     @PostMapping("/addArticle")
-    public ApiResult addCorpus(TArticle tArticle){
+    public ApiResult addCorpus(TArticle tArticle) {
         if (tArticleService.insert(tArticle)) {
             return ApiResult.resultWith(ResultCodeEnum.SUCCESS);
-        }else {
+        } else {
             return ApiResult.errorWith(ResultCodeEnum.ERROR);
         }
     }
 
+    /**
+     * 修改文章
+     * id 和 修改内容
+     * @param tArticle
+     * @return
+     */
+    @RequestMapping("/updateArticle")
+    public ApiResult updateArticle(TArticle tArticle) {
+        if (tArticleService.update(tArticle) > 0) {
+            return ApiResult.resultWith(ResultCodeEnum.SUCCESS);
+        } else {
+            return ApiResult.errorWith(ResultCodeEnum.ERROR);
+        }
+    }
 
 
 }

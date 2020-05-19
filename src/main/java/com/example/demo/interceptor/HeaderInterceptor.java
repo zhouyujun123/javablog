@@ -22,13 +22,8 @@ public class HeaderInterceptor implements HandlerInterceptor {
 
 
     /**
-     * 请求token校验
+     * 跨域获得自定义header
      *
-     * @param request
-     * @param response
-     * @param handler
-     * @return
-     * @throws Exception
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {

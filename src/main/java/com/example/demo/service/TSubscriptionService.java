@@ -34,7 +34,7 @@ public interface TSubscriptionService {
      * @param tSubscription 实例对象
      * @return 实例对象
      */
-    TSubscription insert(TSubscription tSubscription);
+    int insert(TSubscription tSubscription);
 
     /**
      * 修改数据

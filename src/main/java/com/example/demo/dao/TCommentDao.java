@@ -42,6 +42,13 @@ public interface TCommentDao {
     List<TComment> queryAll(TComment tComment);
 
     /**
+     * 通过文章Id查找评论
+     * @param articleId
+     * @return
+     */
+    List<TComment> queryAllByArticleId(Integer articleId);
+
+    /**
      * 新增数据
      *
      * @param tComment 实例对象

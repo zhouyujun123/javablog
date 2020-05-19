@@ -8,7 +8,6 @@ import com.example.demo.base.ResultCodeEnum;
 import com.example.demo.utils.JwtUtil;
 import com.example.demo.utils.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 

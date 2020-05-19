@@ -63,9 +63,8 @@ public class TArticleServiceImpl implements TArticleService {
      * @return 实例对象
      */
     @Override
-    public TArticle update(TArticle tArticle) {
-        this.tArticleDao.update(tArticle);
-        return this.queryById(tArticle.getId());
+    public int update(TArticle tArticle) {
+        return this.tArticleDao.update(tArticle);
     }
 
     /**

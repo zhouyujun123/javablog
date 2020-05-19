@@ -28,13 +28,16 @@ public interface TCommentService {
      */
     List<TComment> queryAllByLimit(int offset, int limit);
 
+
+    List<TComment> queryAllByArticleId(Integer articleId);
+
     /**
      * 新增数据
      *
      * @param tComment 实例对象
      * @return 实例对象
      */
-    TComment insert(TComment tComment);
+    int insert(TComment tComment);
 
     /**
      * 修改数据

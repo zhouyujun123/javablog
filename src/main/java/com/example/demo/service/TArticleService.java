@@ -49,7 +49,7 @@ public interface TArticleService {
      * @param tArticle 实例对象
      * @return 实例对象
      */
-    TArticle update(TArticle tArticle);
+    int update(TArticle tArticle);
 
     /**
      * 通过主键删除数据
