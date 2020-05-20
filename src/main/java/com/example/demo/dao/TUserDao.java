@@ -1,5 +1,6 @@
 package com.example.demo.dao;
 
+import com.example.demo.dto.FindDTO;
 import com.example.demo.entity.TUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -43,6 +44,9 @@ public interface TUserDao {
      * @return 对象列表
      */
     List<TUser> queryAll(TUser tUser);
+
+
+    List<TUser> findLike(FindDTO find);
 
     /**
      * 新增数据

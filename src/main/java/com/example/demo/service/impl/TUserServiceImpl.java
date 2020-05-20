@@ -4,6 +4,7 @@ import com.example.demo.base.ApiException;
 import com.example.demo.base.ApiResult;
 import com.example.demo.base.ResultCodeEnum;
 import com.example.demo.dao.TUserDao;
+import com.example.demo.dto.FindDTO;
 import com.example.demo.entity.TUser;
 import com.example.demo.service.TUserService;
 import com.example.demo.utils.JwtUtil;
@@ -52,6 +53,13 @@ public class TUserServiceImpl implements TUserService {
     public List<TUser> queryAllByLimit(int offset, int limit) {
         return this.tUserDao.queryAllByLimit(offset, limit);
     }
+
+    @Override
+    public List<TUser> findLike(FindDTO find) {
+        return this.tUserDao.findLike(find);
+    }
+
+
 
     /**
      * 新增数据

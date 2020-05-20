@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.FindDTO;
+import com.example.demo.entity.TArticle;
 import com.example.demo.entity.TCorpus;
 import java.util.List;
 
@@ -28,6 +30,9 @@ public interface TCorpusService {
      */
     List<TCorpus> queryAllByLimit(int offset, int limit);
 
+
+
+
     /**
      * 查询所有数据
      * @return
@@ -49,6 +54,9 @@ public interface TCorpusService {
      * @return 实例对象
      */
     TCorpus update(TCorpus tCorpus);
+
+    List<TCorpus> findLike(FindDTO find);
+
 
     /**
      * 通过主键删除数据

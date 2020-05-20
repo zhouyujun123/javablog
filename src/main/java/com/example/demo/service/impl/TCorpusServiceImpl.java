@@ -1,5 +1,6 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.dto.FindDTO;
 import com.example.demo.entity.TCorpus;
 import com.example.demo.dao.TCorpusDao;
 import com.example.demo.service.TCorpusService;
@@ -66,6 +67,11 @@ public class TCorpusServiceImpl implements TCorpusService {
     public TCorpus update(TCorpus tCorpus) {
         this.tCorpusDao.update(tCorpus);
         return this.queryById(tCorpus.getId());
+    }
+
+    @Override
+    public List<TCorpus> findLike(FindDTO find) {
+        return this.tCorpusDao.findLike(find);
     }
 
     /**

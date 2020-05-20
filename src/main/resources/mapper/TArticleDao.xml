@@ -15,16 +15,28 @@
 
     <!--查询单个-->
     <select id="queryById" resultMap="TArticleMap">
-        select
-          id, article_name, user_id, article_introduct, article_create_time, article_content, article_corpus_id, article_state
+        select id,
+               article_name,
+               user_id,
+               article_introduct,
+               article_create_time,
+               article_content,
+               article_corpus_id,
+               article_state
         from zyjblog.t_article
         where id = #{id}
     </select>
 
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="TArticleMap">
-        select
-          id, article_name, user_id, article_introduct, article_create_time, article_content, article_corpus_id, article_state
+        select id,
+               article_name,
+               user_id,
+               article_introduct,
+               article_create_time,
+               article_content,
+               article_corpus_id,
+               article_state
         from zyjblog.t_article
         limit #{offset}, #{limit}
     </select>
@@ -32,7 +44,8 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="TArticleMap">
         select
-          id, article_name, user_id, article_introduct, article_create_time, article_content, article_corpus_id, article_state
+        id, article_name, user_id, article_introduct, article_create_time, article_content, article_corpus_id,
+        article_state
         from zyjblog.t_article
         <where>
             <if test="id != null">
@@ -62,10 +75,29 @@
         </where>
     </select>
 
+    <select id="findLike" resultMap="TArticleMap">
+        select
+        id, article_name, user_id, article_introduct, article_create_time, article_content, article_corpus_id,
+        article_state
+        from zyjblog.t_article
+        <where>
+            <if test="userId != null and userId != ''">
+                and user_id = #{userId}
+            </if>
+            <if test="text != null and text != ''">
+                and article_name like concat('%',#{text},'%')
+                or article_content like concat('%',#{text},'%')
+                or article_introduct like concat('%',#{text},'%')
+            </if>
+        </where>
+    </select>
+
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into zyjblog.t_article(article_name, user_id, article_introduct, article_create_time, article_content, article_corpus_id, article_state)
-        values (#{articleName}, #{userId}, #{articleIntroduct}, #{articleCreateTime}, #{articleContent}, #{articleCorpusId}, #{articleState})
+        insert into zyjblog.t_article(article_name, user_id, article_introduct, article_create_time, article_content,
+                                      article_corpus_id, article_state)
+        values (#{articleName}, #{userId}, #{articleIntroduct}, #{articleCreateTime}, #{articleContent},
+                #{articleCorpusId}, #{articleState})
     </insert>
 
     <!--通过主键修改数据-->
@@ -99,7 +131,9 @@
 
     <!--通过主键删除-->
     <delete id="deleteById">
-        delete from zyjblog.t_article where id = #{id}
+        delete
+        from zyjblog.t_article
+        where id = #{id}
     </delete>
 
 </mapper>

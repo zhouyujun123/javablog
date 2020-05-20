@@ -1,5 +1,6 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.dto.FindDTO;
 import com.example.demo.entity.TArticle;
 import com.example.demo.dao.TArticleDao;
 import com.example.demo.service.TArticleService;
@@ -81,5 +82,10 @@ public class TArticleServiceImpl implements TArticleService {
     @Override
     public List<TArticle> queryAll(TArticle article) {
         return this.tArticleDao.queryAll(article);
+    }
+
+    @Override
+    public List<TArticle> findLike(FindDTO find) {
+        return this.tArticleDao.findLike(find);
     }
 }

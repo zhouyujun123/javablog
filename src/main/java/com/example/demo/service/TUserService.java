@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.base.ApiResult;
+import com.example.demo.dto.FindDTO;
 import com.example.demo.entity.TUser;
 
 import javax.servlet.http.HttpServletResponse;
@@ -30,6 +31,13 @@ public interface TUserService {
      * @return 对象列表
      */
     List<TUser> queryAllByLimit(int offset, int limit);
+
+    /**
+     * 模糊查找
+     * @param text
+     * @return
+     */
+    List<TUser> findLike(FindDTO find);
 
     /**
      * 新增数据

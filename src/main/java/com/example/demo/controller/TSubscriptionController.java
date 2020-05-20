@@ -10,6 +10,7 @@ import com.example.demo.service.TArticleService;
 import com.example.demo.service.TCorpusService;
 import com.example.demo.service.TSubscriptionService;
 import com.example.demo.service.TUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,13 +34,13 @@ public class TSubscriptionController {
     @Resource
     private TSubscriptionService tSubscriptionService;
 
-    @Resource
+    @Autowired
     private TUserService userService;
 
-    @Resource
+    @Autowired
     private TArticleService articleService;
 
-    @Resource
+    @Autowired
     private TCorpusService corpusService;
 
     /**

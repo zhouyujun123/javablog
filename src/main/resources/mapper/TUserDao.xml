@@ -63,6 +63,19 @@
         </where>
     </select>
 
+    <select id="findLike" resultMap="TUserMap">
+        select
+        id, user_name, user_psw, user_email, head_img
+        from zyjblog.t_user
+        <where>
+            <if test="text != null and text != ''">
+                and user_name like concat('%',#{text},'%')
+            </if>
+        </where>
+    </select>
+
+
+
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
         insert into zyjblog.t_user(user_name, user_psw, user_email)

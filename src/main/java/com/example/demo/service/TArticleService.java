@@ -1,6 +1,8 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.FindDTO;
 import com.example.demo.entity.TArticle;
+import com.example.demo.entity.TUser;
 
 import java.util.List;
 
@@ -25,6 +27,9 @@ public interface TArticleService {
      * @return
      */
     List<TArticle> queryAll(TArticle article);
+
+    List<TArticle> findLike(FindDTO find);
+
 
     /**
      * 查询多条数据

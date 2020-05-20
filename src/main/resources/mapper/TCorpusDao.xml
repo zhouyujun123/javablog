@@ -46,6 +46,20 @@
         </where>
     </select>
 
+    <select id="findLike" resultMap="TCorpusMap">
+        select
+        id, user_id, corpus_name, corpus_create_time
+        from zyjblog.t_corpus
+        <where>
+            <if test="userId != null and userId != ''">
+                and user_id = #{userId}
+            </if>
+            <if test="text != null and text != ''">
+                and corpus_name like concat('%',#{text},'%')
+            </if>
+        </where>
+    </select>
+
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
         insert into zyjblog.t_corpus(user_id, corpus_name, corpus_create_time)
@@ -68,6 +82,8 @@
         </set>
         where id = #{id}
     </update>
+
+
 
     <!--通过主键删除-->
     <delete id="deleteById">

@@ -1,6 +1,8 @@
 package com.example.demo.dao;
 
+import com.example.demo.dto.FindDTO;
 import com.example.demo.entity.TArticle;
+import com.example.demo.entity.TUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
@@ -55,6 +57,9 @@ public interface TArticleDao {
      * @return 影响行数
      */
     int update(TArticle tArticle);
+
+    List<TArticle> findLike(FindDTO find);
+
 
     /**
      * 通过主键删除数据
