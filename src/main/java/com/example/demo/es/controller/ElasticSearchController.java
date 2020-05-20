@@ -8,10 +8,14 @@ import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
+import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+
+import static org.elasticsearch.index.query.QueryBuilders.matchAllQuery;
 
 /**
  * @Author mintaoyu
@@ -24,25 +28,20 @@ public class ElasticSearchController {
     @Autowired
     private TArticleService articleService;
 
-//    @Autowired
-//    BulkProcessor bulkProcessor;
 
     @Autowired
     private ElasticsearchTemplate elasticSearchTemplate;
 
-//    /**
-//     * 同步文章到ElasticSearch
-//     */
-//    @RequestMapping("/SynchronizeES")
-//    public void SynchronizeES() {
-//        List<TArticle> tArticles = articleService.queryAll(null);
-//        int i = 0;
-//        for (TArticle article : tArticles) {
-//            String jsonString = JSON.toJSONString(article);
-//            bulkProcessor.add(new IndexRequest("article_index",
-//                    "article_index", i + "")
-//                    .source(jsonString, XContentType.JSON));
-//            i++;
-//        }
-//    }
+    /**
+     * 同步文章到ElasticSearch
+     */
+    @RequestMapping("/SynchronizeES")
+    public List<TArticle> SynchronizeES() {
+        SearchQuery searchQuery = new NativeSearchQueryBuilder()
+                .withQuery(matchAllQuery())
+                .build();
+        List<TArticle> tArticles = elasticSearchTemplate.queryForList(searchQuery, TArticle.class);
+        tArticles.forEach(System.out::println);
+        return tArticles;
+    }
 }
