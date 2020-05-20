@@ -38,7 +38,7 @@ public class TUserServiceImpl implements TUserService {
      * @return 实例对象
      */
     @Override
-    public TUser queryById(Integer id) {
+    public TUser queryById(Long id) {
         return this.tUserDao.queryById(id);
     }
 

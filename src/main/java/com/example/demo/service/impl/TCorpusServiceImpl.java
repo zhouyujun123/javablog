@@ -27,7 +27,7 @@ public class TCorpusServiceImpl implements TCorpusService {
      * @return 实例对象
      */
     @Override
-    public TCorpus queryById(Integer id) {
+    public TCorpus queryById(Long id) {
         return this.tCorpusDao.queryById(id);
     }
 

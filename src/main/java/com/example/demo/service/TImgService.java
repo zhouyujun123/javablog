@@ -17,7 +17,7 @@ public interface TImgService {
      * @param id 主键
      * @return 实例对象
      */
-    TImg queryById(Integer id);
+    TImg queryById(Long id);
 
     /**
      * 查询多条数据

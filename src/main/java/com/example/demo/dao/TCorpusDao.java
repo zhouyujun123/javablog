@@ -22,7 +22,7 @@ public interface TCorpusDao {
      * @param id 主键
      * @return 实例对象
      */
-    TCorpus queryById(Integer id);
+    TCorpus queryById(Long id);
 
     /**
      * 查询指定行数据

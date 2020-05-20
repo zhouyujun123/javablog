@@ -27,7 +27,7 @@ public class TArticleServiceImpl implements TArticleService {
      * @return 实例对象
      */
     @Override
-    public TArticle queryById(Integer id) {
+    public TArticle queryById(Long id) {
         return this.tArticleDao.queryById(id);
     }
 

@@ -50,7 +50,7 @@ public class TSubscriptionController {
      * @return 单条数据
      */
     @GetMapping("selectOne")
-    public TSubscription selectOne(Integer id) {
+    public TSubscription selectOne(Long id) {
         return this.tSubscriptionService.queryById(id);
     }
 

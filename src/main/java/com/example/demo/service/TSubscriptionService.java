@@ -17,7 +17,7 @@ public interface TSubscriptionService {
      * @param id 主键
      * @return 实例对象
      */
-    TSubscription queryById(Integer id);
+    TSubscription queryById(Long id);
 
     /**
      * 查询多条数据

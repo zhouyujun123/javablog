@@ -26,7 +26,7 @@ public class TSubscriptionServiceImpl implements TSubscriptionService {
      * @return 实例对象
      */
     @Override
-    public TSubscription queryById(Integer id) {
+    public TSubscription queryById(Long id) {
         return this.tSubscriptionDao.queryById(id);
     }
 

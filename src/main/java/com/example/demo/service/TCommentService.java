@@ -17,7 +17,7 @@ public interface TCommentService {
      * @param id 主键
      * @return 实例对象
      */
-    TComment queryById(Integer id);
+    TComment queryById(Long id);
 
     /**
      * 查询多条数据
@@ -29,7 +29,7 @@ public interface TCommentService {
     List<TComment> queryAllByLimit(int offset, int limit);
 
 
-    List<TComment> queryAllByArticleId(Integer articleId);
+    List<TComment> queryAllByArticleId(Long articleId);
 
     /**
      * 新增数据

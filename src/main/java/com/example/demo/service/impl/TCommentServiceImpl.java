@@ -26,7 +26,7 @@ public class TCommentServiceImpl implements TCommentService {
      * @return 实例对象
      */
     @Override
-    public TComment queryById(Integer id) {
+    public TComment queryById(Long id) {
         return this.tCommentDao.queryById(id);
     }
 
@@ -43,7 +43,7 @@ public class TCommentServiceImpl implements TCommentService {
     }
 
     @Override
-    public List<TComment> queryAllByArticleId(Integer articleId) {
+    public List<TComment> queryAllByArticleId(Long articleId) {
         return this.tCommentDao.queryAllByArticleId(articleId);
     }
 

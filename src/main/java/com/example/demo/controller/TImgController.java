@@ -54,7 +54,7 @@ public class TImgController {
      * @return 单条数据
      */
     @GetMapping("selectOne")
-    public TImg selectOne(Integer id) {
+    public TImg selectOne(Long id) {
         return this.tImgService.queryById(id);
     }
 

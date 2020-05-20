@@ -26,7 +26,7 @@ public class TImgServiceImpl implements TImgService {
      * @return 实例对象
      */
     @Override
-    public TImg queryById(Integer id) {
+    public TImg queryById(Long id) {
         return this.tImgDao.queryById(id);
     }
 

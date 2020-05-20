@@ -33,7 +33,7 @@ public class TCorpusController {
      * @return 单条数据
      */
     @GetMapping("selectOne")
-    public TCorpus selectOne(Integer id) {
+    public TCorpus selectOne(Long id) {
         return this.tCorpusService.queryById(id);
     }
 

@@ -9,7 +9,7 @@
         <result property="articleIntroduct" column="article_introduct" jdbcType="VARCHAR"/>
         <result property="articleCreateTime" column="article_create_time" jdbcType="TIMESTAMP"/>
         <result property="articleContent" column="article_content" jdbcType="VARCHAR"/>
-        <result property="articleCorpusId" column="article_corpus_id" jdbcType="VARCHAR"/>
+        <result property="articleCorpusId" column="article_corpus_id" jdbcType="INTEGER"/>
         <result property="articleState" column="article_state" jdbcType="INTEGER"/>
     </resultMap>
 

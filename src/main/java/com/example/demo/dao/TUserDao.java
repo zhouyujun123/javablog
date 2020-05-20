@@ -25,7 +25,7 @@ public interface TUserDao {
      * @param id 主键
      * @return 实例对象
      */
-    TUser queryById(Integer id);
+    TUser queryById(Long id);
 
     /**
      * 查询指定行数据

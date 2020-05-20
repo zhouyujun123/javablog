@@ -21,7 +21,7 @@ public interface TUserService {
      * @param id 主键
      * @return 实例对象
      */
-    TUser queryById(Integer id);
+    TUser queryById(Long id);
 
     /**
      * 查询多条数据
@@ -34,7 +34,7 @@ public interface TUserService {
 
     /**
      * 模糊查找
-     * @param text
+     * @param
      * @return
      */
     List<TUser> findLike(FindDTO find);

@@ -19,7 +19,7 @@ public interface TCorpusService {
      * @param id 主键
      * @return 实例对象
      */
-    TCorpus queryById(Integer id);
+    TCorpus queryById(Long id);
 
     /**
      * 查询多条数据

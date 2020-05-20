@@ -39,7 +39,7 @@ public class TCommentController {
      * @return 单条数据
      */
     @GetMapping("selectOne")
-    public TComment selectOne(Integer id) {
+    public TComment selectOne(Long id) {
         return this.tCommentService.queryById(id);
     }
 
@@ -58,7 +58,7 @@ public class TCommentController {
      * @return
      */
     @GetMapping("/findComment/{articleId}")
-    public ApiResult findComment(@PathVariable("articleId") Integer articleId) {
+    public ApiResult findComment(@PathVariable("articleId") Long articleId) {
         List<TComment> tComments = service.queryAllByArticleId(articleId);
         if (tComments.size() > 0) {
             return ApiResult.resultWith(ResultCodeEnum.SUCCESS, tComments);

@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
@@ -8,40 +10,18 @@ import java.io.Serializable;
  * @author makejava
  * @since 2020-05-14 16:50:16
  */
+@Data
 public class TImg implements Serializable {
     private static final long serialVersionUID = -76891754898314951L;
     
-    private Integer id;
+    private Long id;
     
-    private Integer userId;
+    private Long userId;
     /**
     * 文章url
     */
     private String imgUrl;
 
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public String getImgUrl() {
-        return imgUrl;
-    }
-
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
-    }
 
 }

@@ -20,7 +20,7 @@ public interface TArticleService {
      * @param id 主键
      * @return 实例对象
      */
-    TArticle queryById(Integer id);
+    TArticle queryById(Long id);
 
     /**
      * 查询所有数据
