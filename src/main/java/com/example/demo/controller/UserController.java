@@ -46,7 +46,6 @@ public class UserController {
      */
     @PostMapping("/login")
     public ApiResult login(String username, String password, HttpServletResponse response) {
-        response.setHeader("Access-Control-Expose-Headers","token");
         return userService.login(username, password, response);
     }
 

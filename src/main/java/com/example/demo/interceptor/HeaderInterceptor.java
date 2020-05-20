@@ -33,6 +33,7 @@ public class HeaderInterceptor implements HandlerInterceptor {
         response.setHeader("Access-Control-Allow-Methods", "GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS");
         response.setHeader("Access-Control-Max-Age", "86400");
         response.setHeader("Access-Control-Allow-Headers", "token");
+        response.setHeader("Access-Control-Expose-Headers", "token");
         if (OPTIONS.equals(request.getMethod())) {
             response.setStatus(HttpStatus.NO_CONTENT.value());
             return false;
