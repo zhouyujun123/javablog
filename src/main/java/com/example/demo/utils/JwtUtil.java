@@ -31,7 +31,7 @@ public class JwtUtil {
      * @param userId 用户Id
      * @return
      */
-    public static String sign(Long time, String userId) {
+    public static String sign(Long time, String userId,String role) {
         //过期时间
         Date date = new Date(System.currentTimeMillis() + EXPIRE_TIME);
         //私钥及加密算法
@@ -42,7 +42,7 @@ public class JwtUtil {
         header.put("alg", "HS256");
         //附带username和userID生成签名
         return JWT.create().withHeader(header).withClaim("time", time)
-                .withClaim("userId", userId).withExpiresAt(date).sign(algorithm);
+                .withClaim("userId", userId).withClaim("role", role).withExpiresAt(date).sign(algorithm);
     }
 
 

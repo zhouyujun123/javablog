@@ -17,4 +17,10 @@ public class TUser {
      * 头像
      */
     private String headImg;
+    /**
+     * 权限Id
+     */
+    private Integer roleId;
+
+    private TRole role;
 }

@@ -80,6 +80,7 @@ public class TUserServiceImpl implements TUserService {
             } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
+            tUser.setRoleId(3);
             int i = tUserDao.insert(tUser);
             if (i > 0) {
                 return ApiResult.resultWith(ResultCodeEnum.SUCCESS);
@@ -120,7 +121,7 @@ public class TUserServiceImpl implements TUserService {
         }
         TUser userPO = tUserDao.hasPeople(username, password);
         if (userPO != null) {
-            String token = JwtUtil.sign(System.currentTimeMillis(), userPO.getId().toString());
+            String token = JwtUtil.sign(System.currentTimeMillis(), userPO.getId().toString(),userPO.getRole().getRole());
             LoginVO loginVO = new LoginVO(userPO.getUserName(), userPO.getId().toString());
             response.addHeader("token", token);
             RedisUtil.set(userPO.getId().toString(), token);

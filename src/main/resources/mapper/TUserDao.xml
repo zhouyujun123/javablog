@@ -8,33 +8,47 @@
         <result property="userPsw" column="user_psw" jdbcType="VARCHAR"/>
         <result property="userEmail" column="user_email" jdbcType="VARCHAR"/>
         <result property="headImg" column="head_img" jdbcType="VARCHAR"/>
+        <association property="role" javaType="com.example.demo.entity.TRole">
+            <id column="id" property="id"/>
+            <result column="role" property="role"/>
+        </association>
     </resultMap>
 
     <select id="hasPeopleRegistered" resultType="int">
         select count(1)
         from t_user
-        where user_name = #{username} or user_email=#{mailbox}
+        where user_name = #{username}
+           or user_email = #{mailbox}
     </select>
 
     <select id="hasPeople" resultMap="TUserMap">
         select *
-        from t_user
-        where user_name = #{username}
-          and user_psw = #{password}
+        from t_user u,t_role r
+        where u.user_name = #{username}
+          and u.user_psw = #{password}
+          and u.role_id=r.id
     </select>
 
     <!--查询单个-->
     <select id="queryById" resultMap="TUserMap">
-        select
-          id, user_name, user_psw, user_email, head_img
+        select id,
+               user_name,
+               user_psw,
+               user_email,
+               head_img,
+               role_id
         from zyjblog.t_user
         where id = #{id}
     </select>
 
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="TUserMap">
-        select
-          id, user_name, user_psw, user_email, head_img
+        select id,
+               user_name,
+               user_psw,
+               user_email,
+               head_img,
+               role_id
         from zyjblog.t_user
         limit #{offset}, #{limit}
     </select>
@@ -42,7 +56,7 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="TUserMap">
         select
-          id, user_name, user_psw, user_email, head_img
+        id, user_name, user_psw, user_email, head_img
         from zyjblog.t_user
         <where>
             <if test="id != null">
@@ -75,11 +89,10 @@
     </select>
 
 
-
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into zyjblog.t_user(user_name, user_psw, user_email)
-        values (#{userName}, #{userPsw}, #{userEmail})
+        insert into zyjblog.t_user(user_name, user_psw, user_email, role_id)
+        values (#{userName}, #{userPsw}, #{userEmail}, #{roleId})
     </insert>
 
     <!--通过主键修改数据-->
@@ -98,13 +111,18 @@
             <if test="headImg != null and headImg != ''">
                 head_img = #{headImg},
             </if>
+            <if test="roleId != null">
+                role_id = #{roleId},
+            </if>
         </set>
         where id = #{id}
     </update>
 
     <!--通过主键删除-->
     <delete id="deleteById">
-        delete from zyjblog.t_user where id = #{id}
+        delete
+        from zyjblog.t_user
+        where id = #{id}
     </delete>
 
 </mapper>

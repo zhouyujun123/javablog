@@ -1,6 +1,7 @@
 package com.example.demo.conf;
 
 import com.example.demo.interceptor.HeaderInterceptor;
+import com.example.demo.interceptor.RoleCheckInterceptor;
 import com.example.demo.interceptor.TokenInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +24,9 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     @Autowired
     HeaderInterceptor headerInterceptor;
 
+    @Autowired
+    RoleCheckInterceptor roleCheckInterceptor;
+
     /**
      * 注册拦截器
      *
@@ -41,6 +45,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         interceptorToken.excludePathPatterns("/");
         interceptorToken.excludePathPatterns("/error");
         interceptorToken.excludePathPatterns("/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**");
+        registry.addInterceptor(roleCheckInterceptor).addPathPatterns("/**");
     }
 
 

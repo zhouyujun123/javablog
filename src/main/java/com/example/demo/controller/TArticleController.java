@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.example.demo.base.ApiResult;
 import com.example.demo.base.ResultCodeEnum;
+import com.example.demo.base.RoleCheck;
 import com.example.demo.entity.TArticle;
 import com.example.demo.service.TArticleService;
 import com.github.pagehelper.PageHelper;
@@ -54,6 +55,7 @@ public class TArticleController {
      * @param article
      * @return
      */
+//    @RoleCheck(roles = {"OWNER","USER"})
     @GetMapping("/findAllArticle")
     public ApiResult findAllArticle(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "6") Integer size, TArticle article) {
         PageHelper.startPage(page, size);

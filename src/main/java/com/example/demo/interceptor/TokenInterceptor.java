@@ -46,16 +46,18 @@ public class TokenInterceptor implements HandlerInterceptor {
             DecodedJWT jwt = JwtUtil.verity(token);
             if (jwt != null) {
                 String userId = jwt.getClaim("userId").asString();
+                String role = jwt.getClaim("role").asString();
                 Long time = jwt.getClaim("time").asLong();
                 // 验证token是否即将过期  key为userId val为token
                 boolean expired = System.currentTimeMillis() - time > EXPIRE_TIME;
                 if (RedisUtil.exists(userId) && token.equals(RedisUtil.get(userId))) {
                     if (expired) {
-                        String newToken = JwtUtil.sign(System.currentTimeMillis(), userId);
+                        String newToken = JwtUtil.sign(System.currentTimeMillis(), userId,role);
                         RedisUtil.set(userId, newToken);
                         response.addHeader("token", newToken);
                     }
                     request.setAttribute("userId", userId);
+                    request.setAttribute("role", role);
                     return true;
                 }
                 throw new ApiException(ApiResult.errorWith(ResultCodeEnum.TOKEN_EXPIRED));

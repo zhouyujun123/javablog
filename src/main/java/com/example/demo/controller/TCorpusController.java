@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.base.ApiResult;
 import com.example.demo.base.ResultCodeEnum;
+import com.example.demo.base.RoleCheck;
 import com.example.demo.entity.TCorpus;
 import com.example.demo.service.TCorpusService;
 import com.github.pagehelper.PageHelper;
@@ -37,6 +38,7 @@ public class TCorpusController {
         return this.tCorpusService.queryById(id);
     }
 
+//    @RoleCheck(roles = {"ADMIN"})
     @GetMapping("/findAllCorpus")
     public ApiResult findAllCorpus(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "6") Integer size,TCorpus corpus) {
         PageHelper.startPage(page, size);
