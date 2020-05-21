@@ -3,6 +3,7 @@ package com.example.demo.service.impl;
 import com.example.demo.base.ApiException;
 import com.example.demo.base.ApiResult;
 import com.example.demo.base.ResultCodeEnum;
+import com.example.demo.base.RoleConstant;
 import com.example.demo.dao.TUserDao;
 import com.example.demo.dto.FindDTO;
 import com.example.demo.entity.TUser;
@@ -60,7 +61,6 @@ public class TUserServiceImpl implements TUserService {
     }
 
 
-
     /**
      * 新增数据
      *
@@ -80,7 +80,8 @@ public class TUserServiceImpl implements TUserService {
             } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-            tUser.setRoleId(3);
+            // 添加权限 普通用户
+            tUser.setRoleId(RoleConstant.USER);
             int i = tUserDao.insert(tUser);
             if (i > 0) {
                 return ApiResult.resultWith(ResultCodeEnum.SUCCESS);
@@ -121,7 +122,7 @@ public class TUserServiceImpl implements TUserService {
         }
         TUser userPO = tUserDao.hasPeople(username, password);
         if (userPO != null) {
-            String token = JwtUtil.sign(System.currentTimeMillis(), userPO.getId().toString(),userPO.getRole().getRole());
+            String token = JwtUtil.sign(System.currentTimeMillis(), userPO.getId().toString(), userPO.getRole().getRole());
             LoginVO loginVO = new LoginVO(userPO.getUserName(), userPO.getId().toString());
             response.addHeader("token", token);
             RedisUtil.set(userPO.getId().toString(), token);
