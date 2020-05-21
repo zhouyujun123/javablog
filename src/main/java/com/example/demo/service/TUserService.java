@@ -45,7 +45,7 @@ public interface TUserService {
      * @param tUser 实例对象
      * @return 实例对象
      */
-    ApiResult insert(TUser tUser);
+    ApiResult registered(TUser tUser);
 
     /**
      * 修改数据

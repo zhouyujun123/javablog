@@ -62,13 +62,12 @@ public class TUserServiceImpl implements TUserService {
 
 
     /**
-     * 新增数据
-     *
+     * 注册
      * @param tUser 实例对象
      * @return 实例对象
      */
     @Override
-    public ApiResult insert(TUser tUser) {
+    public ApiResult registered(TUser tUser) {
         int peopleNum = tUserDao.hasPeopleRegistered(tUser.getUserName(), tUser.getUserEmail());
         String password;
         if (peopleNum == 0) {

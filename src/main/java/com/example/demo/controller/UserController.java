@@ -57,7 +57,7 @@ public class UserController {
     @PostMapping("/registered")
     public ApiResult registered(TUser user, String captcha) {
         if (user.getUserEmail() != null && captcha.equals(currentMap.get(user.getUserEmail()))) {
-            return userService.insert(user);
+            return userService.registered(user);
         } else {
             throw new ApiException(ApiResult.errorWith(ResultCodeEnum.ERROR));
         }
