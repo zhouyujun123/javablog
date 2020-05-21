@@ -2,9 +2,7 @@ package com.example.demo.entity;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.Document;
 
-import java.util.Date;
 import java.io.Serializable;
 
 /**
@@ -14,7 +12,6 @@ import java.io.Serializable;
  * @since 2020-05-14 17:00:46
  */
 @Data
-@Document(indexName = "buy", type = "_doc")
 public class TArticle implements Serializable {
     private static final long serialVersionUID = -34674011594388686L;
     /**

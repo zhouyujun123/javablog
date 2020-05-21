@@ -10,13 +10,7 @@ import com.example.demo.entity.TArticle;
 import com.example.demo.service.TArticleService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.elasticsearch.action.update.UpdateRequest;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
-import org.springframework.data.elasticsearch.core.query.IndexQuery;
-import org.springframework.data.elasticsearch.core.query.IndexQueryBuilder;
-import org.springframework.data.elasticsearch.core.query.UpdateQuery;
-import org.springframework.data.elasticsearch.core.query.UpdateQueryBuilder;
+
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -39,8 +33,7 @@ public class TArticleController {
     @Resource
     private TArticleService tArticleService;
 
-    @Autowired
-    private ElasticsearchTemplate elasticSearchTemplate;
+
 
     /**
      * 通过主键查询单条数据
@@ -79,7 +72,6 @@ public class TArticleController {
     public ApiResult deleteById(@PathVariable("id") Integer id) {
         boolean delete = tArticleService.deleteById(id);
         if (delete) {
-            elasticSearchTemplate.delete(TArticle.class, id.toString());
             return ApiResult.resultWith(ResultCodeEnum.SUCCESS);
         } else {
             return ApiResult.errorWith(ResultCodeEnum.OPERATION_FAILED);
@@ -92,8 +84,6 @@ public class TArticleController {
     @PostMapping("/addArticle")
     public ApiResult addCorpus(TArticle tArticle) {
         if (tArticleService.insert(tArticle)) {
-            IndexQuery indexQuery = new IndexQueryBuilder().withObject(tArticle).build();
-            elasticSearchTemplate.index(indexQuery);
             return ApiResult.resultWith(ResultCodeEnum.SUCCESS);
         } else {
             return ApiResult.errorWith(ResultCodeEnum.ERROR);
@@ -110,33 +100,13 @@ public class TArticleController {
     @PostMapping("/updateArticle")
     public ApiResult updateArticle(TArticle tArticle) {
         if (tArticleService.update(tArticle) > 0) {
-            UpdateRequest request = new UpdateRequest("buy","_doc",tArticle.getId().toString());
-            Map<String, Object> map = BeanUtil.beanToMap(tArticle,false,true);
-            request.doc(toArgs(map));
-            UpdateQuery updateQuery = new UpdateQueryBuilder().withId(tArticle.getId().toString()).withClass(TArticle.class).withUpdateRequest(request).build();
-            elasticSearchTemplate.update(updateQuery);
             return ApiResult.resultWith(ResultCodeEnum.SUCCESS);
         } else {
             return ApiResult.errorWith(ResultCodeEnum.ERROR);
         }
     }
 
-    /**
-     * 将批量数据转换成es参数数组
-     * @param data
-     * @return
-     */
-    private Object[] toArgs(Map<String, Object> data) {
-        List<Object> args = new ArrayList<>();
-        if (CollectionUtil.isEmpty(data)) {
-            throw new RuntimeException("批量操作数据不可为空 !");
-        }
-        data.forEach((key, value) -> {
-            args.add(key);
-            args.add(value);
-        });
-        return args.toArray();
-    }
+
 
 
 }

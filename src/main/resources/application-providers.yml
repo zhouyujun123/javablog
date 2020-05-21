@@ -11,15 +11,15 @@ providers:
 #    port: 9300
 #    cluster:
 #      name: elasticsearch
-spring:
-  data:
-    elasticsearch:
-      cluster-name: elasticsearch
-      #节点的地址，注意api模式下端口号是9300，千万不要写成9200
-      #是否开启本地存储
-      repositories:
-        enabled: false
-      cluster-nodes: 121.196.124.226:9300
+#spring:
+#  data:
+#    elasticsearch:
+#      cluster-name: elasticsearch
+#      #节点的地址，注意api模式下端口号是9300，千万不要写成9200
+#      #是否开启本地存储
+#      repositories:
+#        enabled: false
+#      cluster-nodes: localhost:9300
 
   redis:
     host: 115.28.105.227
