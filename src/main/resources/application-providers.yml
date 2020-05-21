@@ -20,7 +20,7 @@ providers:
 #      repositories:
 #        enabled: false
 #      cluster-nodes: localhost:9300
-
+spring:
   redis:
     host: 115.28.105.227
     port: 6379
