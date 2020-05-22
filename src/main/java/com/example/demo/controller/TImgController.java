@@ -72,7 +72,7 @@ public class TImgController {
             // 检查存储桶是否已经存在
             boolean isExist = minioClient.bucketExists(bucketName);
             if (isExist) {
-                log.error("Bucket already exists.");
+                log.info("存储桶已存在，开始插入图片");
             } else {
                 // 创建一个名为asiatrip的存储桶，用于存储照片的zip文件。
                 minioClient.makeBucket(bucketName);
