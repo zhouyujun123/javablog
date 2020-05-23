@@ -29,7 +29,7 @@ public class TCorpus implements Serializable {
     /**
     * 文集创建时间
     */
-    private Date corpusCreateTime;
+    private String corpusCreateTime;
 
 
 
