@@ -7,20 +7,27 @@
         <result property="userId" column="user_id" jdbcType="INTEGER"/>
         <result property="corpusName" column="corpus_name" jdbcType="VARCHAR"/>
         <result property="corpusCreateTime" column="corpus_create_time" jdbcType="TIMESTAMP"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
     </resultMap>
 
     <!--查询单个-->
     <select id="queryById" resultMap="TCorpusMap">
-        select
-          id, user_id, corpus_name, corpus_create_time
+        select id,
+               user_id,
+               corpus_name,
+               corpus_create_time,
+               status
         from zyjblog.t_corpus
         where id = #{id}
     </select>
 
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="TCorpusMap">
-        select
-          id, user_id, corpus_name, corpus_create_time
+        select id,
+               user_id,
+               corpus_name,
+               corpus_create_time,
+               status
         from zyjblog.t_corpus
         limit #{offset}, #{limit}
     </select>
@@ -28,7 +35,7 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="TCorpusMap">
         select
-          id, user_id, corpus_name, corpus_create_time
+        id, user_id, corpus_name, corpus_create_time,status
         from zyjblog.t_corpus
         <where>
             <if test="id != null">
@@ -43,12 +50,15 @@
             <if test="corpusCreateTime != null">
                 and corpus_create_time = #{corpusCreateTime}
             </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
         </where>
     </select>
 
     <select id="findLike" resultMap="TCorpusMap">
         select
-        id, user_id, corpus_name, corpus_create_time
+        id, user_id, corpus_name, corpus_create_time,status
         from zyjblog.t_corpus
         <where>
             <if test="userId != null and userId != ''">
@@ -62,8 +72,8 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into zyjblog.t_corpus(user_id, corpus_name, corpus_create_time)
-        values (#{userId}, #{corpusName}, #{corpusCreateTime})
+        insert into zyjblog.t_corpus(user_id, corpus_name, corpus_create_time,status)
+        values (#{userId}, #{corpusName}, #{corpusCreateTime},#{status})
     </insert>
 
     <!--通过主键修改数据-->
@@ -79,15 +89,19 @@
             <if test="corpusCreateTime != null">
                 corpus_create_time = #{corpusCreateTime},
             </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
         </set>
         where id = #{id}
     </update>
 
 
-
     <!--通过主键删除-->
     <delete id="deleteById">
-        delete from zyjblog.t_corpus where id = #{id}
+        delete
+        from zyjblog.t_corpus
+        where id = #{id}
     </delete>
 
 </mapper>

@@ -30,6 +30,10 @@ public class TCorpus implements Serializable {
     * 文集创建时间
     */
     private String corpusCreateTime;
+    /**
+     * 文集状态
+     */
+    private Integer status;
 
 
 
