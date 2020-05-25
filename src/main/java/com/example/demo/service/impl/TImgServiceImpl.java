@@ -49,9 +49,8 @@ public class TImgServiceImpl implements TImgService {
      * @return 实例对象
      */
     @Override
-    public TImg insert(TImg tImg) {
-        this.tImgDao.insert(tImg);
-        return tImg;
+    public int insert(TImg tImg) {
+        return this.tImgDao.insert(tImg);
     }
 
     /**

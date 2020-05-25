@@ -10,10 +10,14 @@ import io.minio.MinioClient;
 import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -61,11 +65,12 @@ public class TImgController {
 
     /**
      * 上传图片 支持多图上传
+     *
      * @param files
      * @return
      */
-    @PostMapping(value = "/uploadFile",consumes = "multipart/form-data")
-    public ApiResult uploadFile(MultipartFile[] files) {
+    @PostMapping(value = "/uploadFile", consumes = "multipart/form-data")
+    public ApiResult uploadFile(MultipartFile[] files, HttpServletRequest request) {
         List<String> imgUrlList = new ArrayList<>();
         try {
             MinioClient minioClient = new MinioClient(minoUrl, accessKey, secretKey);
@@ -78,6 +83,7 @@ public class TImgController {
                 minioClient.makeBucket(bucketName);
             }
             for (MultipartFile file : files) {
+                TImg img = new TImg();
                 // 图片名称
                 String fileName = file.getOriginalFilename();
                 // 压缩图片
@@ -88,10 +94,18 @@ public class TImgController {
                 minioClient.putObject(bucketName, fileName, inputStream, inputStream.available(), "application/octet-stream");
                 String url = minioClient.getObjectUrl(bucketName, fileName);
                 log.info("图片url==========>" + url);
-                imgUrlList.add(url);
+                Long userId = (Long) request.getAttribute("userId");
+                img.setUserId(userId);
+                img.setImgUrl(url);
+                int insert = tImgService.insert(img);
+                if (insert > 0) {
+                    imgUrlList.add(url);
+                } else {
+                    throw new ApiException(ApiResult.errorWith(ResultCodeEnum.IMG_FAIL));
+                }
             }
         } catch (Exception e) {
-            throw new ApiException(ApiResult.errorWith(ResultCodeEnum.IMG_FAIL,e.getMessage()));
+            throw new ApiException(ApiResult.errorWith(ResultCodeEnum.IMG_FAIL, e.getMessage()));
         }
         return ApiResult.resultWith(ResultCodeEnum.SUCCESS, imgUrlList);
     }

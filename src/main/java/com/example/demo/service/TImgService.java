@@ -34,7 +34,7 @@ public interface TImgService {
      * @param tImg 实例对象
      * @return 实例对象
      */
-    TImg insert(TImg tImg);
+    int insert(TImg tImg);
 
     /**
      * 修改数据
