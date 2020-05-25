@@ -13,6 +13,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 
 /**
  * @Author mintaoyu
@@ -47,12 +48,13 @@ public class TokenInterceptor implements HandlerInterceptor {
             if (jwt != null) {
                 String userId = jwt.getClaim("userId").asString();
                 String role = jwt.getClaim("role").asString();
-                Long time = jwt.getClaim("time").asLong();
+                Long expireTime = jwt.getExpiresAt().getTime();
+                log.info("过期时间======>"+expireTime);
                 // 验证token是否即将过期  key为userId val为token
-                boolean expired = System.currentTimeMillis() - time > EXPIRE_TIME;
+                boolean expired = expireTime - System.currentTimeMillis() < EXPIRE_TIME;
                 if (RedisUtil.exists(userId) && token.equals(RedisUtil.get(userId))) {
                     if (expired) {
-                        String newToken = JwtUtil.sign(System.currentTimeMillis(), userId,role);
+                        String newToken = JwtUtil.sign(userId,role);
                         RedisUtil.set(userId, newToken);
                         response.addHeader("token", newToken);
                     }

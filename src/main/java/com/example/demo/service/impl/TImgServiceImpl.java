@@ -42,6 +42,13 @@ public class TImgServiceImpl implements TImgService {
         return this.tImgDao.queryAllByLimit(offset, limit);
     }
 
+    @Override
+    public List<TImg> queryAll(Long userId) {
+        TImg img = new TImg();
+        img.setUserId(userId);
+        return this.tImgDao.queryAll(img);
+    }
+
     /**
      * 新增数据
      *
@@ -72,7 +79,7 @@ public class TImgServiceImpl implements TImgService {
      * @return 是否成功
      */
     @Override
-    public boolean deleteById(Integer id) {
+    public boolean deleteById(Long id) {
         return this.tImgDao.deleteById(id) > 0;
     }
 }

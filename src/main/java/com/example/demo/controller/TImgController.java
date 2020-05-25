@@ -69,7 +69,7 @@ public class TImgController {
      * @param files
      * @return
      */
-    @PostMapping(value = "/uploadFile", consumes = "multipart/form-data")
+    @PostMapping(value = "/uploadFile", consumes = "multipart/form-data", headers = "content-type=multipart/form-data")
     public ApiResult uploadFile(MultipartFile[] files, HttpServletRequest request) {
         List<String> imgUrlList = new ArrayList<>();
         try {
@@ -94,20 +94,45 @@ public class TImgController {
                 minioClient.putObject(bucketName, fileName, inputStream, inputStream.available(), "application/octet-stream");
                 String url = minioClient.getObjectUrl(bucketName, fileName);
                 log.info("图片url==========>" + url);
-                Long userId = (Long) request.getAttribute("userId");
-                img.setUserId(userId);
+                String userId =  (String)request.getAttribute("userId");
+                img.setUserId(Long.valueOf(userId));
                 img.setImgUrl(url);
                 int insert = tImgService.insert(img);
                 if (insert > 0) {
                     imgUrlList.add(url);
                 } else {
-                    throw new ApiException(ApiResult.errorWith(ResultCodeEnum.IMG_FAIL));
+                    throw new ApiException(ApiResult.errorWith(ResultCodeEnum.IMG_UPLOAD_FAIL));
                 }
             }
         } catch (Exception e) {
-            throw new ApiException(ApiResult.errorWith(ResultCodeEnum.IMG_FAIL, e.getMessage()));
+            throw new ApiException(ApiResult.errorWith(ResultCodeEnum.IMG_UPLOAD_FAIL, e.getMessage()));
         }
         return ApiResult.resultWith(ResultCodeEnum.SUCCESS, imgUrlList);
+    }
+
+    /**
+     * 图片查询
+     */
+    @GetMapping("/findImg")
+    public ApiResult findImg(HttpServletRequest request){
+        Long userId = (Long) request.getAttribute("userId");
+        List<TImg> imgs = tImgService.queryAll(userId);
+        return ApiResult.resultWith(ResultCodeEnum.SUCCESS, imgs);
+    }
+
+
+
+    /**
+     * 图片删除
+     */
+    @PostMapping("/deleteImg")
+    public ApiResult deleteImg(Long imgId){
+        boolean delete = tImgService.deleteById(imgId);
+        if (delete){
+            return ApiResult.resultWith(ResultCodeEnum.SUCCESS);
+        }else {
+            return ApiResult.resultWith(ResultCodeEnum.IMG_DELETE_FAIL, imgId);
+        }
     }
 
 }

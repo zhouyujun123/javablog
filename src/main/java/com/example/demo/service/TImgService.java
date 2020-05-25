@@ -28,6 +28,9 @@ public interface TImgService {
      */
     List<TImg> queryAllByLimit(int offset, int limit);
 
+
+    List<TImg> queryAll(Long userId);
+
     /**
      * 新增数据
      *
@@ -50,6 +53,6 @@ public interface TImgService {
      * @param id 主键
      * @return 是否成功
      */
-    boolean deleteById(Integer id);
+    boolean deleteById(Long id);
 
 }
