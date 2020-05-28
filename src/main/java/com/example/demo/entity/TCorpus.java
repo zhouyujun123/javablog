@@ -31,7 +31,7 @@ public class TCorpus implements Serializable {
     */
     private String corpusCreateTime;
     /**
-     * 文集状态
+     * 文集状态 发布：1 未发布：0
      */
     private Integer status;
 

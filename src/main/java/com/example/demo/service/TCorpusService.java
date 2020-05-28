@@ -53,7 +53,7 @@ public interface TCorpusService {
      * @param tCorpus 实例对象
      * @return 实例对象
      */
-    TCorpus update(TCorpus tCorpus);
+    boolean update(TCorpus tCorpus);
 
     List<TCorpus> findLike(FindDTO find);
 

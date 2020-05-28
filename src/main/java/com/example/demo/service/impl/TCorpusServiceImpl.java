@@ -1,8 +1,8 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.dao.TCorpusDao;
 import com.example.demo.dto.FindDTO;
 import com.example.demo.entity.TCorpus;
-import com.example.demo.dao.TCorpusDao;
 import com.example.demo.service.TCorpusService;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +35,7 @@ public class TCorpusServiceImpl implements TCorpusService {
      * 查询多条数据
      *
      * @param offset 查询起始位置
-     * @param limit 查询条数
+     * @param limit  查询条数
      * @return 对象列表
      */
     @Override
@@ -51,7 +51,7 @@ public class TCorpusServiceImpl implements TCorpusService {
      */
     @Override
     public Boolean insert(TCorpus tCorpus) {
-        if (this.tCorpusDao.insert(tCorpus)>0){
+        if (this.tCorpusDao.insert(tCorpus) > 0) {
             return true;
         }
         return false;
@@ -64,9 +64,8 @@ public class TCorpusServiceImpl implements TCorpusService {
      * @return 实例对象
      */
     @Override
-    public TCorpus update(TCorpus tCorpus) {
-        this.tCorpusDao.update(tCorpus);
-        return this.queryById(tCorpus.getId());
+    public boolean update(TCorpus tCorpus) {
+        return this.tCorpusDao.update(tCorpus) > 0;
     }
 
     @Override
@@ -87,6 +86,7 @@ public class TCorpusServiceImpl implements TCorpusService {
 
     /**
      * 查询所有数据
+     *
      * @return
      */
     @Override

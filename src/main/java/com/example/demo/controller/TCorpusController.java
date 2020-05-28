@@ -76,5 +76,14 @@ public class TCorpusController {
         }
     }
 
+    @PostMapping("/updateCorpus")
+    public ApiResult updateCorpus(TCorpus tCorpus){
+        if (tCorpusService.update(tCorpus)) {
+            return ApiResult.resultWith(ResultCodeEnum.SUCCESS);
+        }else {
+            return ApiResult.errorWith(ResultCodeEnum.ERROR);
+        }
+    }
+
 
 }
