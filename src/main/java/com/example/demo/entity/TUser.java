@@ -13,6 +13,13 @@ public class TUser {
     private String userName;
     private String userPsw;
     private String userEmail;
+    private Integer sex;
+    private String nickName;
+    private String birthDate;
+    /**
+     * 自我简介
+     */
+    private String introduction;
     /**
      * 头像
      */
