@@ -10,9 +10,14 @@ import com.example.demo.service.MailService;
 import com.example.demo.service.TUserService;
 import com.example.demo.utils.MD5Util;
 import com.example.demo.utils.VerifyUtil;
+import com.example.demo.vo.UserVO;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
@@ -49,7 +54,8 @@ public class UserController {
 
     /**
      * 注册
-     * @param captcha  验证码
+     *
+     * @param captcha 验证码
      * @return
      */
     @PostMapping("/registered")
@@ -80,11 +86,12 @@ public class UserController {
 
     /**
      * 修改用户信息
+     *
      * @return
      */
     @PostMapping("/updateUserInfo")
-    public ApiResult updateUserInfo(TUser user){
-        if (StrUtil.isNotBlank(user.getUserPsw())){
+    public ApiResult updateUserInfo(TUser user) {
+        if (StrUtil.isNotBlank(user.getUserPsw())) {
             try {
                 String password = MD5Util.md5LowerCase(user.getUserPsw());
                 user.setUserPsw(password);
@@ -92,9 +99,9 @@ public class UserController {
                 e.printStackTrace();
             }
         }
-        if (userService.update(user)>0){
+        if (userService.update(user) > 0) {
             return ApiResult.resultWith(ResultCodeEnum.SUCCESS);
-        }else {
+        } else {
             return ApiResult.resultWith(ResultCodeEnum.USER_UPDATE_FAIL);
         }
     }
@@ -102,7 +109,9 @@ public class UserController {
     @GetMapping("/getUserInfo/{userId}")
     public ApiResult getUserInfo(@PathVariable("userId") Long userId) {
         TUser user = userService.queryById(userId);
-        return ApiResult.resultWith(ResultCodeEnum.SUCCESS,user);
+        UserVO userVO = new UserVO();
+        BeanUtils.copyProperties(user, userVO);
+        return ApiResult.resultWith(ResultCodeEnum.SUCCESS, userVO);
     }
 
 
