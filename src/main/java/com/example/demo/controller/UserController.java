@@ -12,9 +12,7 @@ import com.example.demo.utils.MD5Util;
 import com.example.demo.utils.VerifyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
@@ -99,6 +97,12 @@ public class UserController {
         }else {
             return ApiResult.resultWith(ResultCodeEnum.USER_UPDATE_FAIL);
         }
+    }
+
+    @GetMapping("/getUserInfo/{userId}")
+    public ApiResult getUserInfo(@PathVariable("userId") Long userId) {
+        TUser user = userService.queryById(userId);
+        return ApiResult.resultWith(ResultCodeEnum.SUCCESS,user);
     }
 
 
