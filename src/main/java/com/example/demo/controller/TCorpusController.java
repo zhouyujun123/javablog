@@ -76,6 +76,11 @@ public class TCorpusController {
         }
     }
 
+    /**
+     * 修改文集
+     * @param tCorpus
+     * @return
+     */
     @PostMapping("/updateCorpus")
     public ApiResult updateCorpus(TCorpus tCorpus){
         if (tCorpusService.update(tCorpus)) {

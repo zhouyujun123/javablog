@@ -80,14 +80,8 @@
     <update id="update">
         update zyjblog.t_corpus
         <set>
-            <if test="userId != null">
-                user_id = #{userId},
-            </if>
             <if test="corpusName != null and corpusName != ''">
                 corpus_name = #{corpusName},
-            </if>
-            <if test="corpusCreateTime != null">
-                corpus_create_time = #{corpusCreateTime},
             </if>
             <if test="status != null">
                 status = #{status},
