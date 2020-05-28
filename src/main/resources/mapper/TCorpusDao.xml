@@ -8,35 +8,44 @@
         <result property="corpusName" column="corpus_name" jdbcType="VARCHAR"/>
         <result property="corpusCreateTime" column="corpus_create_time" jdbcType="TIMESTAMP"/>
         <result property="status" column="status" jdbcType="INTEGER"/>
+        <association property="user" javaType="com.example.demo.entity.TUser">
+            <id column="id" property="id"/>
+            <result column="nick_name" property="nickName"/>
+        </association>
     </resultMap>
 
     <!--查询单个-->
     <select id="queryById" resultMap="TCorpusMap">
-        select id,
-               user_id,
-               corpus_name,
-               corpus_create_time,
-               status
-        from zyjblog.t_corpus
-        where id = #{id}
+        select cp.id,
+               cp.user_id,
+               cp.corpus_name,
+               cp.corpus_create_time,
+               cp.status,
+               user.nick_name
+        from zyjblog.t_corpus cp,
+             zyjblog.t_user user
+        where cp.id = #{id}
+          and user.id = cp.user_id;
     </select>
 
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="TCorpusMap">
-        select id,
-               user_id,
-               corpus_name,
-               corpus_create_time,
-               status
-        from zyjblog.t_corpus
+        select cp.id,
+               cp.user_id,
+               cp.corpus_name,
+               cp.corpus_create_time,
+               cp.status,
+               user.nick_name
+        from zyjblog.t_corpus cp,
+             zyjblog.t_user user
         limit #{offset}, #{limit}
     </select>
 
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="TCorpusMap">
         select
-        id, user_id, corpus_name, corpus_create_time,status
-        from zyjblog.t_corpus
+        cp.id, cp.user_id, cp.corpus_name, cp.corpus_create_time,cp.status,user.nick_name
+        from zyjblog.t_corpus cp,zyjblog.t_user user
         <where>
             <if test="id != null">
                 and id = #{id}
@@ -53,13 +62,14 @@
             <if test="status != null">
                 and status = #{status}
             </if>
+            and user.id = cp.user_id
         </where>
     </select>
 
     <select id="findLike" resultMap="TCorpusMap">
         select
-        id, user_id, corpus_name, corpus_create_time,status
-        from zyjblog.t_corpus
+        cp.id, cp.user_id, cp.corpus_name, cp.corpus_create_time,cp.status,user.nick_name
+        from zyjblog.t_corpus cp,zyjblog.t_user user
         <where>
             <if test="userId != null and userId != ''">
                 and user_id = #{userId}
@@ -67,13 +77,14 @@
             <if test="text != null and text != ''">
                 and corpus_name like concat('%',#{text},'%')
             </if>
+            and user.id = cp.user_id
         </where>
     </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into zyjblog.t_corpus(user_id, corpus_name, corpus_create_time,status)
-        values (#{userId}, #{corpusName}, #{corpusCreateTime},#{status})
+        insert into zyjblog.t_corpus(user_id, corpus_name, corpus_create_time, status)
+        values (#{userId}, #{corpusName}, #{corpusCreateTime}, #{status})
     </insert>
 
     <!--通过主键修改数据-->

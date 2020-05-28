@@ -35,6 +35,8 @@ public class TCorpus implements Serializable {
      */
     private Integer status;
 
+    private TUser user;
+
 
 
 }
