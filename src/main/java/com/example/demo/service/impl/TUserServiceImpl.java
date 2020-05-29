@@ -70,7 +70,7 @@ public class TUserServiceImpl implements TUserService {
     public ApiResult registered(TUser tUser) {
         int peopleNum = tUserDao.hasPeopleRegistered(tUser.getUserName(), tUser.getUserEmail());
         String password;
-        if (peopleNum == 0) {
+        if (peopleNum != 0) {
             return ApiResult.errorWith(ResultCodeEnum.ACCOUNT_EXIST);
         } else {
             try {

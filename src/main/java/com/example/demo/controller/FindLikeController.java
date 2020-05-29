@@ -8,6 +8,7 @@ import com.example.demo.entity.TCorpus;
 import com.example.demo.entity.TUser;
 import com.example.demo.service.TArticleService;
 import com.example.demo.service.TCorpusService;
+import com.example.demo.service.TSubscriptionService;
 import com.example.demo.service.TUserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -34,6 +35,9 @@ public class FindLikeController {
 
     @Autowired
     private TCorpusService corpusService;
+
+    @Autowired
+    private TSubscriptionService subscriptionService;
 
     @GetMapping("findLike")
     public ApiResult findLike(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "6") Integer size, FindDTO find) {
