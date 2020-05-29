@@ -78,22 +78,22 @@ public class TImgController {
                 minioClient.makeBucket(bucketName);
             }
             for (MultipartFile file : files) {
-                TImg img = new TImg();
+//                TImg img = new TImg();
                 // 图片名称 为了确定唯一性 用户id+图片名称+8位随机数
                 String fileName = MD5Util.md5LowerCase(request.getAttribute("userId") + file.getOriginalFilename() + RandomUtil.randomString(5));
                 InputStream inputStream = file.getInputStream();
                 minioClient.putObject(bucketName, fileName, inputStream, inputStream.available(), "application/octet-stream");
                 String url = minioClient.getObjectUrl(bucketName, fileName);
                 log.info("图片url==========>" + url);
-                String userId = (String) request.getAttribute("userId");
-                img.setUserId(Long.valueOf(userId));
-                img.setImgUrl(url);
-                int insert = tImgService.insert(img);
-                if (insert > 0) {
-                    imgUrlList.add(url);
-                } else {
-                    throw new ApiException(ApiResult.errorWith(ResultCodeEnum.IMG_UPLOAD_FAIL));
-                }
+//                String userId = (String) request.getAttribute("userId");
+//                img.setUserId(Long.valueOf(userId));
+//                img.setImgUrl(url);
+//                int insert = tImgService.insert(img);
+//                if (insert > 0) {
+//                    imgUrlList.add(url);
+//                } else {
+//                    throw new ApiException(ApiResult.errorWith(ResultCodeEnum.IMG_UPLOAD_FAIL));
+//                }
             }
         } catch (Exception e) {
             throw new ApiException(ApiResult.errorWith(ResultCodeEnum.IMG_UPLOAD_FAIL, e.getMessage()));
@@ -101,28 +101,28 @@ public class TImgController {
         return ApiResult.resultWith(ResultCodeEnum.SUCCESS, imgUrlList);
     }
 
-    /**
-     * 图片查询
-     */
-    @GetMapping("/findImg")
-    public ApiResult findImg(HttpServletRequest request) {
-        Long userId = (Long) request.getAttribute("userId");
-        List<TImg> imgs = tImgService.queryAll(userId);
-        return ApiResult.resultWith(ResultCodeEnum.SUCCESS, imgs);
-    }
-
-
-    /**
-     * 图片删除
-     */
-    @PostMapping("/deleteImg")
-    public ApiResult deleteImg(Long imgId) {
-        boolean delete = tImgService.deleteById(imgId);
-        if (delete) {
-            return ApiResult.resultWith(ResultCodeEnum.SUCCESS);
-        } else {
-            return ApiResult.resultWith(ResultCodeEnum.IMG_DELETE_FAIL, imgId);
-        }
-    }
+//    /**
+//     * 图片查询
+//     */
+//    @GetMapping("/findImg")
+//    public ApiResult findImg(HttpServletRequest request) {
+//        Long userId = (Long) request.getAttribute("userId");
+//        List<TImg> imgs = tImgService.queryAll(userId);
+//        return ApiResult.resultWith(ResultCodeEnum.SUCCESS, imgs);
+//    }
+//
+//
+//    /**
+//     * 图片删除
+//     */
+//    @PostMapping("/deleteImg")
+//    public ApiResult deleteImg(Long imgId) {
+//        boolean delete = tImgService.deleteById(imgId);
+//        if (delete) {
+//            return ApiResult.resultWith(ResultCodeEnum.SUCCESS);
+//        } else {
+//            return ApiResult.resultWith(ResultCodeEnum.IMG_DELETE_FAIL, imgId);
+//        }
+//    }
 
 }
