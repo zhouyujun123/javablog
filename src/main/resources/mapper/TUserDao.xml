@@ -11,7 +11,7 @@
         <result property="sex" column="sex" jdbcType="INTEGER"/>
         <result property="nickName" column="nick_name" jdbcType="VARCHAR"/>
         <result property="introduction" column="introduction" jdbcType="VARCHAR"/>
-        <result property="birthDate" column="birth_date" jdbcType="VARCHAR"/>
+        <result property="birthYear" column="birth_year" jdbcType="VARCHAR"/>
         <association property="role" javaType="com.example.demo.entity.TRole">
             <id column="id" property="id"/>
             <result column="role" property="role"/>
@@ -45,7 +45,7 @@
                sex,
                nick_name,
                introduction,
-               birth_date
+               birth_year
         from zyjblog.t_user
         where id = #{id}
     </select>
@@ -61,7 +61,7 @@
                sex,
                nick_name,
                introduction,
-               birth_date
+               birth_year
         from zyjblog.t_user
         limit #{offset}, #{limit}
     </select>
@@ -95,7 +95,7 @@
         id, user_name, user_psw, user_email, head_img,sex,
         nick_name,
         introduction,
-        birth_date
+        birth_year
         from zyjblog.t_user
         <where>
             <if test="text != null and text != ''">
@@ -139,8 +139,8 @@
             <if test="introduction != null and introduction != ''">
                 introduction = #{introduction},
             </if>
-            <if test="birthDate != null and userName != ''">
-                birth_date = #{birthDate},
+            <if test="birthYear != null and birthYear != ''">
+                birth_year = #{birthYear},
             </if>
         </set>
         where id = #{id}

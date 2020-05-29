@@ -15,7 +15,7 @@ public class TUser {
     private String userEmail;
     private Integer sex;
     private String nickName;
-    private String birthDate;
+    private String birthYear;
     /**
      * 自我简介
      */
