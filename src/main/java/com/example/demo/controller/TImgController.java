@@ -82,11 +82,7 @@ public class TImgController {
                 TImg img = new TImg();
                 // 图片名称
                 String fileName = file.getOriginalFilename();
-                // 压缩图片
-                BufferedImage image = Thumbnails.of(file.getInputStream()).scale(0.8f).outputQuality(1.0f).asBufferedImage();
-                InputStream inputStream = ImageUtil.bufferedImageToInputStream(image);
-                // 使用putObject上传一个文件到存储桶中。
-                assert inputStream != null;
+                InputStream inputStream = file.getInputStream();
                 minioClient.putObject(bucketName, fileName, inputStream, inputStream.available(), "application/octet-stream");
                 String url = minioClient.getObjectUrl(bucketName, fileName);
                 log.info("图片url==========>" + url);

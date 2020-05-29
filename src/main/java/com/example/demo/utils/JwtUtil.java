@@ -38,7 +38,6 @@ public class JwtUtil {
     public static String sign(String userId,String role) {
         //过期时间
         Date date = new Date(System.currentTimeMillis() + EXPIRE_TIME);
-        log.info("过期时间======>"+date.getTime());
         //私钥及加密算法
         Algorithm algorithm = Algorithm.HMAC256(TOKEN_SECRET);
         //设置头信息

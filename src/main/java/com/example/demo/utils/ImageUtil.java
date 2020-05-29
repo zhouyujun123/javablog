@@ -5,6 +5,7 @@ import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.name.Rename;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
@@ -108,9 +109,18 @@ public class ImageUtil {
      * @param image
      * @return
      */
-    public static InputStream bufferedImageToInputStream(BufferedImage image) {
+    public static InputStream bufferedImageToInputStream(BufferedImage image,String fileName) {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         try {
+            //重画一下，要么会变色
+            if ("jpg".equalsIgnoreCase(fileName) || "jpeg".equalsIgnoreCase(fileName)) {
+                BufferedImage tag;
+                tag = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_BGR);
+                Graphics g = tag.getGraphics();
+                g.drawImage(image, 0, 0, null); // 绘制缩小后的图
+                g.dispose();
+                image = tag;
+            }
             ImageIO.write(image, "jpg", os);
             return new ByteArrayInputStream(os.toByteArray());
         } catch (IOException e) {
