@@ -1,21 +1,19 @@
 package com.example.demo.controller;
 
+import cn.hutool.core.util.RandomUtil;
 import com.example.demo.base.ApiException;
 import com.example.demo.base.ApiResult;
 import com.example.demo.base.ResultCodeEnum;
 import com.example.demo.entity.TImg;
 import com.example.demo.service.TImgService;
-import com.example.demo.utils.ImageUtil;
 import io.minio.MinioClient;
 import lombok.extern.slf4j.Slf4j;
-import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.awt.image.BufferedImage;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -80,8 +78,8 @@ public class TImgController {
             }
             for (MultipartFile file : files) {
                 TImg img = new TImg();
-                // 图片名称
-                String fileName = file.getOriginalFilename();
+                // 图片名称 为了确定唯一性 用户id+图片名称+8位随机数
+                String fileName = request.getAttribute("userId") + file.getOriginalFilename() + RandomUtil.randomString(5);
                 InputStream inputStream = file.getInputStream();
                 minioClient.putObject(bucketName, fileName, inputStream, inputStream.available(), "application/octet-stream");
                 String url = minioClient.getObjectUrl(bucketName, fileName);

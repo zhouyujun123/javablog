@@ -17,9 +17,7 @@ public class TImg implements Serializable {
     private Long id;
     
     private Long userId;
-    /**
-    * 文章url
-    */
+
     private String imgUrl;
 
 
