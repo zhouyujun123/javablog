@@ -85,6 +85,7 @@ public class TImgController {
                 minioClient.putObject(bucketName, fileName, inputStream, inputStream.available(), "application/octet-stream");
                 String url = minioClient.getObjectUrl(bucketName, fileName);
                 log.info("图片url==========>" + url);
+                imgUrlList.add(url);
 //                String userId = (String) request.getAttribute("userId");
 //                img.setUserId(Long.valueOf(userId));
 //                img.setImgUrl(url);
