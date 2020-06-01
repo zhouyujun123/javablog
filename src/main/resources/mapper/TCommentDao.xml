@@ -6,12 +6,16 @@
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="articleId" column="article_id" jdbcType="INTEGER"/>
         <result property="articleComment" column="article_comment" jdbcType="VARCHAR"/>
+        <result property="fromUserId" column="from_user_id" jdbcType="INTEGER"/>
+        <result property="toUserId" column="to_user_id" jdbcType="INTEGER"/>
+        <result property="previousId" column="previous_id" jdbcType="INTEGER"/>
+        <result property="commentTime" column="comment_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <!--查询单个-->
     <select id="queryById" resultMap="TCommentMap">
         select
-          id, article_id, article_comment
+          id, article_id, article_comment, from_user_id, to_user_id, previous_id, comment_time
         from zyjblog.t_comment
         where id = #{id}
     </select>
@@ -19,7 +23,7 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="TCommentMap">
         select
-          id, article_id, article_comment
+          id, article_id, article_comment, from_user_id, to_user_id, previous_id, comment_time
         from zyjblog.t_comment
         limit #{offset}, #{limit}
     </select>
@@ -27,7 +31,7 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="TCommentMap">
         select
-          id, article_id, article_comment
+          id, article_id, article_comment, from_user_id, to_user_id, previous_id, comment_time
         from zyjblog.t_comment
         <where>
             <if test="id != null">
@@ -39,25 +43,25 @@
             <if test="articleComment != null and articleComment != ''">
                 and article_comment = #{articleComment}
             </if>
-        </where>
-    </select>
-
-
-    <select id="queryAllByArticleId" resultMap="TCommentMap">
-        select
-        id, article_id, article_comment
-        from zyjblog.t_comment
-        <where>
-            <if test="articleId != null">
-                and article_id = #{articleId}
+            <if test="fromUserId != null">
+                and from_user_id = #{fromUserId}
+            </if>
+            <if test="toUserId != null">
+                and to_user_id = #{toUserId}
+            </if>
+            <if test="previousId != null">
+                and previous_id = #{previousId}
+            </if>
+            <if test="commentTime != null">
+                and comment_time = #{commentTime}
             </if>
         </where>
     </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into zyjblog.t_comment(article_id, article_comment)
-        values (#{articleId}, #{articleComment})
+        insert into zyjblog.t_comment(article_id, article_comment, from_user_id, to_user_id, previous_id, comment_time)
+        values (#{articleId}, #{articleComment}, #{fromUserId}, #{toUserId}, #{previousId}, #{commentTime})
     </insert>
 
     <!--通过主键修改数据-->
@@ -69,6 +73,18 @@
             </if>
             <if test="articleComment != null and articleComment != ''">
                 article_comment = #{articleComment},
+            </if>
+            <if test="fromUserId != null">
+                from_user_id = #{fromUserId},
+            </if>
+            <if test="toUserId != null">
+                to_user_id = #{toUserId},
+            </if>
+            <if test="previousId != null">
+                previous_id = #{previousId},
+            </if>
+            <if test="commentTime != null">
+                comment_time = #{commentTime},
             </if>
         </set>
         where id = #{id}

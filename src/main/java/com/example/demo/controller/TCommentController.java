@@ -2,13 +2,12 @@ package com.example.demo.controller;
 
 import com.example.demo.base.ApiResult;
 import com.example.demo.base.ResultCodeEnum;
+import com.example.demo.entity.TArticle;
 import com.example.demo.entity.TComment;
 import com.example.demo.service.TCommentService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -24,8 +23,6 @@ import java.util.List;
 @RequestMapping("tComment")
 public class TCommentController {
 
-    @Autowired
-    private TCommentService service;
     /**
      * 服务对象
      */
@@ -45,7 +42,7 @@ public class TCommentController {
 
     @RequestMapping("/addComment")
     public ApiResult addComment(TComment comment) {
-        if (service.insert(comment) > 0) {
+        if (tCommentService.insert(comment) > 0) {
             return ApiResult.resultWith(ResultCodeEnum.SUCCESS);
         } else {
             return ApiResult.errorWith(ResultCodeEnum.ERROR);
@@ -54,14 +51,22 @@ public class TCommentController {
 
     /**
      * 通过文章id找文章评论
+     *
+     * 默认previousId为0，即查找顶级评论
+     *
      * @param articleId
      * @return
      */
     @GetMapping("/findComment/{articleId}")
-    public ApiResult findComment(@PathVariable("articleId") Long articleId) {
-        List<TComment> tComments = service.queryAllByArticleId(articleId);
-        if (tComments.size() > 0) {
-            return ApiResult.resultWith(ResultCodeEnum.SUCCESS, tComments);
+    public ApiResult findComment(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "6") Integer size, @PathVariable("articleId") Long articleId, @RequestParam(defaultValue = "0") Long previousId) {
+        TComment com = new TComment();
+        com.setArticleId(articleId);
+        com.setPreviousId(previousId);
+        List<TComment> commentList = tCommentService.queryAll(com);
+        if (commentList.size() > 0) {
+            PageHelper.startPage(page, size);
+            PageInfo<TComment> pageInfo = new PageInfo<>(commentList);
+            return ApiResult.resultWith(ResultCodeEnum.SUCCESS, pageInfo);
         } else {
             return ApiResult.errorWith(ResultCodeEnum.ERROR);
         }

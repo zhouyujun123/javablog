@@ -102,7 +102,6 @@ public class UserController {
      * 修改用户信息
      *
      * @param newPsw 新密码  老密码传在TUser对象中的userPsw字段
-     *
      * @return
      */
     @PostMapping("/updateUserInfo")

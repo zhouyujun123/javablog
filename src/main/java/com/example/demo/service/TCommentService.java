@@ -7,7 +7,7 @@ import java.util.List;
  * (TComment)表服务接口
  *
  * @author makejava
- * @since 2020-05-14 16:50:54
+ * @since 2020-06-01 14:58:53
  */
 public interface TCommentService {
 
@@ -28,8 +28,8 @@ public interface TCommentService {
      */
     List<TComment> queryAllByLimit(int offset, int limit);
 
+    List<TComment> queryAll(TComment tComment);
 
-    List<TComment> queryAllByArticleId(Long articleId);
 
     /**
      * 新增数据
@@ -53,6 +53,6 @@ public interface TCommentService {
      * @param id 主键
      * @return 是否成功
      */
-    boolean deleteById(Integer id);
+    boolean deleteById(Long id);
 
 }

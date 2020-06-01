@@ -1,7 +1,6 @@
 package com.example.demo.dao;
 
 import com.example.demo.entity.TComment;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
@@ -9,11 +8,9 @@ import java.util.List;
  * (TComment)表数据库访问层
  *
  * @author makejava
- * @since 2020-05-14 16:50:54
+ * @since 2020-06-01 14:58:51
  */
-@Mapper
 public interface TCommentDao {
-
 
     /**
      * 通过ID查询单条数据
@@ -42,13 +39,6 @@ public interface TCommentDao {
     List<TComment> queryAll(TComment tComment);
 
     /**
-     * 通过文章Id查找评论
-     * @param articleId
-     * @return
-     */
-    List<TComment> queryAllByArticleId(Long articleId);
-
-    /**
      * 新增数据
      *
      * @param tComment 实例对象
@@ -70,6 +60,6 @@ public interface TCommentDao {
      * @param id 主键
      * @return 影响行数
      */
-    int deleteById(Integer id);
+    int deleteById(Long id);
 
 }

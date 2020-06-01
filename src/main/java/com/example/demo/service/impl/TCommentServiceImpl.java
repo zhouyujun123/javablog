@@ -12,7 +12,7 @@ import java.util.List;
  * (TComment)表服务实现类
  *
  * @author makejava
- * @since 2020-05-14 16:50:54
+ * @since 2020-06-01 14:58:54
  */
 @Service("tCommentService")
 public class TCommentServiceImpl implements TCommentService {
@@ -43,8 +43,8 @@ public class TCommentServiceImpl implements TCommentService {
     }
 
     @Override
-    public List<TComment> queryAllByArticleId(Long articleId) {
-        return this.tCommentDao.queryAllByArticleId(articleId);
+    public List<TComment> queryAll(TComment tComment) {
+        return this.tCommentDao.queryAll(tComment);
     }
 
     /**
@@ -77,7 +77,7 @@ public class TCommentServiceImpl implements TCommentService {
      * @return 是否成功
      */
     @Override
-    public boolean deleteById(Integer id) {
+    public boolean deleteById(Long id) {
         return this.tCommentDao.deleteById(id) > 0;
     }
 }
