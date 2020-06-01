@@ -23,6 +23,8 @@ public interface TUserService {
      */
     TUser queryById(Long id);
 
+    String queryNameById(Long id);
+
     /**
      * 查询多条数据
      *

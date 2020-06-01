@@ -35,6 +35,13 @@
     </select>
 
     <!--查询单个-->
+    <select id="queryNameById" resultType="string">
+        select nick_name
+        from zyjblog.t_user
+        where id = #{id}
+    </select>
+
+    <!--查询单个-->
     <select id="queryById" resultMap="TUserMap">
         select id,
                user_name,

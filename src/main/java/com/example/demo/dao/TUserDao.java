@@ -27,6 +27,9 @@ public interface TUserDao {
      */
     TUser queryById(Long id);
 
+
+    String queryNameById(Long id);
+
     /**
      * 查询指定行数据
      *

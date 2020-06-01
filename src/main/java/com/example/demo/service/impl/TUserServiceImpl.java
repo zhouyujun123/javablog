@@ -43,6 +43,11 @@ public class TUserServiceImpl implements TUserService {
         return this.tUserDao.queryById(id);
     }
 
+    @Override
+    public String queryNameById(Long id) {
+        return this.tUserDao.queryNameById(id);
+    }
+
     /**
      * 查询多条数据
      *

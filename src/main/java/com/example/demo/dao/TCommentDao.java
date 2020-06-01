@@ -1,6 +1,7 @@
 package com.example.demo.dao;
 
 import com.example.demo.entity.TComment;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import java.util.List;
  * @author makejava
  * @since 2020-06-01 14:58:51
  */
+@Mapper
 public interface TCommentDao {
 
     /**
