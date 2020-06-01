@@ -45,6 +45,8 @@ public class UserController {
 
     /**
      * 登陆
+     *
+     * @param code 验证码 大小写敏感
      */
     @PostMapping("/login")
     public ApiResult login(String code, String username, String password, HttpServletRequest request, HttpServletResponse response) {
@@ -75,7 +77,10 @@ public class UserController {
 
 
     /**
-     * 邮箱获取验证码
+     * 获取验证码
+     *
+     * 输入邮箱则验证码发向邮箱
+     * 不输邮箱 则响应到界面
      *
      * @param mailbox 邮箱
      */
