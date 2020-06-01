@@ -11,14 +11,13 @@ import com.example.demo.service.TUserService;
 import com.example.demo.utils.MD5Util;
 import com.example.demo.utils.VerifyUtil;
 import com.example.demo.vo.UserVO;
+import com.ramostear.captcha.HappyCaptcha;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
@@ -48,8 +47,15 @@ public class UserController {
      * 登陆
      */
     @PostMapping("/login")
-    public ApiResult login(String username, String password, HttpServletResponse response) {
-        return userService.login(username, password, response);
+    public ApiResult login(String code, String username, String password, HttpServletRequest request, HttpServletResponse response) {
+        //Verification Captcha
+        boolean flag = HappyCaptcha.verification(request, code, false);
+        if (flag) {
+            HappyCaptcha.remove(request);
+            return userService.login(username, password, response);
+        } else {
+            return ApiResult.errorWith(ResultCodeEnum.VERIFY_CODE_FAILED);
+        }
     }
 
     /**
@@ -69,19 +75,22 @@ public class UserController {
 
 
     /**
-     * 获取验证码
+     * 邮箱获取验证码
      *
      * @param mailbox 邮箱
      */
     @GetMapping("/getCaptcha")
-    public ApiResult getCaptcha(String mailbox) {
-        Object[] objects = VerifyUtil.createImage();
-        // 获取验证码
-        String yzm = (String) objects[0];
-        log.info("验证码为 =======> " + yzm);
-        currentMap.put(mailbox, yzm);
-        mailService.sendAttachmentsMail(mailbox, "这是您注册的验证码===>请查收", "验证码为:" + yzm);
-        return ApiResult.resultWith(ResultCodeEnum.SUCCESS);
+    public void getCaptcha(@RequestParam(value = "mailbox", required = false) String mailbox, HttpServletRequest request, HttpServletResponse response) {
+        if (mailbox == null) {
+            HappyCaptcha.require(request, response).build().finish();
+        } else {
+            Object[] objects = VerifyUtil.createImage();
+            // 获取验证码
+            String yzm = (String) objects[0];
+            log.info("验证码为 =======> " + yzm);
+            currentMap.put(mailbox, yzm);
+            mailService.sendAttachmentsMail(mailbox, "这是您注册的验证码===>请查收", "验证码为:" + yzm);
+        }
     }
 
     /**
