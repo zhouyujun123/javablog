@@ -78,7 +78,7 @@ public class UserController {
 
     /**
      * 获取验证码
-     *
+     * <p>
      * 输入邮箱则验证码发向邮箱
      * 不输邮箱 则响应到界面
      *
@@ -101,14 +101,23 @@ public class UserController {
     /**
      * 修改用户信息
      *
+     * @param newPsw 新密码  老密码传在TUser对象中的userPsw字段
+     *
      * @return
      */
     @PostMapping("/updateUserInfo")
-    public ApiResult updateUserInfo(TUser user) {
+    public ApiResult updateUserInfo(TUser user, String newPsw, HttpServletRequest request) {
         if (StrUtil.isNotBlank(user.getUserPsw())) {
+            String userId = (String) request.getAttribute("userId");
             try {
                 String password = MD5Util.md5LowerCase(user.getUserPsw());
-                user.setUserPsw(password);
+                boolean hasPeople = userService.hasPeopleByUserIdAndPsw(userId, password);
+                if (hasPeople) {
+                    newPsw = MD5Util.md5LowerCase(newPsw);
+                    user.setUserPsw(newPsw);
+                } else {
+                    return ApiResult.resultWith(ResultCodeEnum.ORIGINAL_PSW_FAIL);
+                }
             } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
                 e.printStackTrace();
             }

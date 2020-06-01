@@ -70,5 +70,14 @@ public interface TUserService {
     ApiResult login(String username, String password, HttpServletResponse response);
 
 
+    /**
+     * 该用户id 是否是该密码
+     * @param userId
+     * @param psw
+     * @return
+     */
+    boolean hasPeopleByUserIdAndPsw(String userId,String psw);
+
+
 
 }

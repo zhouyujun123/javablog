@@ -10,6 +10,7 @@ public enum ResultCodeEnum {
     MAIL_FAIL(4012, "邮件发送失败"),
     IMG_UPLOAD_FAIL(4013, "上传图片失败"),
     IMG_DELETE_FAIL(4015, "删除图片失败"),
+    ORIGINAL_PSW_FAIL(4016, "原密码错误"),
     USER_UPDATE_FAIL(4014, "更新用户信息失败"),
     SUCCESS(2000, "请求成功"),
     ILLEGAL_STATE(2001, "错误状态"),

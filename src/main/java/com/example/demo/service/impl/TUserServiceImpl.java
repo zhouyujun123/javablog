@@ -129,4 +129,10 @@ public class TUserServiceImpl implements TUserService {
         }
         throw new ApiException(ApiResult.errorWith(ResultCodeEnum.LOGIN_FAILED));
     }
+
+    @Override
+    public boolean hasPeopleByUserIdAndPsw(String userId, String psw) {
+        TUser tUser = tUserDao.queryById(Long.valueOf(userId));
+        return psw.equals(tUser.getUserPsw());
+    }
 }
