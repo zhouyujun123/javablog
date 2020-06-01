@@ -26,9 +26,23 @@
     </select>
 
     <!--通过实体作为筛选条件查询-->
-    <select id="queryAll" resultMap="TSubscriptionMap">
+    <select id="queryAllByUserId" resultMap="TSubscriptionMap">
         select
           id, user_id, type, subscription_id
+        from zyjblog.t_subscription
+        <where>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="type != null">
+                and type = #{type}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryAll" resultMap="TSubscriptionMap">
+        select
+        id, user_id, type, subscription_id
         from zyjblog.t_subscription
         <where>
             <if test="id != null">

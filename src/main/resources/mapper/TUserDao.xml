@@ -99,14 +99,14 @@
 
     <select id="findLike" resultMap="TUserMap">
         select
-        id, user_name, user_psw, user_email, head_img,sex,
+        id, user_email, head_img,sex,
         nick_name,
         introduction,
         birth_year
         from zyjblog.t_user
         <where>
             <if test="text != null and text != ''">
-                and user_name like concat('%',#{text},'%')
+                and nick_name like concat('%',#{text},'%')
             </if>
         </where>
     </select>

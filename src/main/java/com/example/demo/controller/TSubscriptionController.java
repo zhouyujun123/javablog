@@ -12,6 +12,7 @@ import com.example.demo.service.TSubscriptionService;
 import com.example.demo.service.TUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -57,7 +58,7 @@ public class TSubscriptionController {
     /**
      * 用户订阅
      */
-    @RequestMapping("/userSub")
+    @PostMapping("/userSub")
     public ApiResult userSub(TSubscription subscription) {
         if (tSubscriptionService.insert(subscription) > 0) {
             return ApiResult.resultWith(ResultCodeEnum.SUCCESS);
@@ -71,7 +72,7 @@ public class TSubscriptionController {
      * userId
      * type 0:用户 1:文章 2:文集
      */
-    @RequestMapping("/findSub")
+    @PostMapping("/findSub")
     public ApiResult findSub(TSubscription subscription) {
         Integer type = subscription.getType();
         List<TSubscription> list = tSubscriptionService.queryAll(subscription);

@@ -31,6 +31,9 @@ public interface TSubscriptionService {
 
     List<TSubscription> queryAll(TSubscription subscription);
 
+    List<TSubscription> queryAllByUserId(String userId,String type);
+
+
     /**
      * 新增数据
      *

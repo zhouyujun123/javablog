@@ -40,6 +40,10 @@ public interface TSubscriptionDao {
      */
     List<TSubscription> queryAll(TSubscription tSubscription);
 
+    List<TSubscription> queryAllByUserId(String userId,String type);
+
+
+
     /**
      * 新增数据
      *

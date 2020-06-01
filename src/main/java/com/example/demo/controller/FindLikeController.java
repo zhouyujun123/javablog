@@ -5,6 +5,7 @@ import com.example.demo.base.ResultCodeEnum;
 import com.example.demo.dto.FindDTO;
 import com.example.demo.entity.TArticle;
 import com.example.demo.entity.TCorpus;
+import com.example.demo.entity.TSubscription;
 import com.example.demo.entity.TUser;
 import com.example.demo.service.TArticleService;
 import com.example.demo.service.TCorpusService;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -37,14 +39,17 @@ public class FindLikeController {
     private TCorpusService corpusService;
 
     @Autowired
-    private TSubscriptionService subscriptionService;
+    private TSubscriptionService subService;
 
     @GetMapping("findLike")
-    public ApiResult findLike(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "6") Integer size, FindDTO find) {
+    public ApiResult findLike(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "6") Integer size, FindDTO find, HttpServletRequest request) {
         PageHelper.startPage(page, size);
         Integer type = find.getType();
+        String userId = (String) request.getAttribute("userId");
         if (type == 0) {
             List<TUser> userList = userService.findLike(find);
+            // 获取该用户所有订阅的所有作者
+            List<TSubscription> subList = subService.queryAllByUserId(userId, "0");
             PageInfo<TUser> pageInfo = new PageInfo<>(userList);
             return ApiResult.resultWith(ResultCodeEnum.SUCCESS, pageInfo);
         } else if (type == 1) {

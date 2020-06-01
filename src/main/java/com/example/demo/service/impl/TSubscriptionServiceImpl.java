@@ -47,6 +47,11 @@ public class TSubscriptionServiceImpl implements TSubscriptionService {
         return this.tSubscriptionDao.queryAll(subscription);
     }
 
+    @Override
+    public List<TSubscription> queryAllByUserId(String userId,String type) {
+        return this.tSubscriptionDao.queryAllByUserId(userId,type);
+    }
+
     /**
      * 新增数据
      *
