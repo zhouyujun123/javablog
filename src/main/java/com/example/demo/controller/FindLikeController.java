@@ -45,11 +45,8 @@ public class FindLikeController {
     public ApiResult findLike(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "6") Integer size, FindDTO find, HttpServletRequest request) {
         PageHelper.startPage(page, size);
         Integer type = find.getType();
-        String userId = (String) request.getAttribute("userId");
         if (type == 0) {
             List<TUser> userList = userService.findLike(find);
-            // 获取该用户所有订阅的所有作者
-            List<TSubscription> subList = subService.queryAllByUserId(userId, "0");
             PageInfo<TUser> pageInfo = new PageInfo<>(userList);
             return ApiResult.resultWith(ResultCodeEnum.SUCCESS, pageInfo);
         } else if (type == 1) {
