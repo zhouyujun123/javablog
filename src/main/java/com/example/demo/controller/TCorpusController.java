@@ -5,11 +5,17 @@ import com.example.demo.base.ResultCodeEnum;
 import com.example.demo.base.RoleCheck;
 import com.example.demo.entity.TCorpus;
 import com.example.demo.service.TCorpusService;
+import com.example.demo.service.TSubscriptionService;
+import com.example.demo.vo.ArticleVO;
+import com.example.demo.vo.CorpusVO;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -27,6 +33,10 @@ public class TCorpusController {
     @Resource
     private TCorpusService tCorpusService;
 
+    @Autowired
+    private TSubscriptionService subService;
+
+
     /**
      * 通过主键查询单条数据
      *
@@ -34,8 +44,18 @@ public class TCorpusController {
      * @return 单条数据
      */
     @GetMapping("selectOne")
-    public TCorpus selectOne(Long id) {
-        return this.tCorpusService.queryById(id);
+    public ApiResult selectOne(HttpServletRequest request, Long id) {
+        TCorpus tCorpus = this.tCorpusService.queryById(id);
+        String myUserId = (String) request.getAttribute("userId");
+        CorpusVO corpusVO = new CorpusVO();
+        BeanUtils.copyProperties(tCorpus, corpusVO);
+        boolean sub = subService.isSub(myUserId, tCorpus.getId().toString(), "2");
+        if (sub) {
+            corpusVO.setHasSubscribed(true);
+        } else {
+            corpusVO.setHasSubscribed(false);
+        }
+        return ApiResult.resultWith(ResultCodeEnum.SUCCESS, corpusVO);
     }
 
 //    @RoleCheck(roles = {"ADMIN"})

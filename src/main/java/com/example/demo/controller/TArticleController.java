@@ -1,23 +1,20 @@
 package com.example.demo.controller;
 
-import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.collection.CollectionUtil;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.example.demo.base.ApiResult;
 import com.example.demo.base.ResultCodeEnum;
-import com.example.demo.base.RoleCheck;
 import com.example.demo.entity.TArticle;
 import com.example.demo.service.TArticleService;
+import com.example.demo.service.TSubscriptionService;
+import com.example.demo.vo.ArticleVO;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Map;
 
 /**
  * (TArticle)表控制层
@@ -34,6 +31,8 @@ public class TArticleController {
     @Resource
     private TArticleService tArticleService;
 
+    @Autowired
+    private TSubscriptionService subService;
 
 
     /**
@@ -43,8 +42,18 @@ public class TArticleController {
      * @return 单条数据
      */
     @GetMapping("selectOne")
-    public TArticle selectOne(Long id) {
-        return this.tArticleService.queryById(id);
+    public ApiResult selectOne(HttpServletRequest request, Long id) {
+        TArticle article = this.tArticleService.queryById(id);
+        String myUserId = (String) request.getAttribute("userId");
+        ArticleVO articleVO = new ArticleVO();
+        BeanUtils.copyProperties(article, articleVO);
+        boolean sub = subService.isSub(myUserId, article.getId().toString(), "1");
+        if (sub) {
+            articleVO.setHasSubscribed(true);
+        } else {
+            articleVO.setHasSubscribed(false);
+        }
+        return ApiResult.resultWith(ResultCodeEnum.SUCCESS, articleVO);
     }
 
     /**
@@ -107,8 +116,6 @@ public class TArticleController {
             return ApiResult.errorWith(ResultCodeEnum.ERROR);
         }
     }
-
-
 
 
 }

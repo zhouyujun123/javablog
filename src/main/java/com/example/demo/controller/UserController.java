@@ -136,7 +136,7 @@ public class UserController {
 
     /**
      * 获取用户信息
-     * @param userId
+     * @param userId 想要查看的用户的Id
      * @return
      */
     @GetMapping("/getUserInfo/{userId}")
