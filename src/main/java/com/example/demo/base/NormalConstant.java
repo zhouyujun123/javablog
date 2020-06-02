@@ -17,8 +17,10 @@ public interface NormalConstant {
      */
     String USER_ID = "userId";
     String ROLE = "role";
+    String SIGN = "sign";
     String USER_TYPE="0";
     String ARTICLE_TYPE="1";
     String CORPUS_TYPE="2";
+    String PRIVATE_KEY="ymtzyj";
 
 }

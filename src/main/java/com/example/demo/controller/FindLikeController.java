@@ -15,6 +15,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -57,5 +58,10 @@ public class FindLikeController {
             PageInfo<TCorpus> pageInfo = new PageInfo<>(corpusList);
             return ApiResult.resultWith(ResultCodeEnum.SUCCESS, pageInfo);
         }
+    }
+
+    @PostMapping("/test")
+    public void test(List<String> d){
+        System.out.println(d);
     }
 }

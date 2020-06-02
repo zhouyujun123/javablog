@@ -1,5 +1,6 @@
 package com.example.demo.interceptor;
 
+import cn.hutool.core.text.StrBuilder;
 import cn.hutool.core.util.StrUtil;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.demo.base.ApiException;
@@ -7,6 +8,7 @@ import com.example.demo.base.ApiResult;
 import com.example.demo.base.NormalConstant;
 import com.example.demo.base.ResultCodeEnum;
 import com.example.demo.utils.JwtUtil;
+import com.example.demo.utils.MD5Util;
 import com.example.demo.utils.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -14,7 +16,8 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * @Author mintaoyu
@@ -30,7 +33,6 @@ public class TokenInterceptor implements HandlerInterceptor {
     public static final Long EXPIRE_TIME = 600000L;
 
 
-
     /**
      * 请求token校验
      *
@@ -42,7 +44,6 @@ public class TokenInterceptor implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-
         String token = request.getHeader("token");
         if (StrUtil.isNotBlank(token)) {
             DecodedJWT jwt = JwtUtil.verity(token);
@@ -54,7 +55,7 @@ public class TokenInterceptor implements HandlerInterceptor {
                 boolean expired = expireTime - System.currentTimeMillis() < EXPIRE_TIME;
                 if (RedisUtil.exists(userId) && token.equals(RedisUtil.get(userId))) {
                     if (expired) {
-                        String newToken = JwtUtil.sign(userId,role);
+                        String newToken = JwtUtil.sign(userId, role);
                         RedisUtil.set(userId, newToken);
                         response.addHeader("token", newToken);
                     }

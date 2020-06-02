@@ -30,6 +30,7 @@ public enum ResultCodeEnum {
     EXCHANGE_FAIL(4009, "第三方兑换失败"),
 
     SIGN_NULL(3000, "签名参数未传"),
+    SIGN_ERROR(3004, "签名参数错误"),
     TOKEN_FAILED(3001, "token验证失败错误"),
     TOKEN_EXPIRED(3003, "token过期"),
     TOKEN_NULL(3002, "token为空"),
