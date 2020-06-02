@@ -38,7 +38,7 @@ public class FindLikeController {
     @Autowired
     private TCorpusService corpusService;
 
-  
+
 
     @GetMapping("findLike")
     public ApiResult findLike(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "6") Integer size, FindDTO find, HttpServletRequest request) {

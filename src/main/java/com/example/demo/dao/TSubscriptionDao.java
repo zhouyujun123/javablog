@@ -42,6 +42,8 @@ public interface TSubscriptionDao {
 
     List<TSubscription> queryAllByUserId(String userId,String type);
 
+    int isSub(String subscriberId,String subscribedId,String type);
+
 
 
     /**

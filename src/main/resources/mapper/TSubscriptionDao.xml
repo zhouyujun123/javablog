@@ -40,6 +40,23 @@
         </where>
     </select>
 
+    <select id="isSub" resultType="int">
+        select
+        count(1)
+        from zyjblog.t_subscription
+        <where>
+            <if test="userId != null">
+                and user_id = #{subscriberId}
+            </if>
+            <if test="type != null">
+                and type = #{type}
+            </if>
+            <if test="subscriptionId != null">
+                and subscription_id = #{subscribedId}
+            </if>
+        </where>
+    </select>
+
     <select id="queryAll" resultMap="TSubscriptionMap">
         select
         id, user_id, type, subscription_id

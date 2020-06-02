@@ -1,7 +1,7 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.TSubscription;
 import com.example.demo.dao.TSubscriptionDao;
+import com.example.demo.entity.TSubscription;
 import com.example.demo.service.TSubscriptionService;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +34,7 @@ public class TSubscriptionServiceImpl implements TSubscriptionService {
      * 查询多条数据
      *
      * @param offset 查询起始位置
-     * @param limit 查询条数
+     * @param limit  查询条数
      * @return 对象列表
      */
     @Override
@@ -48,8 +48,13 @@ public class TSubscriptionServiceImpl implements TSubscriptionService {
     }
 
     @Override
-    public List<TSubscription> queryAllByUserId(String userId,String type) {
-        return this.tSubscriptionDao.queryAllByUserId(userId,type);
+    public List<TSubscription> queryAllByUserId(String userId, String type) {
+        return this.tSubscriptionDao.queryAllByUserId(userId, type);
+    }
+
+    @Override
+    public boolean isSub(String subscriberId,String subscribedId,String type) {
+        return this.tSubscriptionDao.isSub(subscriberId, subscribedId, type) > 0;
     }
 
     /**

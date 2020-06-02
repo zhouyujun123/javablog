@@ -15,6 +15,7 @@ public class UserVO {
     private Integer sex;
     private String nickName;
     private String birthDate;
+    private Boolean hasSubscribed;
     /**
      * 自我简介
      */

@@ -5,8 +5,10 @@ import cn.hutool.core.util.StrUtil;
 import com.example.demo.base.ApiException;
 import com.example.demo.base.ApiResult;
 import com.example.demo.base.ResultCodeEnum;
+import com.example.demo.entity.TSubscription;
 import com.example.demo.entity.TUser;
 import com.example.demo.service.MailService;
+import com.example.demo.service.TSubscriptionService;
 import com.example.demo.service.TUserService;
 import com.example.demo.utils.MD5Util;
 import com.example.demo.utils.VerifyUtil;
@@ -21,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,6 +40,9 @@ public class UserController {
 
     @Autowired
     MailService mailService;
+
+    @Autowired
+    private TSubscriptionService subService;
 
     /**
      * 当超出2000时，自动移除最老的key
@@ -128,11 +134,23 @@ public class UserController {
         }
     }
 
+    /**
+     * 获取用户信息
+     * @param userId
+     * @return
+     */
     @GetMapping("/getUserInfo/{userId}")
-    public ApiResult getUserInfo(@PathVariable("userId") Long userId) {
+    public ApiResult getUserInfo(@PathVariable("userId") Long userId,HttpServletRequest request) {
+        String myUserId = (String) request.getAttribute("userId");
         TUser user = userService.queryById(userId);
         UserVO userVO = new UserVO();
         BeanUtils.copyProperties(user, userVO);
+        boolean sub = subService.isSub(myUserId, userId.toString(), "0");
+        if (sub){
+            userVO.setHasSubscribed(true);
+        }else {
+            userVO.setHasSubscribed(false);
+        }
         return ApiResult.resultWith(ResultCodeEnum.SUCCESS, userVO);
     }
 

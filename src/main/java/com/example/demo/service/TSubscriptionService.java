@@ -33,6 +33,15 @@ public interface TSubscriptionService {
 
     List<TSubscription> queryAllByUserId(String userId,String type);
 
+    /**
+     *
+     * @param subscriberId 订阅者Id
+     * @param subscribedId 被订阅者Id
+     * @param type 类型
+     * @return
+     */
+    boolean isSub(String subscriberId,String subscribedId,String type);
+
 
     /**
      * 新增数据
