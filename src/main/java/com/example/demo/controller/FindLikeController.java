@@ -42,7 +42,7 @@ public class FindLikeController {
 
 
     @GetMapping("findLike")
-    public ApiResult findLike(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "6") Integer size, FindDTO find, HttpServletRequest request) {
+    public ApiResult findLike(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "6") Integer size, FindDTO find) {
         PageHelper.startPage(page, size);
         Integer type = find.getType();
         if (type == 0) {
