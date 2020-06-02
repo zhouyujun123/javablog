@@ -8,6 +8,7 @@ import java.lang.annotation.Target;
 /**
  * @Author mintaoyu
  * Date on 2020-05-21  16:25
+ * 权限注释
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

@@ -3,6 +3,7 @@ package com.example.demo.base;
 /**
  * @author allan
  * @date 25/12/2017
+ * 常量类
  */
 public interface NormalConstant {
     /**

@@ -3,6 +3,7 @@ package com.example.demo.base;
 /**
  * @author allan
  * @date 25/12/2017
+ * 返回枚举
  */
 public enum ResultCodeEnum {
     ERROR(0, "请求失败"),
