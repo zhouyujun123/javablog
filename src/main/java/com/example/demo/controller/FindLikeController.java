@@ -59,9 +59,5 @@ public class FindLikeController {
             return ApiResult.resultWith(ResultCodeEnum.SUCCESS, pageInfo);
         }
     }
-
-    @PostMapping("/test")
-    public void test(List<String> d){
-        System.out.println(d);
-    }
+    
 }
