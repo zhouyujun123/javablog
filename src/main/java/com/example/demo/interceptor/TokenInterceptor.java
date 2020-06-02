@@ -43,13 +43,13 @@ public class TokenInterceptor implements HandlerInterceptor {
      * @throws Exception
      */
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String token = request.getHeader("token");
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        String token = request.getHeader(NormalConstant.TOKEN);
         if (StrUtil.isNotBlank(token)) {
             DecodedJWT jwt = JwtUtil.verity(token);
             if (jwt != null) {
                 String userId = jwt.getClaim(NormalConstant.USER_ID).asString();
-                String role = jwt.getClaim("role").asString();
+                String role = jwt.getClaim(NormalConstant.ROLE).asString();
                 Long expireTime = jwt.getExpiresAt().getTime();
                 // 验证token是否即将过期  key为userId val为token
                 boolean expired = expireTime - System.currentTimeMillis() < EXPIRE_TIME;
@@ -57,10 +57,10 @@ public class TokenInterceptor implements HandlerInterceptor {
                     if (expired) {
                         String newToken = JwtUtil.sign(userId, role);
                         RedisUtil.set(userId, newToken);
-                        response.addHeader("token", newToken);
+                        response.addHeader(NormalConstant.TOKEN, newToken);
                     }
-                    request.setAttribute("userId", userId);
-                    request.setAttribute("role", role);
+                    request.setAttribute(NormalConstant.USER_ID, userId);
+                    request.setAttribute(NormalConstant.ROLE, role);
                     return true;
                 }
                 throw new ApiException(ApiResult.errorWith(ResultCodeEnum.TOKEN_EXPIRED));

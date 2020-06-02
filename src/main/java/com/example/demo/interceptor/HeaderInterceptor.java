@@ -26,7 +26,7 @@ public class HeaderInterceptor implements HandlerInterceptor {
      *
      */
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         // Access-Control-Allow-Credentials为true，那么Origin不能为*
         response.setHeader("Access-Control-Allow-Credentials", "false");

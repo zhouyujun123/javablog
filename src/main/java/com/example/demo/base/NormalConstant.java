@@ -17,6 +17,7 @@ public interface NormalConstant {
      */
     String USER_ID = "userId";
     String ROLE = "role";
+    String TOKEN = "token";
     String SIGN = "sign";
     String USER_TYPE="0";
     String ARTICLE_TYPE="1";
