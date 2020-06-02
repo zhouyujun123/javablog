@@ -1,6 +1,7 @@
 package com.example.demo.interceptor;
 
 import cn.hutool.core.text.StrBuilder;
+import cn.hutool.core.util.StrUtil;
 import com.example.demo.base.ApiException;
 import com.example.demo.base.ApiResult;
 import com.example.demo.base.NormalConstant;
@@ -43,12 +44,13 @@ public class SignInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         Map<String, String[]> map = request.getParameterMap();
-        Map<String, String[]> treeMap = new TreeMap<>(map);
+        Map<String, String[]> treeMap;
         String fromSign;
         StrBuilder sb = new StrBuilder();
-        if (treeMap.containsKey(NormalConstant.SIGN)) {
-            fromSign = treeMap.get(NormalConstant.SIGN)[0];
-            treeMap.remove(NormalConstant.SIGN);
+        if (map.containsKey(NormalConstant.SIGN) && StrUtil.isNotBlank(map.get(NormalConstant.SIGN)[0])) {
+            fromSign = map.get(NormalConstant.SIGN)[0];
+            map.remove(NormalConstant.SIGN);
+            treeMap = new TreeMap<>(map);
         } else {
             throw new ApiException(ApiResult.errorWith(ResultCodeEnum.SIGN_NULL));
         }
