@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import cn.hutool.core.util.RandomUtil;
 import com.example.demo.base.ApiException;
 import com.example.demo.base.ApiResult;
+import com.example.demo.base.NormalConstant;
 import com.example.demo.base.ResultCodeEnum;
 import com.example.demo.entity.TImg;
 import com.example.demo.service.TImgService;
@@ -80,7 +81,7 @@ public class TImgController {
             for (MultipartFile file : files) {
 //                TImg img = new TImg();
                 // 图片名称 为了确定唯一性 用户id+图片名称+8位随机数
-                String fileName = MD5Util.md5LowerCase(request.getAttribute("userId") + file.getOriginalFilename() + RandomUtil.randomString(5));
+                String fileName = MD5Util.md5LowerCase(request.getAttribute(NormalConstant.USER_ID) + file.getOriginalFilename() + RandomUtil.randomString(5));
                 InputStream inputStream = file.getInputStream();
                 minioClient.putObject(bucketName, fileName, inputStream, inputStream.available(), "application/octet-stream");
                 String url = minioClient.getObjectUrl(bucketName, fileName);

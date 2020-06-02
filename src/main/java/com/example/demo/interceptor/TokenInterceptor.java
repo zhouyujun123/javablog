@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.demo.base.ApiException;
 import com.example.demo.base.ApiResult;
+import com.example.demo.base.NormalConstant;
 import com.example.demo.base.ResultCodeEnum;
 import com.example.demo.utils.JwtUtil;
 import com.example.demo.utils.RedisUtil;
@@ -46,7 +47,7 @@ public class TokenInterceptor implements HandlerInterceptor {
         if (StrUtil.isNotBlank(token)) {
             DecodedJWT jwt = JwtUtil.verity(token);
             if (jwt != null) {
-                String userId = jwt.getClaim("userId").asString();
+                String userId = jwt.getClaim(NormalConstant.USER_ID).asString();
                 String role = jwt.getClaim("role").asString();
                 Long expireTime = jwt.getExpiresAt().getTime();
                 // 验证token是否即将过期  key为userId val为token

@@ -1,9 +1,6 @@
 package com.example.demo.interceptor;
 
-import com.example.demo.base.ApiException;
-import com.example.demo.base.ApiResult;
-import com.example.demo.base.ResultCodeEnum;
-import com.example.demo.base.RoleCheck;
+import com.example.demo.base.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
@@ -29,7 +26,7 @@ public class RoleCheckInterceptor implements HandlerInterceptor {
             if (roleCheck != null) {
                 //获取方法中设置的权限信息
                 String[] roles = roleCheck.roles();
-                String userType = (String) request.getAttribute("role");
+                String userType = (String) request.getAttribute(NormalConstant.ROLE);
                 for (String role : roles) {
                     //判断用户是否有权限访问
                     if (role.equals(userType)) {

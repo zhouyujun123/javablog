@@ -2,8 +2,8 @@ package com.example.demo.service.impl;
 
 import com.example.demo.base.ApiException;
 import com.example.demo.base.ApiResult;
+import com.example.demo.base.NormalConstant;
 import com.example.demo.base.ResultCodeEnum;
-import com.example.demo.base.RoleConstant;
 import com.example.demo.dao.TUserDao;
 import com.example.demo.dto.FindDTO;
 import com.example.demo.entity.TUser;
@@ -85,7 +85,7 @@ public class TUserServiceImpl implements TUserService {
                 e.printStackTrace();
             }
             // 添加权限 普通用户
-            tUser.setRoleId(RoleConstant.USER);
+            tUser.setRoleId(NormalConstant.USER);
             int i = tUserDao.insert(tUser);
             if (i > 0) {
                 return ApiResult.resultWith(ResultCodeEnum.SUCCESS);

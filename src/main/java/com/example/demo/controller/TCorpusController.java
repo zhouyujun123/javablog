@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.base.ApiResult;
+import com.example.demo.base.NormalConstant;
 import com.example.demo.base.ResultCodeEnum;
 import com.example.demo.base.RoleCheck;
 import com.example.demo.entity.TCorpus;
@@ -46,10 +47,10 @@ public class TCorpusController {
     @GetMapping("selectOne")
     public ApiResult selectOne(HttpServletRequest request, Long id) {
         TCorpus tCorpus = this.tCorpusService.queryById(id);
-        String myUserId = (String) request.getAttribute("userId");
+        String myUserId = (String) request.getAttribute(NormalConstant.USER_ID);
         CorpusVO corpusVO = new CorpusVO();
         BeanUtils.copyProperties(tCorpus, corpusVO);
-        boolean sub = subService.isSub(myUserId, tCorpus.getId().toString(), "2");
+        boolean sub = subService.isSub(myUserId, tCorpus.getId().toString(), NormalConstant.CORPUS_TYPE);
         if (sub) {
             corpusVO.setHasSubscribed(true);
         } else {

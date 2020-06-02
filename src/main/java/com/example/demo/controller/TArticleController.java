@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.base.ApiResult;
+import com.example.demo.base.NormalConstant;
 import com.example.demo.base.ResultCodeEnum;
 import com.example.demo.entity.TArticle;
 import com.example.demo.service.TArticleService;
@@ -44,10 +45,10 @@ public class TArticleController {
     @GetMapping("selectOne")
     public ApiResult selectOne(HttpServletRequest request, Long id) {
         TArticle article = this.tArticleService.queryById(id);
-        String myUserId = (String) request.getAttribute("userId");
+        String myUserId = (String) request.getAttribute(NormalConstant.USER_ID);
         ArticleVO articleVO = new ArticleVO();
         BeanUtils.copyProperties(article, articleVO);
-        boolean sub = subService.isSub(myUserId, article.getId().toString(), "1");
+        boolean sub = subService.isSub(myUserId, article.getId().toString(), NormalConstant.ARTICLE_TYPE);
         if (sub) {
             articleVO.setHasSubscribed(true);
         } else {

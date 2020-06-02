@@ -4,6 +4,7 @@ import cn.hutool.core.map.FixedLinkedHashMap;
 import cn.hutool.core.util.StrUtil;
 import com.example.demo.base.ApiException;
 import com.example.demo.base.ApiResult;
+import com.example.demo.base.NormalConstant;
 import com.example.demo.base.ResultCodeEnum;
 import com.example.demo.entity.TSubscription;
 import com.example.demo.entity.TUser;
@@ -113,7 +114,7 @@ public class UserController {
     @PostMapping("/updateUserInfo")
     public ApiResult updateUserInfo(TUser user, String newPsw, HttpServletRequest request) {
         if (StrUtil.isNotBlank(user.getUserPsw())) {
-            String userId = (String) request.getAttribute("userId");
+            String userId = (String) request.getAttribute(NormalConstant.USER_ID);
             try {
                 String password = MD5Util.md5LowerCase(user.getUserPsw());
                 boolean hasPeople = userService.hasPeopleByUserIdAndPsw(userId, password);
@@ -141,11 +142,11 @@ public class UserController {
      */
     @GetMapping("/getUserInfo/{userId}")
     public ApiResult getUserInfo(@PathVariable("userId") Long userId,HttpServletRequest request) {
-        String myUserId = (String) request.getAttribute("userId");
+        String myUserId = (String) request.getAttribute(NormalConstant.USER_ID);
         TUser user = userService.queryById(userId);
         UserVO userVO = new UserVO();
         BeanUtils.copyProperties(user, userVO);
-        boolean sub = subService.isSub(myUserId, userId.toString(), "0");
+        boolean sub = subService.isSub(myUserId, userId.toString(), NormalConstant.USER_TYPE);
         if (sub){
             userVO.setHasSubscribed(true);
         }else {
