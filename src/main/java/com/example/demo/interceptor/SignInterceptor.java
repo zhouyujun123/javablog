@@ -27,6 +27,13 @@ public class SignInterceptor implements HandlerInterceptor {
     /**
      * 请求sign校验
      *
+     * <p>
+     * 签名规则 将业务参数的参数名称按照顺序排序(升序)，并加入相应参数值组合成字符串，
+     * 如 app_id+123+param1+value1+param2+value2 得到 appId123param1value1param2value2，
+     * 然后将得到的字符串⾸尾拼接privateKey得到新的字符串，如privateKey的值为123321，
+     * 则新的字符串为:123321appId123param1value1param2value2123321，然后对该字符串进⾏行MD5加密 (小写)，
+     * 得到的便是签名参数sign
+     *
      * @param request
      * @param response
      * @param handler
@@ -51,7 +58,7 @@ public class SignInterceptor implements HandlerInterceptor {
                 sb.append(val);
             }
         }
-        String sign = MD5Util.md5LowerCase(sb + NormalConstant.PRIVATE_KEY);
+        String sign = MD5Util.md5LowerCase(NormalConstant.PRIVATE_KEY + sb + NormalConstant.PRIVATE_KEY);
         if (!sign.equals(fromSign)) {
             throw new ApiException(ApiResult.errorWith(ResultCodeEnum.SIGN_ERROR));
         }
