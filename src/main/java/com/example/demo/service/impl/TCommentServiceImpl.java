@@ -1,5 +1,6 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.dto.CommentDTO;
 import com.example.demo.entity.TComment;
 import com.example.demo.dao.TCommentDao;
 import com.example.demo.service.TCommentService;
@@ -26,7 +27,7 @@ public class TCommentServiceImpl implements TCommentService {
      * @return 实例对象
      */
     @Override
-    public TComment queryById(Long id) {
+    public CommentDTO queryById(Long id) {
         return this.tCommentDao.queryById(id);
     }
 
@@ -43,7 +44,7 @@ public class TCommentServiceImpl implements TCommentService {
     }
 
     @Override
-    public List<TComment> queryAll(TComment tComment) {
+    public List<CommentDTO> queryAll(TComment tComment) {
         return this.tCommentDao.queryAll(tComment);
     }
 

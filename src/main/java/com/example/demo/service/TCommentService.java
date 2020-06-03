@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.CommentDTO;
 import com.example.demo.entity.TComment;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public interface TCommentService {
      * @param id 主键
      * @return 实例对象
      */
-    TComment queryById(Long id);
+    CommentDTO queryById(Long id);
 
     /**
      * 查询多条数据
@@ -28,7 +29,7 @@ public interface TCommentService {
      */
     List<TComment> queryAllByLimit(int offset, int limit);
 
-    List<TComment> queryAll(TComment tComment);
+    List<CommentDTO> queryAll(TComment tComment);
 
 
     /**

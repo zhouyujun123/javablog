@@ -1,5 +1,6 @@
 package com.example.demo.dao;
 
+import com.example.demo.dto.CommentDTO;
 import com.example.demo.entity.TComment;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -20,7 +21,7 @@ public interface TCommentDao {
      * @param id 主键
      * @return 实例对象
      */
-    TComment queryById(Long id);
+    CommentDTO queryById(Long id);
 
     /**
      * 查询指定行数据
@@ -38,7 +39,7 @@ public interface TCommentDao {
      * @param tComment 实例对象
      * @return 对象列表
      */
-    List<TComment> queryAll(TComment tComment);
+    List<CommentDTO> queryAll(TComment tComment);
 
     /**
      * 新增数据

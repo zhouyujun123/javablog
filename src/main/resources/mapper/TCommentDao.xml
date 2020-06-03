@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.dao.TCommentDao">
 
-    <resultMap type="com.example.demo.entity.TComment" id="TCommentMap">
+    <resultMap type="com.example.demo.dto.CommentDTO" id="TCommentMap">
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="articleId" column="article_id" jdbcType="INTEGER"/>
         <result property="articleComment" column="article_comment" jdbcType="VARCHAR"/>
@@ -10,20 +10,34 @@
         <result property="toUserId" column="to_user_id" jdbcType="INTEGER"/>
         <result property="previousId" column="previous_id" jdbcType="INTEGER"/>
         <result property="commentTime" column="comment_time" jdbcType="TIMESTAMP"/>
+        <result property="fromUserName" column="from_user_name" jdbcType="VARCHAR"/>
+        <result property="toUserName" column="to_user_name" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!--查询单个-->
     <select id="queryById" resultMap="TCommentMap">
-        select
-          id, article_id, article_comment, from_user_id, to_user_id, previous_id, comment_time
-        from zyjblog.t_comment
-        where id = #{id}
+        select c.id,
+               c.article_id,
+               c.article_comment,
+               c.from_user_id,
+               c.to_user_id,
+               c.previous_id,
+               c.comment_time,
+               u.nick_name as from_user_name ,x.nick_name as to_user_name
+        from zyjblog.t_comment c
+        LEFT JOIN t_user u ON c.from_user_id=u.id LEFT JOIN t_user x ON x.id=c.to_user_id
+        where c.id = #{id}
     </select>
 
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="TCommentMap">
-        select
-          id, article_id, article_comment, from_user_id, to_user_id, previous_id, comment_time
+        select id,
+               article_id,
+               article_comment,
+               from_user_id,
+               to_user_id,
+               previous_id,
+               comment_time
         from zyjblog.t_comment
         limit #{offset}, #{limit}
     </select>
@@ -31,8 +45,10 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="TCommentMap">
         select
-          id, article_id, article_comment, from_user_id, to_user_id, previous_id, comment_time
-        from zyjblog.t_comment
+        c.id, c.article_id, c.article_comment, c.from_user_id, c.to_user_id, c.previous_id, c.comment_time,
+        u.nick_name as from_user_name ,x.nick_name as to_user_name
+        from zyjblog.t_comment c
+        LEFT JOIN t_user u ON c.from_user_id=u.id LEFT JOIN t_user x ON x.id=c.to_user_id
         <where>
             <if test="id != null">
                 and id = #{id}
@@ -92,7 +108,9 @@
 
     <!--通过主键删除-->
     <delete id="deleteById">
-        delete from zyjblog.t_comment where id = #{id}
+        delete
+        from zyjblog.t_comment
+        where id = #{id}
     </delete>
 
 </mapper>

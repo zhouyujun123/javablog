@@ -3,18 +3,14 @@ package com.example.demo.controller;
 import com.example.demo.base.ApiResult;
 import com.example.demo.base.ResultCodeEnum;
 import com.example.demo.dto.CommentDTO;
-import com.example.demo.entity.TArticle;
 import com.example.demo.entity.TComment;
-import com.example.demo.entity.TUser;
 import com.example.demo.service.TCommentService;
 import com.example.demo.service.TUserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,8 +30,6 @@ public class TCommentController {
     @Resource
     private TCommentService tCommentService;
 
-    @Resource
-    private TUserService userService;
 
     /**
      * 通过主键查询单条数据
@@ -44,8 +38,8 @@ public class TCommentController {
      * @return 单条数据
      */
     @GetMapping("selectOne")
-    public TComment selectOne(Long id) {
-        return this.tCommentService.queryById(id);
+    public ApiResult selectOne(Long id) {
+        return ApiResult.resultWith(ResultCodeEnum.SUCCESS, this.tCommentService.queryById(id));
     }
 
     @PostMapping("/addComment")
@@ -59,7 +53,7 @@ public class TCommentController {
 
     /**
      * 通过文章id找文章评论
-     *
+     * <p>
      * 默认previousId为0，即查找顶级评论
      *
      * @param articleId
@@ -70,20 +64,10 @@ public class TCommentController {
         TComment com = new TComment();
         com.setArticleId(articleId);
         com.setPreviousId(previousId);
-        List<TComment> commentList = tCommentService.queryAll(com);
-        List<CommentDTO> commentDTOList = new ArrayList<>();
-        for (TComment comment : commentList) {
-            CommentDTO commentDTO = new CommentDTO();
-            String fromUserName = userService.queryNameById(comment.getFromUserId());
-            String toUserName = userService.queryNameById(comment.getToUserId());
-            BeanUtils.copyProperties(comment,commentDTO);
-            commentDTO.setFromUserName(fromUserName);
-            commentDTO.setToUserName(toUserName);
-            commentDTOList.add(commentDTO);
-        }
+        List<CommentDTO> commentList = tCommentService.queryAll(com);
         if (commentList.size() > 0) {
             PageHelper.startPage(page, size);
-            PageInfo<CommentDTO> pageInfo = new PageInfo<>(commentDTOList);
+            PageInfo<CommentDTO> pageInfo = new PageInfo<>(commentList);
             return ApiResult.resultWith(ResultCodeEnum.SUCCESS, pageInfo);
         } else {
             return ApiResult.errorWith(ResultCodeEnum.ERROR);

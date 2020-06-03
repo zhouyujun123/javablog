@@ -59,5 +59,5 @@ public class FindLikeController {
             return ApiResult.resultWith(ResultCodeEnum.SUCCESS, pageInfo);
         }
     }
-    
+
 }
