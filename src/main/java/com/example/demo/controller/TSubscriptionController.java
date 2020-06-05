@@ -59,12 +59,17 @@ public class TSubscriptionController {
      * 用户订阅
      */
     @PostMapping("/userSub")
-    public ApiResult userSub(TSubscription subscription) {
-        if (tSubscriptionService.insert(subscription) > 0) {
-            return ApiResult.resultWith(ResultCodeEnum.SUCCESS);
-        } else {
-            return ApiResult.resultWith(ResultCodeEnum.ERROR);
-        }
+    public ApiResult userSub(TSubscription sub) {
+        Integer type = sub.getType();
+        Long userId = sub.getUserId();
+        String key = userId + "-" + type;
+        tSubscriptionService.addSubToSet(key,sub.getSubscriptionId());
+        return ApiResult.resultWith(ResultCodeEnum.SUCCESS);
+//        if (tSubscriptionService.insert(subscription) > 0) {
+//            return ApiResult.resultWith(ResultCodeEnum.SUCCESS);
+//        } else {
+//            return ApiResult.resultWith(ResultCodeEnum.ERROR);
+//        }
     }
 
     /**

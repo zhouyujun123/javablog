@@ -40,11 +40,11 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         //拦截所有的请求
         registry.addInterceptor(headerInterceptor).addPathPatterns("/**");
-        InterceptorRegistration sign = registry.addInterceptor(signInterceptor).addPathPatterns("/**");
-        sign.excludePathPatterns("/csrf");
-        sign.excludePathPatterns("/");
-        sign.excludePathPatterns("/error");
-        sign.excludePathPatterns("/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**");
+//        InterceptorRegistration sign = registry.addInterceptor(signInterceptor).addPathPatterns("/**");
+//        sign.excludePathPatterns("/csrf");
+//        sign.excludePathPatterns("/");
+//        sign.excludePathPatterns("/error");
+//        sign.excludePathPatterns("/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**");
         InterceptorRegistration interceptorToken = registry.addInterceptor(tokenInterceptor).addPathPatterns("/**");
         // 主页
         interceptorToken.excludePathPatterns("/login");

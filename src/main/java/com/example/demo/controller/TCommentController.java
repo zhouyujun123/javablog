@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.base.ApiResult;
+import com.example.demo.base.NormalConstant;
 import com.example.demo.base.ResultCodeEnum;
 import com.example.demo.dto.CommentDTO;
 import com.example.demo.entity.TComment;
@@ -11,6 +12,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -43,7 +45,9 @@ public class TCommentController {
     }
 
     @PostMapping("/addComment")
-    public ApiResult addComment(TComment comment) {
+    public ApiResult addComment(HttpServletRequest request,TComment comment) {
+        String myUserId = (String) request.getAttribute(NormalConstant.USER_ID);
+        comment.setFromUserId(Long.valueOf(myUserId));
         if (tCommentService.insert(comment) > 0) {
             return ApiResult.resultWith(ResultCodeEnum.SUCCESS);
         } else {

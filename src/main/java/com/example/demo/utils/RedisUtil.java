@@ -4,13 +4,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Component;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Map;
 import java.util.Set;
@@ -150,7 +155,7 @@ public class RedisUtil {
         return null;
     }
 
-    public static boolean hmset(String key, Map<String, String> value) {
+    public static boolean hmset(String key, Map<String, Object> value) {
         boolean result = false;
         try {
             redisTemplate.opsForHash().putAll(key, value);
@@ -161,8 +166,8 @@ public class RedisUtil {
         return result;
     }
 
-    public static Map<String, String> hmget(String key) {
-        Map<String, String> result = null;
+    public static Map<String, Object> hmget(String key) {
+        Map<String, Object> result = null;
         try {
             result = redisTemplate.opsForHash().entries(key);
         } catch (Exception e) {
@@ -170,6 +175,14 @@ public class RedisUtil {
         }
         return result;
     }
+
+    public static Long addSubToSet(String key,Object value){
+        return redisTemplate.opsForSet().add(key, value);
+    }
+
+
+
+
 
     @Autowired(required = false)
     public void setRedisTemplate(RedisTemplate redisTemplate) {

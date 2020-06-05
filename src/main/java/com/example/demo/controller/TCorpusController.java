@@ -89,7 +89,9 @@ public class TCorpusController {
      * @return
      */
     @PostMapping("/addCorpus")
-    public ApiResult addCorpus(TCorpus tCorpus){
+    public ApiResult addCorpus(HttpServletRequest request,TCorpus tCorpus){
+        String myUserId = (String) request.getAttribute(NormalConstant.USER_ID);
+        tCorpus.setUserId(Long.valueOf(myUserId));
         if (tCorpusService.insert(tCorpus)) {
             return ApiResult.resultWith(ResultCodeEnum.SUCCESS);
         }else {

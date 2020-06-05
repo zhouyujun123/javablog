@@ -94,7 +94,9 @@ public class TArticleController {
      * 添加文章
      */
     @PostMapping("/addArticle")
-    public ApiResult addCorpus(TArticle tArticle) {
+    public ApiResult addCorpus(HttpServletRequest request, TArticle tArticle) {
+        String myUserId = (String) request.getAttribute(NormalConstant.USER_ID);
+        tArticle.setUserId(Long.valueOf(myUserId));
         if (tArticleService.insert(tArticle)) {
             return ApiResult.resultWith(ResultCodeEnum.SUCCESS);
         } else {

@@ -67,4 +67,9 @@ public interface TSubscriptionService {
      */
     boolean deleteById(Integer id);
 
+    /**
+     * redisSet 实现关注列表
+     */
+    void addSubToSet(String key,Object value);
+
 }

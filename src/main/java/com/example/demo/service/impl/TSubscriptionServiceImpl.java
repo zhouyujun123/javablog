@@ -3,6 +3,8 @@ package com.example.demo.service.impl;
 import com.example.demo.dao.TSubscriptionDao;
 import com.example.demo.entity.TSubscription;
 import com.example.demo.service.TSubscriptionService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -18,6 +20,9 @@ import java.util.List;
 public class TSubscriptionServiceImpl implements TSubscriptionService {
     @Resource
     private TSubscriptionDao tSubscriptionDao;
+
+    @Resource
+    private RedisTemplate<String,Object> redisTemplate;
 
     /**
      * 通过ID查询单条数据
@@ -89,5 +94,10 @@ public class TSubscriptionServiceImpl implements TSubscriptionService {
     @Override
     public boolean deleteById(Integer id) {
         return this.tSubscriptionDao.deleteById(id) > 0;
+    }
+
+    @Override
+    public void addSubToSet(String key,Object value) {
+        redisTemplate.opsForSet().add(key,value);
     }
 }
