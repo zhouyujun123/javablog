@@ -36,5 +36,6 @@ public interface ShoppingCartService {
      */
     ApiResult delCart(String userId);
 
+    ApiResult updateCartNum(String userId, String productId, int num);
 
 }

@@ -4,6 +4,7 @@ import com.example.demo.base.ApiResult;
 import com.example.demo.service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -55,6 +56,15 @@ public class ShoppingCartController {
     @GetMapping("/delCartProduct")
     public ApiResult delCartProduct(String userId, String productId) {
         return shoppingCartService.delCartProduct(userId, productId);
+    }
+
+    /**
+     * 更新购物车商品数量
+     */
+    @PostMapping("/updateCartNum")
+    public ApiResult updateCartNum(String userId, String productId, int num) {
+        return shoppingCartService.updateCartNum(userId, productId, num);
+
     }
 
 

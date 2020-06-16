@@ -75,4 +75,17 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         }
         return ApiResult.errorWith(ResultCodeEnum.ERROR);
     }
+
+    @Override
+    public ApiResult updateCartNum(String userId, String productId, int num) {
+        String json = redisService.hget(CartPrefix.getCartList, userId, productId);
+        if (json == null) {
+            return ApiResult.errorWith(ResultCodeEnum.ERROR);
+        } else {
+            CartDTO cart = JSON.parseObject(json, CartDTO.class);
+            cart.setProductNum(num);
+            redisService.hset(CartPrefix.getCartList, userId, productId, JSON.toJSONString(cart));
+            return ApiResult.resultWith(ResultCodeEnum.SUCCESS);
+        }
+    }
 }
