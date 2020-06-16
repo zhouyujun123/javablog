@@ -1,6 +1,7 @@
 package com.example.demo.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.example.demo.base.ApiResult;
 import com.example.demo.base.CartPrefix;
 import com.example.demo.base.ResultCodeEnum;
@@ -27,13 +28,13 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     ProductInfoDao productInfoDao;
 
     @Override
-    public ApiResult addOrUpdateCart(String userId, String productId, int num) {
+    public ApiResult addOrUpdateCart(String userId, String productId) {
         boolean exists = redisService.existsValue(CartPrefix.getCartList, userId, productId);
         if (exists) {
             //获取现有的购物车中的数据
             String json = redisService.hget(CartPrefix.getCartList, userId, productId);
             CartDTO cart = JSON.parseObject(json, CartDTO.class);
-            cart.setProductNum(num + cart.getProductNum());
+            cart.setProductNum(cart.getProductNum() + 1);
             redisService.hset(CartPrefix.getCartList, userId, productId, JSON.toJSONString(cart));
         } else {
             // 根据商品Id查询商品
@@ -44,24 +45,34 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             cartDto.setProductIcon(productInfo.getProductIcon());
             cartDto.setProductPrice(productInfo.getProductPrice());
             cartDto.setProductStatus(productInfo.getProductStatus());
-            cartDto.setProductNum(num);
+            cartDto.setProductNum(1);
             redisService.hset(CartPrefix.getCartList, userId, productId, JSON.toJSONString(cartDto));
         }
         return ApiResult.resultWith(ResultCodeEnum.SUCCESS);
     }
 
     @Override
-    public int delCartProduct(String userId, String productId, int num) {
-        return 0;
+    public ApiResult delCartProduct(String userId, String productId) {
+        Long hdel = redisService.hdel(CartPrefix.getCartList, userId, productId);
+        if (hdel == 1L) {
+            return ApiResult.resultWith(ResultCodeEnum.SUCCESS);
+        }
+        return ApiResult.resultWith(ResultCodeEnum.ERROR);
     }
 
     @Override
-    public List<CartDTO> showCart(String userId) {
-        return null;
+    public ApiResult showCart(String userId) {
+        List<String> jsonList = redisService.hvals(CartPrefix.getCartList, userId);
+        List<CartDTO> cartDTOList = JSONArray.parseArray(JSON.toJSONString(jsonList), CartDTO.class);
+        return ApiResult.resultWith(ResultCodeEnum.SUCCESS, cartDTOList);
     }
 
     @Override
-    public int delCart() {
-        return 0;
+    public ApiResult delCart(String userId) {
+        boolean delete = redisService.delete(CartPrefix.getCartList, userId);
+        if (delete) {
+            return ApiResult.resultWith(ResultCodeEnum.SUCCESS);
+        }
+        return ApiResult.errorWith(ResultCodeEnum.ERROR);
     }
 }

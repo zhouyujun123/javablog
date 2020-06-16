@@ -4,7 +4,6 @@ import com.example.demo.base.ApiResult;
 import com.example.demo.service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -21,11 +20,42 @@ public class ShoppingCartController {
     /**
      * @param userId    用户Id
      * @param productId 商品Id
-     * @param num       商品数量
      * @return
      */
     @GetMapping("/addCart")
-    public ApiResult addCart(String userId, String productId, int num) {
-        return shoppingCartService.addOrUpdateCart(userId, productId, num);
+    public ApiResult addCart(String userId, String productId) {
+        return shoppingCartService.addOrUpdateCart(userId, productId);
     }
+
+    /**
+     * 清空购物车
+     *
+     * @param userId
+     * @return
+     */
+    @GetMapping("/delCart")
+    public ApiResult delCart(String userId) {
+        return shoppingCartService.delCart(userId);
+    }
+
+    /**
+     * 购物车展示列表
+     *
+     * @param userId
+     * @return
+     */
+    @GetMapping("/showCart")
+    public ApiResult showCart(String userId) {
+        return shoppingCartService.showCart(userId);
+    }
+
+    /**
+     * 删除购物车商品
+     */
+    @GetMapping("/delCartProduct")
+    public ApiResult delCartProduct(String userId, String productId) {
+        return shoppingCartService.delCartProduct(userId, productId);
+    }
+
+
 }

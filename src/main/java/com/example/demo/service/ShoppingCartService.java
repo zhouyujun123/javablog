@@ -15,27 +15,26 @@ public interface ShoppingCartService {
      * 添加购物车
      * 判断redis是否有key，如果有则添加数量，如果没有则新增购物车商品
      */
-    ApiResult addOrUpdateCart(String userId, String productId, int num);
+    ApiResult addOrUpdateCart(String userId, String productId);
 
     /**
      * 删除购物车商品
      *
      * @param userId
      * @param productId
-     * @param num
      * @return
      */
-    int delCartProduct(String userId, String productId, int num);
+    ApiResult delCartProduct(String userId, String productId);
 
     /**
      * 展示购物车商品
      */
-    List<CartDTO> showCart(String userId);
+    ApiResult showCart(String userId);
 
     /**
      * 清空购物车
      */
-    int delCart();
+    ApiResult delCart(String userId);
 
 
 }
