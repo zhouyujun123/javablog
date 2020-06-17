@@ -23,6 +23,13 @@
         where order_id = #{orderId}
     </select>
 
+    <select id="queryByUserId" resultMap="TOrderMasterMap">
+        select
+            order_id, buyer_name, buyer_phone, buyer_address_id, buyer_user_id, order_amount, order_status, pay_status, create_time, update_time
+        from zyjblog.t_order_master
+        where buyer_user_id = #{userId}
+    </select>
+
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="TOrderMasterMap">
         select

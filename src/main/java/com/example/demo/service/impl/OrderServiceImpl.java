@@ -2,13 +2,13 @@ package com.example.demo.service.impl;
 
 import com.example.demo.base.ApiResult;
 import com.example.demo.base.ResultCodeEnum;
-import com.example.demo.dao.TOrderAddressDao;
 import com.example.demo.dao.TOrderDetailDao;
 import com.example.demo.dao.TOrderMasterDao;
 import com.example.demo.dto.OrderDTO;
-import com.example.demo.entity.TOrderAddress;
 import com.example.demo.entity.TOrderDetail;
+import com.example.demo.entity.TOrderMaster;
 import com.example.demo.service.OrderService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +28,6 @@ public class OrderServiceImpl implements OrderService {
     private TOrderMasterDao masterDao;
 
 
-
     @Override
     public ApiResult creatOrder(OrderDTO orderDTO) {
         List<TOrderDetail> detailList = orderDTO.getOrderDetailList();
@@ -41,12 +40,19 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public ApiResult delOrder(String orderId) {
-        return null;
+        masterDao.deleteById(orderId);
+        detailDao.deleteByOrderId(orderId);
+        return ApiResult.resultWith(ResultCodeEnum.SUCCESS);
     }
 
     @Override
     public ApiResult getOrderList(String userId) {
-        return null;
+        TOrderMaster master = masterDao.queryByUserId(userId);
+        List<TOrderDetail> details = detailDao.queryAllByOrderId(master.getOrderId());
+        OrderDTO orderDTO = new OrderDTO();
+        BeanUtils.copyProperties(master,orderDTO);
+        orderDTO.setOrderDetailList(details);
+        return ApiResult.resultWith(ResultCodeEnum.SUCCESS,orderDTO);
     }
 
     @Override

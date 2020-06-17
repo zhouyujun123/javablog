@@ -23,6 +23,9 @@ public interface TOrderMasterDao {
      */
     TOrderMaster queryById(String orderId);
 
+
+    TOrderMaster queryByUserId(String userId);
+
     /**
      * 查询指定行数据
      *

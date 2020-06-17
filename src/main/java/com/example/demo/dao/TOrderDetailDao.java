@@ -40,6 +40,9 @@ public interface TOrderDetailDao {
      */
     List<TOrderDetail> queryAll(TOrderDetail tOrderDetail);
 
+
+    List<TOrderDetail> queryAllByOrderId(String orderId);
+
     /**
      * 新增数据
      *
@@ -63,5 +66,8 @@ public interface TOrderDetailDao {
      * @return 影响行数
      */
     int deleteById(String detailId);
+
+
+    int deleteByOrderId(String orderId);
 
 }
