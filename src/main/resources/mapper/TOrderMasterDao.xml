@@ -17,23 +17,47 @@
 
     <!--查询单个-->
     <select id="queryById" resultMap="TOrderMasterMap">
-        select
-          order_id, buyer_name, buyer_phone, buyer_address_id, buyer_user_id, order_amount, order_status, pay_status, create_time, update_time
+        select order_id,
+               buyer_name,
+               buyer_phone,
+               buyer_address_id,
+               buyer_user_id,
+               order_amount,
+               order_status,
+               pay_status,
+               create_time,
+               update_time
         from zyjblog.t_order_master
         where order_id = #{orderId}
     </select>
 
     <select id="queryByUserId" resultMap="TOrderMasterMap">
-        select
-            order_id, buyer_name, buyer_phone, buyer_address_id, buyer_user_id, order_amount, order_status, pay_status, create_time, update_time
+        select order_id,
+               buyer_name,
+               buyer_phone,
+               buyer_address_id,
+               buyer_user_id,
+               order_amount,
+               order_status,
+               pay_status,
+               create_time,
+               update_time
         from zyjblog.t_order_master
         where buyer_user_id = #{userId}
     </select>
 
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="TOrderMasterMap">
-        select
-          order_id, buyer_name, buyer_phone, buyer_address_id, buyer_user_id, order_amount, order_status, pay_status, create_time, update_time
+        select order_id,
+               buyer_name,
+               buyer_phone,
+               buyer_address_id,
+               buyer_user_id,
+               order_amount,
+               order_status,
+               pay_status,
+               create_time,
+               update_time
         from zyjblog.t_order_master
         limit #{offset}, #{limit}
     </select>
@@ -41,7 +65,8 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="TOrderMasterMap">
         select
-          order_id, buyer_name, buyer_phone, buyer_address_id, buyer_user_id, order_amount, order_status, pay_status, create_time, update_time
+        order_id, buyer_name, buyer_phone, buyer_address_id, buyer_user_id, order_amount, order_status, pay_status,
+        create_time, update_time
         from zyjblog.t_order_master
         <where>
             <if test="orderId != null and orderId != ''">
@@ -78,9 +103,11 @@
     </select>
 
     <!--新增所有列-->
-    <insert id="insert" keyProperty="orderId" useGeneratedKeys="true">
-        insert into zyjblog.t_order_master(buyer_name, buyer_phone, buyer_address_id, buyer_user_id, order_amount, order_status, pay_status, create_time, update_time)
-        values (#{buyerName}, #{buyerPhone}, #{buyerAddressId}, #{buyerUserId}, #{orderAmount}, #{orderStatus}, #{payStatus}, #{createTime}, #{updateTime})
+    <insert id="insert">
+        insert into zyjblog.t_order_master(order_id, buyer_name, buyer_phone, buyer_address_id, buyer_user_id,
+                                           order_amount, order_status, pay_status, create_time, update_time)
+        values (#{orderId}, #{buyerName}, #{buyerPhone}, #{buyerAddressId}, #{buyerUserId}, #{orderAmount},
+                #{orderStatus}, #{payStatus}, #{createTime}, #{updateTime})
     </insert>
 
     <!--通过主键修改数据-->
@@ -120,7 +147,9 @@
 
     <!--通过主键删除-->
     <delete id="deleteById">
-        delete from zyjblog.t_order_master where order_id = #{orderId}
+        delete
+        from zyjblog.t_order_master
+        where order_id = #{orderId}
     </delete>
 
 </mapper>

@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.base.ApiResult;
+import com.example.demo.base.NormalConstant;
 import com.example.demo.dto.OrderDTO;
 import com.example.demo.service.OrderService;
 import com.github.pagehelper.PageHelper;
@@ -48,7 +49,7 @@ public class OrderController {
      */
     @GetMapping("/getOrderList")
     public ApiResult listOrder(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "6") Integer size, HttpServletRequest request) {
-        String userId = (String) request.getAttribute("userId");
+        String userId = (String) request.getAttribute(NormalConstant.USER_ID);
         PageHelper.startPage(page, size);
         return orderService.getOrderList(userId);
     }

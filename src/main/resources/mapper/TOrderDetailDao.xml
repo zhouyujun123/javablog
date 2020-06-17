@@ -78,9 +78,9 @@
     </select>
 
     <!--新增所有列-->
-    <insert id="insert" keyProperty="detailId" useGeneratedKeys="true">
-        insert into zyjblog.t_order_detail(order_id, product_id, product_name, product_price, product_quantity, product_icon, create_time, update_time)
-        values (#{orderId}, #{productId}, #{productName}, #{productPrice}, #{productQuantity}, #{productIcon}, #{createTime}, #{updateTime})
+    <insert id="insert">
+        insert into zyjblog.t_order_detail(detail_id,order_id, product_id, product_name, product_price, product_quantity, product_icon, create_time, update_time)
+        values (#{detailId},#{orderId}, #{productId}, #{productName}, #{productPrice}, #{productQuantity}, #{productIcon}, #{createTime}, #{updateTime})
     </insert>
 
     <!--通过主键修改数据-->

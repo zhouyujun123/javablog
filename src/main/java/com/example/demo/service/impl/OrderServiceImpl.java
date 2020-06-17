@@ -30,11 +30,13 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public ApiResult creatOrder(OrderDTO orderDTO) {
-        List<TOrderDetail> detailList = orderDTO.getOrderDetailList();
-        for (TOrderDetail detail : detailList) {
-            detailDao.insert(detail);
+        boolean insert = masterDao.insert(orderDTO) > 0;
+        if (insert) {
+            List<TOrderDetail> detailList = orderDTO.getOrderDetailList();
+            for (TOrderDetail detail : detailList) {
+                detailDao.insert(detail);
+            }
         }
-        masterDao.insert(orderDTO);
         return ApiResult.resultWith(ResultCodeEnum.SUCCESS);
     }
 
@@ -50,9 +52,9 @@ public class OrderServiceImpl implements OrderService {
         TOrderMaster master = masterDao.queryByUserId(userId);
         List<TOrderDetail> details = detailDao.queryAllByOrderId(master.getOrderId());
         OrderDTO orderDTO = new OrderDTO();
-        BeanUtils.copyProperties(master,orderDTO);
+        BeanUtils.copyProperties(master, orderDTO);
         orderDTO.setOrderDetailList(details);
-        return ApiResult.resultWith(ResultCodeEnum.SUCCESS,orderDTO);
+        return ApiResult.resultWith(ResultCodeEnum.SUCCESS, orderDTO);
     }
 
     @Override
