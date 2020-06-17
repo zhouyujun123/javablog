@@ -50,6 +50,9 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public ApiResult getOrderList(String userId) {
         TOrderMaster master = masterDao.queryByUserId(userId);
+        if (master == null) {
+            return ApiResult.resultWith(ResultCodeEnum.SUCCESS, null);
+        }
         List<TOrderDetail> details = detailDao.queryAllByOrderId(master.getOrderId());
         OrderDTO orderDTO = new OrderDTO();
         BeanUtils.copyProperties(master, orderDTO);
