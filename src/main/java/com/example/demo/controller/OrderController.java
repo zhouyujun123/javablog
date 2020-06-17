@@ -7,6 +7,8 @@ import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @Author mintaoyu
  * Date on 2020-06-17  09:11
@@ -21,6 +23,7 @@ public class OrderController {
 
     /**
      * 提交订单
+     *
      * @param orderDTO
      * @return
      */
@@ -32,7 +35,7 @@ public class OrderController {
 
     @GetMapping("/delOrder/{orderId}")
     public ApiResult delOrder(@PathVariable("orderId") String orderId) {
-        return null;
+        return orderService.delOrder(orderId);
     }
 
 
@@ -44,10 +47,10 @@ public class OrderController {
      * @return
      */
     @GetMapping("/getOrderList")
-    public ApiResult listOrder(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "6") Integer size) {
+    public ApiResult listOrder(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "6") Integer size, HttpServletRequest request) {
+        String userId = (String) request.getAttribute("userId");
         PageHelper.startPage(page, size);
-        // 根据
-        return null;
+        return orderService.getOrderList(userId);
     }
 
     /**
