@@ -14,7 +14,5 @@ import java.util.List;
 @Data
 public class OrderDTO extends TOrderMaster {
 
-    private TOrderAddress address;
-
     private List<TOrderDetail> orderDetailList;
 }

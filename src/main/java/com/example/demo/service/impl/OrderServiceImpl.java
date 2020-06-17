@@ -27,14 +27,10 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private TOrderMasterDao masterDao;
 
-    @Autowired
-    private TOrderAddressDao addressDao;
 
 
     @Override
     public ApiResult creatOrder(OrderDTO orderDTO) {
-        TOrderAddress address = orderDTO.getAddress();
-        addressDao.insert(address);
         List<TOrderDetail> detailList = orderDTO.getOrderDetailList();
         for (TOrderDetail detail : detailList) {
             detailDao.insert(detail);

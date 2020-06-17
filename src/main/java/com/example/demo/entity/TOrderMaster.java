@@ -25,9 +25,9 @@ public class TOrderMaster implements Serializable {
     */
     private String buyerPhone;
     /**
-    * 买家地址
+    * 买家地址Id
     */
-    private String buyerAddress;
+    private String buyerAddressId;
     /**
     * 买家id
     */

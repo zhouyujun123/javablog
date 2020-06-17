@@ -6,7 +6,6 @@ import com.example.demo.base.ResultCodeEnum;
 import com.example.demo.dto.CommentDTO;
 import com.example.demo.entity.TComment;
 import com.example.demo.service.TCommentService;
-import com.example.demo.service.TUserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;

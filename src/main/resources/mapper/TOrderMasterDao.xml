@@ -6,7 +6,7 @@
         <result property="orderId" column="order_id" jdbcType="VARCHAR"/>
         <result property="buyerName" column="buyer_name" jdbcType="VARCHAR"/>
         <result property="buyerPhone" column="buyer_phone" jdbcType="VARCHAR"/>
-        <result property="buyerAddress" column="buyer_address" jdbcType="VARCHAR"/>
+        <result property="buyerAddressId" column="buyer_address_id" jdbcType="VARCHAR"/>
         <result property="buyerUserId" column="buyer_user_id" jdbcType="VARCHAR"/>
         <result property="orderAmount" column="order_amount" jdbcType="NUMERIC"/>
         <result property="orderStatus" column="order_status" jdbcType="OTHER"/>
@@ -18,7 +18,7 @@
     <!--查询单个-->
     <select id="queryById" resultMap="TOrderMasterMap">
         select
-          order_id, buyer_name, buyer_phone, buyer_address, buyer_user_id, order_amount, order_status, pay_status, create_time, update_time
+          order_id, buyer_name, buyer_phone, buyer_address_id, buyer_user_id, order_amount, order_status, pay_status, create_time, update_time
         from zyjblog.t_order_master
         where order_id = #{orderId}
     </select>
@@ -26,7 +26,7 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="TOrderMasterMap">
         select
-          order_id, buyer_name, buyer_phone, buyer_address, buyer_user_id, order_amount, order_status, pay_status, create_time, update_time
+          order_id, buyer_name, buyer_phone, buyer_address_id, buyer_user_id, order_amount, order_status, pay_status, create_time, update_time
         from zyjblog.t_order_master
         limit #{offset}, #{limit}
     </select>
@@ -34,7 +34,7 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="TOrderMasterMap">
         select
-          order_id, buyer_name, buyer_phone, buyer_address, buyer_user_id, order_amount, order_status, pay_status, create_time, update_time
+          order_id, buyer_name, buyer_phone, buyer_address_id, buyer_user_id, order_amount, order_status, pay_status, create_time, update_time
         from zyjblog.t_order_master
         <where>
             <if test="orderId != null and orderId != ''">
@@ -46,8 +46,8 @@
             <if test="buyerPhone != null and buyerPhone != ''">
                 and buyer_phone = #{buyerPhone}
             </if>
-            <if test="buyerAddress != null and buyerAddress != ''">
-                and buyer_address = #{buyerAddress}
+            <if test="buyerAddressId != null and buyerAddressId != ''">
+                and buyer_address_id = #{buyerAddressId}
             </if>
             <if test="buyerUserId != null and buyerUserId != ''">
                 and buyer_user_id = #{buyerUserId}
@@ -72,8 +72,8 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="orderId" useGeneratedKeys="true">
-        insert into zyjblog.t_order_master(buyer_name, buyer_phone, buyer_address, buyer_user_id, order_amount, order_status, pay_status, create_time, update_time)
-        values (#{buyerName}, #{buyerPhone}, #{buyerAddress}, #{buyerUserId}, #{orderAmount}, #{orderStatus}, #{payStatus}, #{createTime}, #{updateTime})
+        insert into zyjblog.t_order_master(buyer_name, buyer_phone, buyer_address_id, buyer_user_id, order_amount, order_status, pay_status, create_time, update_time)
+        values (#{buyerName}, #{buyerPhone}, #{buyerAddressId}, #{buyerUserId}, #{orderAmount}, #{orderStatus}, #{payStatus}, #{createTime}, #{updateTime})
     </insert>
 
     <!--通过主键修改数据-->
@@ -86,8 +86,8 @@
             <if test="buyerPhone != null and buyerPhone != ''">
                 buyer_phone = #{buyerPhone},
             </if>
-            <if test="buyerAddress != null and buyerAddress != ''">
-                buyer_address = #{buyerAddress},
+            <if test="buyerAddressId != null and buyerAddressId != ''">
+                buyer_address_id = #{buyerAddressId},
             </if>
             <if test="buyerUserId != null and buyerUserId != ''">
                 buyer_user_id = #{buyerUserId},

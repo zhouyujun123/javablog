@@ -25,7 +25,6 @@ public class AddressController {
     public ApiResult bindAddress(TOrderAddress address) {
         TOrderAddress insert = addressService.insert(address);
         return ApiResult.resultWith(ResultCodeEnum.SUCCESS, insert);
-
     }
 
     @GetMapping("/delAddress/{addressId}")
