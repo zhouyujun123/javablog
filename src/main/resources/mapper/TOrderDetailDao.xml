@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.TOrderDetailDao">
+
+    <resultMap type="com.example.demo.entity.TOrderDetail" id="TOrderDetailMap">
+        <result property="detailId" column="detail_id" jdbcType="VARCHAR"/>
+        <result property="orderId" column="order_id" jdbcType="VARCHAR"/>
+        <result property="productId" column="product_id" jdbcType="VARCHAR"/>
+        <result property="productName" column="product_name" jdbcType="VARCHAR"/>
+        <result property="productPrice" column="product_price" jdbcType="NUMERIC"/>
+        <result property="productQuantity" column="product_quantity" jdbcType="INTEGER"/>
+        <result property="productIcon" column="product_icon" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TOrderDetailMap">
+        select
+          detail_id, order_id, product_id, product_name, product_price, product_quantity, product_icon, create_time, update_time
+        from zyjblog.t_order_detail
+        where detail_id = #{detailId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TOrderDetailMap">
+        select
+          detail_id, order_id, product_id, product_name, product_price, product_quantity, product_icon, create_time, update_time
+        from zyjblog.t_order_detail
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TOrderDetailMap">
+        select
+          detail_id, order_id, product_id, product_name, product_price, product_quantity, product_icon, create_time, update_time
+        from zyjblog.t_order_detail
+        <where>
+            <if test="detailId != null and detailId != ''">
+                and detail_id = #{detailId}
+            </if>
+            <if test="orderId != null and orderId != ''">
+                and order_id = #{orderId}
+            </if>
+            <if test="productId != null and productId != ''">
+                and product_id = #{productId}
+            </if>
+            <if test="productName != null and productName != ''">
+                and product_name = #{productName}
+            </if>
+            <if test="productPrice != null">
+                and product_price = #{productPrice}
+            </if>
+            <if test="productQuantity != null">
+                and product_quantity = #{productQuantity}
+            </if>
+            <if test="productIcon != null and productIcon != ''">
+                and product_icon = #{productIcon}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="detailId" useGeneratedKeys="true">
+        insert into zyjblog.t_order_detail(order_id, product_id, product_name, product_price, product_quantity, product_icon, create_time, update_time)
+        values (#{orderId}, #{productId}, #{productName}, #{productPrice}, #{productQuantity}, #{productIcon}, #{createTime}, #{updateTime})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update zyjblog.t_order_detail
+        <set>
+            <if test="orderId != null and orderId != ''">
+                order_id = #{orderId},
+            </if>
+            <if test="productId != null and productId != ''">
+                product_id = #{productId},
+            </if>
+            <if test="productName != null and productName != ''">
+                product_name = #{productName},
+            </if>
+            <if test="productPrice != null">
+                product_price = #{productPrice},
+            </if>
+            <if test="productQuantity != null">
+                product_quantity = #{productQuantity},
+            </if>
+            <if test="productIcon != null and productIcon != ''">
+                product_icon = #{productIcon},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        where detail_id = #{detailId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from zyjblog.t_order_detail where detail_id = #{detailId}
+    </delete>
+
+</mapper>
